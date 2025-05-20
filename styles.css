@@ -490,9 +490,8 @@ img.slide.active {
 
 .carousel .card {
   scroll-snap-align: start;
-  height: 340px;
+  height: auto;
   list-style: none;
-  background: #fff;
   border-radius: 8px;
   display: flex;
   cursor: pointer;
@@ -549,12 +548,15 @@ img.slide.active {
 
 .card__article {
   position: relative;
-  overflow: hidden;
 }
 
 .card__img {
   width: 328px;
-  border-radius: 1.5rem;
+  height: 328px;
+  object-fit: cover;
+  border-radius: 1rem;
+  padding: 0;
+  margin: 0;
 }
 
 .card__data {
@@ -570,6 +572,7 @@ img.slide.active {
   margin-inline: auto;
   opacity: 0;
   transition: opacity 1s 1s;
+  z-index: 5;
 }
 
 .card__description {
@@ -601,6 +604,7 @@ img.slide.active {
   animation: show-data 1s forwards;
   opacity: 1;
   transition: opacity .3s;
+  background-color: wheat;
 }
 
 .card__article:hover {
@@ -613,15 +617,16 @@ img.slide.active {
 
 .card__article:not(:hover) .card__data {
   animation: remove-data 1s forwards;
+  background-color: wheat;
 }
 
 
 @keyframes show-data {
   50% {
-    transform: translateY(-10rem);
+    transform: translateY(-15rem);
   }
   100% {
-    transform: translateY(-7rem);
+    transform: translateY(-11rem);
   }
 }
 
@@ -633,10 +638,10 @@ img.slide.active {
 
 @keyframes remove-data {
   0% {
-    transform: translateY(-7rem);
+    transform: translateY(-11rem);
   }
   50% {
-    transform: translateY(-10rem);
+    transform: translateY(-15rem);
   }
   100% {
     transform: translateY(.5rem);
