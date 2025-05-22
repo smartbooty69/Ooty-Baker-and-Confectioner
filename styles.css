@@ -1,3 +1,4 @@
+
 @import 'config/variables';
 @import 'base/base';
 @import 'components/card';
@@ -13,7 +14,7 @@
 }
 
 :root {
-  --bg-color: #0c0c0c;
+  --bg-color: #ffffff;
   --text-color: #fff;
   --main-color: #ae8957;
   --big-font: 6.6rem;
@@ -27,7 +28,7 @@ body {
 }
 
 header {
-  position: fixed;
+  position: relative;
   width: 95%;
   top: 0;
   right: 0px;
@@ -38,14 +39,14 @@ header {
   justify-content: space-between;
   align-items: center;
   transition: all 0.5s ease;
-  background: #fff;
+  background: #4ca050;
   border-radius: 9px;
   margin: 20px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.4);
 }
 
 .logo img {
-  width: 100%;
+  width: 20%;
   height: auto;
   transition: all 0.6s ease;
 }
@@ -70,7 +71,7 @@ header {
 }
 
 .navlist li a {
-  color: #333;
+  color: #e0d4d4;
   text-decoration: none;
   transition: all 0.6s ease;
 }
@@ -79,7 +80,7 @@ header {
   content: '';
   width: 0;
   height: 3px;
-  background: #2192ff;
+  background: #d7dee4;
   position: absolute;
   left: 0;
   bottom: -10px;
@@ -97,10 +98,10 @@ header {
 .nav-btn {
   display: inline-block;
   padding: 9px 24px;
-  background: #2192ff;
-  border: 2px solid #2192ff;
+  background: #ffffff;
+  border: 2px solid #abebbb;
   border-radius: 7px;
-  color: #fff;
+  color: #030303;
   font-size: 15px;
   font-weight: 500;
   transition: all 0.6s ease;
@@ -367,11 +368,11 @@ section {
   width: 100%;
   min-width: 100%;
   height: 500px;
-  margin: 40px auto;
+  margin: 50px auto;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  top: 100px;
+  top: -50px;
 }
 
 .slides {
@@ -434,7 +435,34 @@ img.slide.active {
   background-color: #fff;
   color: #000;
 }
+ 
 
+/* Style for the section header */
+.section-header {
+  text-align: center;
+  margin-bottom: 0px; /* Space between title and slider */
+}
+
+
+.section-title {
+  font-family: 'Chewy', cursive; /* Funky, playful font */
+  font-size: 3rem; /* Make it larger for impact */
+  font-weight: 700;
+  color: #469e13; /* Bright candy-inspired color */
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 2px; /* Add space between letters for a bold look */
+  text-shadow: 2px 2px #6da721; /* Funky shadow effect */
+}
+
+.section-description {
+  font-family: 'Poppins', sans-serif; /* Keep description simpler for contrast */
+  font-size: 1.2rem;
+  color: #444444; /* Neutral color */
+  margin: 10px 0 0;
+}
+
+/* product slides */
 .wrapper {
   margin: 0;
   padding: 0;
@@ -443,9 +471,9 @@ img.slide.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 0 35px;
-  background: rgb(228, 220, 220);
+  min-height: 75vh;
+  padding: 0 150px;
+  background: rgb(255, 255, 255);
   width: auto;
   position: relative;
 }
@@ -453,7 +481,7 @@ img.slide.active {
 .wrapper i {
   height: 50px;
   width: 50px;
-  background: rgb(118, 233, 118);
+  background: rgb(45, 121, 45);
   text-align: center;
   line-height: 50px;
   border-radius: 50%;
@@ -703,5 +731,255 @@ img.slide.active {
   .card__data {
     width: 316px;
     padding-inline: 2.5rem;
+  }
+}
+
+
+   
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+/* General styles for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  color: #000000;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Body styling to enable flexbox layout and minimum height for footer positioning */
+body {
+  display: flex; /* Flexbox for aligning footer at the bottom */
+  flex-direction: column; /* Ensures vertical layout */
+  min-height: 100vh; /* Full viewport height */
+  margin: 0; /* Removes default browser margins */
+}
+
+/* Main content area with flexible space allocation */
+.content1 {
+  flex: 1; /* Makes the content take up available space */
+  position: relative;
+  margin: 130px auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* Main text styling */
+.content1 .text {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.content1 .p {
+  font-size: 2.1875rem;
+  font-weight: 600;
+  color: #f3e4e4;
+}
+
+/* Footer styling */
+footer {
+  position: relative; /* Allows footer to flow naturally with the document */
+  bottom: 0; /* Ensures no offset from the bottom when using relative positioning */
+  width: 100%; /* Stretches the footer to the full width of the page */
+  background: #ffffff; /* Dark background for the footer */
+}
+
+/* Flexbox layout for footer content */
+.main-content {
+  display: flex; /* Creates a flex container for footer sections */
+}
+
+/* Footer content boxes */
+.main-content .box {
+  flex-basis: 50%; /* Each box takes up 50% of the footer width */
+  padding: 10px 20px;
+}
+
+/* Box headers styling */
+.box h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Content inside the boxes */
+.box .content {
+  margin: 20px 0 0 0;
+  position: relative;
+}
+
+/* Styling for a horizontal line above the content */
+.box .content:before {
+  position: absolute;
+  content: '';
+  top: -10px;
+  height: 2px;
+  width: 100%;
+  background: #f8f8f8; /* Dark background for the line */
+}
+
+/* Highlighted part of the line */
+.box .content:after {
+  position: absolute;
+  content: '';
+  height: 2px;
+  width: 15%; /* Small highlight portion */
+  background: #030202; /* Red color for emphasis */
+  top: -10px;
+}
+
+/* Paragraph text styling inside the left box */
+.left .content p {
+  text-align: justify; /* Aligns text for better readability */
+}
+
+/* Social media icons container */
+.left .content .social {
+  margin: 20px 0 0 0;
+}
+
+/* Social media links */
+.left .content .social a {
+  padding: 0 2px;
+}
+
+/* Individual social media icons */
+.left .content .social a span {
+  height: 40px;
+  width: 40px;
+  background: #ffffff; /* Dark background */
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effect for social media icons */
+.left .content .social a span:hover {
+  background: #48ad29; /* Changes to red on hover */
+}
+
+/* Icon styling in the center section */
+.center .content .fas {
+  font-size: 1.4375rem;
+  background: #fffdfd;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 50%; /* Circular shape */
+  transition: 0.3s; /* Smooth hover effect */
+  cursor: pointer;
+}
+
+/* Hover effect for center section icons */
+.center .content .fas:hover {
+  background: #4eec70;
+}
+
+/* Text next to icons */
+.center .content .text {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  padding-left: 10px;
+}
+
+/* Phone contact section */
+.center .content .phone {
+  margin: 15px 0;
+}
+
+/* Form input styling in the right section */
+.right form .text {
+  font-size: 1.0625rem;
+  margin-bottom: 2px;
+  color: #000000;
+}
+
+/* Textarea message styling */
+.right form .msg {
+  margin-top: 10px;
+}
+
+/* Form input fields and textarea */
+.right form input, .right form textarea {
+  width: 100%; /* Full width input fields */
+  font-size: 1.0625rem;
+  background: #ffffff;
+  padding-left: 10px;
+  border: 1px solid #222222;
+}
+
+/* Input fields and textarea focus styling */
+.right form input:focus,
+.right form textarea:focus {
+  outline-color: #3498db; /* Blue outline on focus */
+}
+
+/* Individual input field height */
+.right form input {
+  height: 35px;
+}
+
+/* Submit button styling */
+.right form .btn {
+  margin-top: 10px;
+}
+
+/* Submit button hover effect */
+.right form .btn button {
+  height: 40px;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: #ffffff; /* Red background */
+  font-size: 1.0625rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: .3s; /* Smooth hover effect */
+}
+
+/* Button hover effect */
+.right form .btn button:hover {
+  background: #218d17; /* Changes to black on hover */
+}
+
+/* Bottom footer section */
+.bottom center {
+  padding: 5px;
+  font-size: 0.9375rem;
+  background: #151515;
+}
+
+/* Text inside the bottom footer */
+.bottom center span {
+  color: #000000;
+}
+
+/* Links inside the bottom footer */
+.bottom center a {
+  color: #3dbb5dd7;
+  text-decoration: none;
+}
+
+/* Hover effect for footer links */
+.bottom center a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 900px) {
+  footer {
+    position: relative; /* Footer flows naturally on smaller screens */
+    bottom: 0px;
+  }
+  .main-content {
+    flex-wrap: wrap; /* Wraps the footer boxes */
+    flex-direction: column; /* Stacks the boxes vertically */
+  }
+  .main-content .box {
+    margin: 5px 0;
   }
 }
