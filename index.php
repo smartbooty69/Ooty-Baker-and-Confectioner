@@ -1,3 +1,17 @@
+<?php
+require_once 'connection.php';
+
+$categories = ['Jelly', 'Candy', 'Coated Candy'];
+$products_by_category = [];
+
+foreach ($categories as $category) {
+    $stmt = $conn->prepare("SELECT * FROM products WHERE variety = ?");
+    $stmt->bind_param("s", $category);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $products_by_category[$category] = $result->fetch_all(MYSQLI_ASSOC);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
   <!-- Head Section: Contains meta tags, title, and external resource links -->
@@ -76,7 +90,7 @@
     </div>
 
     <div class="wrapper">
-        <i id="left" class="fa-solid fas fa-angle-left"></i>
+        <i class="fa-solid fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
         <div class="carousel">
             <?php foreach ($products as $product): ?>
                 <article class="card__article">
@@ -101,7 +115,7 @@
                 </article>
             <?php endforeach; ?>
         </div>
-        <i id="right" class="fa-solid fas fa-angle-right"></i>
+        <i class="fa-solid fa-angle-right arrow-btn" data-direction="right" aria-label="Next items"></i>
     </div>
 
     <div class="view-more-container">
