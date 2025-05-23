@@ -31,84 +31,54 @@ prev.addEventListener('click', prevSlide);
 
 setInterval(nextSlide, 4000);
 
-
 document.addEventListener("DOMContentLoaded", function() {
-    const carousel = document.querySelector(".carousel");
-    const arrowBtns = document.querySelectorAll(".wrapper i");
-    const wrapper = document.querySelector(".wrapper");
+    console.log("Carousel script started!"); // 1. Check if the script runs at all
 
-    const firstCard = carousel.querySelector(".card");
-    const firstCardWidth = firstCard.offsetWidth;
+    const wrappers = document.querySelectorAll(".wrapper");
+    console.log(wrappers.length + " carousel wrappers found."); // 2. Check if it finds your carousels
 
-    let isDragging = false,
-        startX,
-        startScrollLeft,
-        timeoutId;
+    wrappers.forEach((wrapper, index) => {
+        const carousel = wrapper.querySelector(".carousel");
+        const arrowBtns = wrapper.querySelectorAll(".arrow-btn");
+        const firstCard = carousel.querySelector(".card__article");
 
-    const dragStart = (e) => { 
-        isDragging = true;
-        carousel.classList.add("dragging");
-        startX = e.pageX;
-        startScrollLeft = carousel.scrollLeft;
-    };
+        console.log("Initializing carousel #" + (index + 1)); // 3. Check if it loops through each one
 
-    const dragging = (e) => {
-        if (!isDragging) return;
-    
-        
-        const newScrollLeft = startScrollLeft - (e.pageX - startX);
-    
-        
-        
-        if (newScrollLeft <= 0 || newScrollLeft >= 
-            carousel.scrollWidth - carousel.offsetWidth) {
-            
-            
-            isDragging = false;
+        if (!firstCard) {
+            console.error("Carousel #" + (index + 1) + " has no cards. Skipping.");
             return;
         }
-    
-        
-        carousel.scrollLeft = newScrollLeft;
-    };
 
-    const dragStop = () => {
-        isDragging = false; 
-        carousel.classList.remove("dragging");
-    };
+        // Calculate the full width to scroll. The '16' is the 'gap' value from your CSS.
+        const firstCardWidth = firstCard.offsetWidth + 16;
+        console.log("Card width for carousel #" + (index + 1) + " calculated as: " + firstCardWidth); // 4. Check the width calculation
 
-    const autoPlay = () => {
-    
-        
-        if (window.innerWidth < 800) return; 
-        
-        
-        const totalCardWidth = carousel.scrollWidth;
-        
-        
-        const maxScrollLeft = totalCardWidth - carousel.offsetWidth;
-        
-        
-        if (carousel.scrollLeft >= maxScrollLeft) return;
-        
-        
-        timeoutId = setTimeout(() => 
-            carousel.scrollLeft += firstCardWidth, 2500);
-    };
+        if (arrowBtns.length === 0) {
+            console.error("Carousel #" + (index + 1) + " has no '.arrow-btn' elements. Check your HTML!");
+        }
 
-    carousel.addEventListener("mousedown", dragStart);
-    carousel.addEventListener("mousemove", dragging);
-    document.addEventListener("mouseup", dragStop);
-    wrapper.addEventListener("mouseenter", () => 
-        clearTimeout(timeoutId));
-    wrapper.addEventListener("mouseleave", autoPlay);
+        arrowBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                // 5. This message should appear every time you click an arrow
+                console.log("Arrow clicked!");
 
-    
-    
-    arrowBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            carousel.scrollLeft += btn.id === "left" ? 
-                -firstCardWidth : firstCardWidth;
+                const direction = btn.getAttribute("data-direction");
+                if (direction === "left") {
+                    carousel.scrollLeft -= firstCardWidth;
+                } else {
+                    carousel.scrollLeft += firstCardWidth;
+                }
+            });
         });
+
+        // Drag functionality (included for completeness)
+        let isDragging = false, startX, startScrollLeft;
+        const dragStart = (e) => { isDragging = true; carousel.classList.add("dragging"); startX = e.pageX; startScrollLeft = carousel.scrollLeft; };
+        const dragging = (e) => { if (!isDragging) return; e.preventDefault(); carousel.scrollLeft = startScrollLeft - (e.pageX - startX); };
+        const dragStop = () => { isDragging = false; carousel.classList.remove("dragging"); };
+        carousel.addEventListener("mousedown", dragStart);
+        carousel.addEventListener("mousemove", dragging);
+        document.addEventListener("mouseup", dragStop);
+        carousel.addEventListener("mouseleave", dragStop);
     });
 });

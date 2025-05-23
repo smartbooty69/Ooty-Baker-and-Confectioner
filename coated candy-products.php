@@ -1,25 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="es">
-  <!-- Head Section: Contains meta tags, title, and external resource links -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OOtys Website</title>
-    
-    <!-- External CSS Files -->
     <link rel="stylesheet" href="styles.css" />
-    <!-- Box Icons Library -->
+    <!-- box icons link -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
     />
-    <!-- Remix Icons Library -->
+    <!-- remix icons link -->
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
 
-    <!-- Google Fonts: Roboto -->
+    <!-- google fonts link -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,58 +25,102 @@
       rel="stylesheet"
     />
 
-    <!-- AOS Animation Library -->
+    <!-- aos animation -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
-
   <body>
-    <!-- Header Section: Contains logo, navigation menu, and sign-in button -->
+    <!-- header -->
     <header>
-      <!-- Logo -->
       <a href="#" class="logo">
-        <img src="images/gimmie-logo.jpg" alt="logo coffe" />
+        <img src="gimmie logo (1).jpg" alt="logo coffe" />
       </a>
 
-      <!-- Main Navigation Menu -->
       <ul class="navlist">
-        <li><a href="#">About us</a></li>
-        <li><a href="#">products</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Membership</a></li>
+        <li><a href="#">Events</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
 
-      <!-- Right Side Header Content -->
       <div class="reght-content">
         <a href="#" class="nav-btn">Sign In</a>
         <div class="bx bx-menu" id="menu-icon"></div>
       </div>
     </header>
 
-    <!-- Main Banner Slider Section -->
-    <div class="slider">
-      <div class="slides">
-          <img src="images/Banne2.jpg" class="slide active" alt="Slider Image 1">
-          <img src="images/banner3.jpg" class="slide" alt="Slider Image 2">
-          <img src="images/Banne2.jpg" class="slide" alt="Slider Image 3">
-      </div>
-      <!-- Slider Navigation Buttons -->
-      <div class="navigation">
-          <button class="prev">&#10094;</button>
-          <button class="next">&#10095;</button>
-      </div>
-    </div>
-    
-    <?php foreach ($products_by_category as $category => $products): ?>
-    <div class="section-header">
-        <h2 class="section-title"><?= strtoupper($category) ?></h2>
-        <p class="section-description">Explore our latest range of delicious <?= strtolower($category) ?>!</p>
+    <div class="product-view">
+      <?php
+        require_once 'connection.php';
+
+        // Fetch only Jelly
+        $sql = "SELECT * FROM products WHERE 	variety = 'Coated Candy'";
+        $result = $conn->query($sql);
+
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        if ($result->num_rows === 0) {
+            echo "<p>No product named Jelly found.</p>";
+        }
+        ?>
+
+        <?php while($row = $result->fetch_assoc()): ?>
+          <article class="card__article">
+              <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="image" class="card__img">
+              
+              <div class="card__data">
+                  <div class="card-header">
+                      <h2 class="card__title"><?php echo htmlspecialchars($row['name']); ?></h2>
+                      <?php if ($row['veg_status'] === 'Veg'): ?>
+                          <div class="veg-icon" title="Vegetarian"></div>
+                      <?php else: ?>
+                          <div class="non-veg-icon" title="Non-Vegetarian"></div>
+                      <?php endif; ?>
+                  </div>
+
+                  <?php if (!empty($row['description'])): ?>
+                      <p class="card-description">
+                          <?php echo htmlspecialchars($row['description']); ?>
+                      </p>
+                  <?php endif; ?>
+
+                  <div class="price-row">
+                      <span class="label">Price:</span>
+                      <span class="value">$<?php echo number_format($row['price'], 2); ?></span>
+                  </div>
+
+                  <?php if (!is_null($row['price_per_gram'])): ?>
+                      <div class="price-row">
+                          <span class="label">Price per gram:</span>
+                          <span class="value">$<?php echo number_format($row['price_per_gram'], 2); ?>/g</span>
+                      </div>
+                  <?php endif; ?>
+              </div>
+          </article>
+        <?php endwhile; ?>
+
+
     </div>
 
-    <div class="wrapper">
-        <i id="left" class="fa-solid fas fa-angle-left"></i>
-        <div class="carousel">
-            <?php foreach ($products as $product): ?>
+   <!-- footer  -->
+  <footer>
+      <div class="main-content">
+        <div class="left box">
+          <h2>About us</h2>
+          <div class="content">
+            <p>CodinNepal is a YouTube channel where you can learn web designing, web development, ui/ux designing, html css tutorial, hover animation and effects, javascript and jquery tutorial and related so on.</p>
+            <div class="social">
+              <a href="https://facebook.com/coding.np"><span class="fab fa-facebook-f"></span></a>
+              <a href="#"><span class="fab fa-twitter"></span></a>
+              <a href="https://instagram.com/coding.np"><span class="fab fa-instagram"></span></a>
+              <a href="https://youtube.com/c/codingnepal"><span class="fab fa-youtube"></span></a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <?php foreach ($products as $product): ?>
                 <article class="card__article">
                     <img src="<?= $product['image_path'] ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="card__img">
                     <div class="card__data">
@@ -101,33 +143,6 @@
                 </article>
             <?php endforeach; ?>
         </div>
-        <i id="right" class="fa-solid fas fa-angle-right"></i>
-    </div>
-
-    <div class="view-more-container">
-        <a href="<?= strtolower($category) ?>-products.html" class="view-more-btn">View More <?= $category ?> Products</a>
-    </div>
-<?php endforeach; ?>
-
-    <!-- Footer Section -->
-    <footer>
-      <div class="main-content">
-        <!-- About Us Section -->
-        <div class="left box">
-          <h2>About us</h2>
-          <div class="content">
-            <p>Ooty Baker & Confectioner is a renowned bakery and confectionery establishment based in Bangalore, Karnataka. Known for its delectable range of baked goods and sweets, the company has been serving customers with quality products for several years. Their commitment to traditional recipes combined with modern baking techniques has made them a favorite among locals and tourists alike..</p>
-            <!-- Social Media Links -->
-            <div class="social">
-              <a href="https://facebook.com/coding.np"><span class="fab fa-facebook-f"></span></a>
-              <a href="#"><span class="fab fa-twitter"></span></a>
-              <a href="https://instagram.com/coding.np"><span class="fab fa-instagram"></span></a>
-              <a href="https://youtube.com/c/codingnepal"><span class="fab fa-youtube"></span></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact Information Section -->
         <div class="center box">
           <h2>Address</h2>
           <div class="content">
@@ -145,8 +160,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Contact Form Section -->
         <div class="right box">
           <h2>Contact us</h2>
           <div class="content">
@@ -166,18 +179,16 @@
           </div>
         </div>
       </div>
-
-      <!-- Copyright Section -->
       <div class="bottom">
         <center>
-          <span class="far fa-copyright"></span><span> gimmie. All rights reserved.</span>
+          <span class="credit">Created By <a href="https://www.codingnepalweb.com">CodingNepal</a> | </span>
+          <span class="far fa-copyright"></span><span> 2020 All rights reserved.</span>
         </center>
       </div>
     </footer>
 
-    <!-- JavaScript Files -->
+    <!-- js script -->
     <script src="index.js"></script>
-    <!-- AOS Animation Initialization -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init({
@@ -185,6 +196,6 @@
       });
     </script>
 
-  </body>
+ </body>
 </html>
     
