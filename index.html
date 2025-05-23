@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
+  <!-- Head Section: Contains meta tags, title, and external resource links -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OOtys Website</title>
+    
+    <!-- External CSS Files -->
     <link rel="stylesheet" href="styles.css" />
-    <!-- box icons link -->
+    <!-- Box Icons Library -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
     />
-    <!-- remix icons link -->
+    <!-- Remix Icons Library -->
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
 
-    <!-- google fonts link -->
+    <!-- Google Fonts: Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,17 +27,21 @@
       rel="stylesheet"
     />
 
-    <!-- aos animation -->
+    <!-- AOS Animation Library -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
+
   <body>
-    <!-- header -->
+    <!-- Header Section: Contains logo, navigation menu, and sign-in button -->
     <header>
+      <!-- Logo -->
       <a href="#" class="logo">
-        <img src="gimmie logo (1).jpg" alt="logo coffe" />
+        <img src="images/gimmie-logo.jpg" alt="logo coffe" />
       </a>
 
+      <!-- Main Navigation Menu -->
       <ul class="navlist">
         <li><a href="#">About</a></li>
         <li><a href="#">Membership</a></li>
@@ -42,239 +49,420 @@
         <li><a href="#">Contact</a></li>
       </ul>
 
+      <!-- Right Side Header Content -->
       <div class="reght-content">
         <a href="#" class="nav-btn">Sign In</a>
         <div class="bx bx-menu" id="menu-icon"></div>
       </div>
     </header>
 
+    <!-- Main Banner Slider Section -->
     <div class="slider">
       <div class="slides">
-          <img src="Banner1.jpg" class="slide active" alt="Slider Image 1"> <img src="banner3.jpg" class="slide" alt="Slider Image 2"> <img src="Banne2.jpg" class="slide" alt="Slider Image 3"> </div>
+          <img src="images/banner1.jpg" class="slide active" alt="Slider Image 1">
+          <img src="images/banner3.jpg" class="slide" alt="Slider Image 2">
+          <img src="images/banner2.jpg" class="slide" alt="Slider Image 3">
+      </div>
+      <!-- Slider Navigation Buttons -->
       <div class="navigation">
           <button class="prev">&#10094;</button>
           <button class="next">&#10095;</button>
       </div>
     </div>
+    
+    <!-- Jelly Products Section -->
+    <div class="section-header">
+      <h2 class="section-title">JELLY</h2>
+      <p class="section-description">Explore our latest range of delicious candies!</p>
+    </div>
 
-        <!-- 1st division for jelly header-->
-<div class="section-header">
-  <h2 class="section-title">JELLY</h2>
-  <p class="section-description">Explore our latest range of delicious candies!</p>
-</div>
-
-
- <!-- 1st division for jelly -->
+    <!-- Jelly Products Carousel -->
     <div class="wrapper">
       <i id="left" class="fa-solid  fas fa-angle-left"></i>
       <div class="carousel">
-
-        <!-- 1st division for jelly header-->
-
-     <!--card body 1 -->             
-            <article class="card__article">
-               <img src="img2.jpg" alt="image" class="card__img">
- 
-               <div class="card__data">
-                  <span class="card__description">Great in taste</span>
-                  <h2 class="card__title">yummmmyyyy</h2>
-                  <a href="#" class="card__button">Read More</a>
-               </div>
-            </article>
-
-             <!--card body 2 -->    
-
-        <article class="card card__article">
-          <img src="img2.jpg" alt="image" class="card__img">
-
+        <!-- Jelly Product Card 1 -->
+        <article class="card__article">
+          <img src="images/img2.jpg" alt="image" class="card__img">
           <div class="card__data">
-              <span class="card__description">Great in taste</span>
-              <h2 class="card__title">yummmmyyyy</h2>
-              <a href="#" class="card__button">Read More</a>
+            <div class="card-header">
+              <h2 class="card__title">Paneer Tikka</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Paneer, yogurt, spices, bell peppers, onions.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$6.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.07/g</span>
+            </div>
           </div>
         </article>
 
+        <!-- Jelly Product Card 2 -->
         <article class="card card__article">
-          <img src="img2.jpg" alt="image" class="card__img">
-
+          <img src="images/img2.jpg" alt="image" class="card__img">
           <div class="card__data">
-              <span class="card__description">Great in taste</span>
-              <h2 class="card__title">yummmmyyyy</h2>
-              <a href="#" class="card__button">Read More</a>
+            <div class="card-header">
+              <h2 class="card__title">Chicken Tikka</h2>
+              <div class="non-veg-icon" title="Non-Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Chicken, yogurt, spices, bell peppers, onions.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$8.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.09/g</span>
+            </div>
           </div>
         </article>
 
+        <!-- Jelly Product Card 3 -->
         <article class="card card__article">
-            <img src="img2.jpg" alt="image" class="card__img">
-
-            <div class="card__data">
-                <span class="card__description">Great in taste</span>
-                <h2 class="card__title">yummmmyyyy</h2>
-                <a href="#" class="card__button">Read More</a>
+          <img src="images/img2.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Veg Biryani</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
             </div>
-          </article>
+            <p class="card-description">
+              Ingredients: Basmati rice, mixed vegetables, spices, herbs.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$7.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.08/g</span>
+            </div>
+          </div>
+        </article>
 
+        <!-- Jelly Product Card 4 -->
         <article class="card card__article">
-            <img src="HotMakhana1.jpg" alt="image" class="card__img">
-
-            <div class="card__data">
-                <span class="card__description">Great in taste</span>
-                <h2 class="card__title">yyy</h2>
-                <a href="#" class="card__button">Read More</a>
+          <img src="images/img2.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Butter Chicken</h2>
+              <div class="non-veg-icon" title="Non-Vegetarian"></div>
             </div>
-          </article>
-          
-        </div>
+            <p class="card-description">
+              Ingredients: Chicken, tomato sauce, butter, cream, spices.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$9.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.10/g</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Jelly Product Card 5 -->
+        <article class="card card__article">
+          <img src="images/HotMakhana1.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Hot Makhana</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Makhana (fox nuts), spices, herbs.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$5.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.06/g</span>
+            </div>
+          </div>
+        </article>
+      </div>
       <i id="right" class="fa-solid fas fa-angle-right"></i>
-  </div>
+    </div>
 
+    <!-- View More Button for Jelly Section -->
+    <div class="view-more-container">
+      <a href="jelly-products.html" class="view-more-btn">View More Jelly Products</a>
+    </div>
 
-<div class="section-header">
-  <h2 class="section-title">CANDY</h2>
-  <p class="section-description">Explore our latest range of delicious candies!</p>
-</div>
+    <!-- Candy Products Section -->
+    <div class="section-header">
+      <h2 class="section-title">CANDY</h2>
+      <p class="section-description">Explore our latest range of delicious candies!</p>
+    </div>
 
-
-  <!-- 2nd division for candy -->
-
+    <!-- Candy Products Carousel -->
     <div class="wrapper">
       <i id="left" class="fa-solid  fas fa-angle-left"></i>
       <div class="carousel">
-
-     <!--card body 1 -->             
-            <article class="card__article">
-               <img src="img2.jpg" alt="image" class="card__img">
-
-               <div class="card__data">
-                  <span class="card__description">Great in taste</span>
-                  <h2 class="card__title">yummmmyyyy</h2>
-                  <a href="#" class="card__button">Read More</a>
-               </div>
-            </article>
-
-             <!--card body 2 -->    
-
-        <article class="card card__article">
-          <img src="img2.jpg" alt="image" class="card__img">
-
+        <!-- Candy Product Card 1 -->
+        <article class="card__article">
+          <img src="images/img2.jpg" alt="image" class="card__img">
           <div class="card__data">
-              <span class="card__description">Great in taste</span>
-              <h2 class="card__title">yummmmyyyy</h2>
-              <a href="#" class="card__button">Read More</a>
+            <div class="card-header">
+              <h2 class="card__title">Paneer Tikka</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Paneer, yogurt, spices, bell peppers, onions.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$6.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.07/g</span>
+            </div>
           </div>
         </article>
 
+        <!-- Candy Product Card 2 -->
         <article class="card card__article">
-          <img src="img2.jpg" alt="image" class="card__img">
-
+          <img src="images/img2.jpg" alt="image" class="card__img">
           <div class="card__data">
-              <span class="card__description">Great in taste</span>
-              <h2 class="card__title">yummmmyyyy</h2>
-              <a href="#" class="card__button">Read More</a>
+            <div class="card-header">
+              <h2 class="card__title">Chicken Tikka</h2>
+              <div class="non-veg-icon" title="Non-Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Chicken, yogurt, spices, bell peppers, onions.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$8.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.09/g</span>
+            </div>
           </div>
         </article>
 
+        <!-- Candy Product Card 3 -->
         <article class="card card__article">
-            <img src="img2.jpg" alt="image" class="card__img">
-
-            <div class="card__data">
-                <span class="card__description">Great in taste</span>
-                <h2 class="card__title">yummmmyyyy</h2>
-                <a href="#" class="card__button">Read More</a>
+          <img src="images/img2.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Veg Biryani</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
             </div>
-          </article>
+            <p class="card-description">
+              Ingredients: Basmati rice, mixed vegetables, spices, herbs.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$7.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.08/g</span>
+            </div>
+          </div>
+        </article>
 
+        <!-- Candy Product Card 4 -->
         <article class="card card__article">
-            <img src="HotMakhana1.jpg" alt="image" class="card__img">
-
-            <div class="card__data">
-                <span class="card__description">Great in taste</span>
-                <h2 class="card__title">yyy</h2>
-                <a href="#" class="card__button">Read More</a>
+          <img src="images/img2.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Butter Chicken</h2>
+              <div class="non-veg-icon" title="Non-Vegetarian"></div>
             </div>
-          </article>
-          
-        </div>
+            <p class="card-description">
+              Ingredients: Chicken, tomato sauce, butter, cream, spices.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$9.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.10/g</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Candy Product Card 5 -->
+        <article class="card card__article">
+          <img src="images/HotMakhana1.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Hot Makhana</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Makhana (fox nuts), spices, herbs.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$5.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.06/g</span>
+            </div>
+          </div>
+        </article>
+      </div>
       <i id="right" class="fa-solid fas fa-angle-right"></i>
-  </div>
+    </div>
 
-<div class="section-header">
-  <h2 class="section-title">COATED CANDY</h2>
-  <p class="section-description">Explore our latest range of delicious candies!</p>
-</div>
+    <!-- View More Button for Candy Section -->
+    <div class="view-more-container">
+      <a href="#" class="view-more-btn">View More Candy Products</a>
+    </div>
 
-  <!-- 3rd division for coated candy -->
+    <!-- Coated Candy Products Section -->
+    <div class="section-header">
+      <h2 class="section-title">COATED CANDY</h2>
+      <p class="section-description">Explore our latest range of delicious candies!</p>
+    </div>
 
+    <!-- Coated Candy Products Carousel -->
     <div class="wrapper">
       <i id="left" class="fa-solid  fas fa-angle-left"></i>
       <div class="carousel">
-
-     <!--card body 1 -->             
-            <article class="card__article">
-               <img src="img2.jpg" alt="image" class="card__img">
-
-               <div class="card__data">
-                  <span class="card__description">Great in taste</span>
-                  <h2 class="card__title">yummmmyyyy</h2>
-                  <a href="#" class="card__button">Read More</a>
-               </div>
-            </article>
-
-             <!--card body 2 -->    
-
-        <article class="card card__article">
-          <img src="img2.jpg" alt="image" class="card__img">
-
+        <!-- Coated Candy Product Card 1 -->
+        <article class="card__article">
+          <img src="images/img2.jpg" alt="image" class="card__img">
           <div class="card__data">
-              <span class="card__description">Great in taste</span>
-              <h2 class="card__title">yummmmyyyy</h2>
-              <a href="#" class="card__button">Read More</a>
+            <div class="card-header">
+              <h2 class="card__title">Paneer Tikka</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Paneer, yogurt, spices, bell peppers, onions.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$6.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.07/g</span>
+            </div>
           </div>
         </article>
 
+        <!-- Coated Candy Product Card 2 -->
         <article class="card card__article">
-          <img src="img2.jpg" alt="image" class="card__img">
-
+          <img src="images/img2.jpg" alt="image" class="card__img">
           <div class="card__data">
-              <span class="card__description">Great in taste</span>
-              <h2 class="card__title">yummmmyyyy</h2>
-              <a href="#" class="card__button">Read More</a>
+            <div class="card-header">
+              <h2 class="card__title">Chicken Tikka</h2>
+              <div class="non-veg-icon" title="Non-Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Chicken, yogurt, spices, bell peppers, onions.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$8.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.09/g</span>
+            </div>
           </div>
         </article>
 
+        <!-- Coated Candy Product Card 3 -->
         <article class="card card__article">
-            <img src="img2.jpg" alt="image" class="card__img">
-
-            <div class="card__data">
-                <span class="card__description">Great in taste</span>
-                <h2 class="card__title">yummmmyyyy</h2>
-                <a href="#" class="card__button">Read More</a>
+          <img src="images/img2.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Veg Biryani</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
             </div>
-          </article>
+            <p class="card-description">
+              Ingredients: Basmati rice, mixed vegetables, spices, herbs.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$7.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.08/g</span>
+            </div>
+          </div>
+        </article>
 
+        <!-- Coated Candy Product Card 4 -->
         <article class="card card__article">
-            <img src="HotMakhana1.jpg" alt="image" class="card__img">
-
-            <div class="card__data">
-                <span class="card__description">Great in taste</span>
-                <h2 class="card__title">yyy</h2>
-                <a href="#" class="card__button">Read More</a>
+          <img src="images/img2.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Butter Chicken</h2>
+              <div class="non-veg-icon" title="Non-Vegetarian"></div>
             </div>
-          </article>
-          
-        </div>
+            <p class="card-description">
+              Ingredients: Chicken, tomato sauce, butter, cream, spices.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$9.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.10/g</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Coated Candy Product Card 5 -->
+        <article class="card card__article">
+          <img src="images/HotMakhana1.jpg" alt="image" class="card__img">
+          <div class="card__data">
+            <div class="card-header">
+              <h2 class="card__title">Hot Makhana</h2>
+              <div class="veg-icon" title="Vegetarian"></div>
+            </div>
+            <p class="card-description">
+              Ingredients: Makhana (fox nuts), spices, herbs.
+            </p>
+            <div class="price-row">
+              <span class="label">Price:</span>
+              <span class="value">$5.99</span>
+            </div>
+            <div class="price-row">
+              <span class="label">Price per gram:</span>
+              <span class="value">$0.06/g</span>
+            </div>
+          </div>
+        </article>
+      </div>
       <i id="right" class="fa-solid fas fa-angle-right"></i>
-  </div>
+    </div>
 
+    <!-- View More Button for Coated Candy Section -->
+    <div class="view-more-container">
+      <a href="#" class="view-more-btn">View More Coated Candy Products</a>
+    </div>
 
-
-   <!-- footer  -->
-  <footer>
+    <!-- Footer Section -->
+    <footer>
       <div class="main-content">
+        <!-- About Us Section -->
         <div class="left box">
           <h2>About us</h2>
           <div class="content">
             <p>CodinNepal is a YouTube channel where you can learn web designing, web development, ui/ux designing, html css tutorial, hover animation and effects, javascript and jquery tutorial and related so on.</p>
+            <!-- Social Media Links -->
             <div class="social">
               <a href="https://facebook.com/coding.np"><span class="fab fa-facebook-f"></span></a>
               <a href="#"><span class="fab fa-twitter"></span></a>
@@ -283,6 +471,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Contact Information Section -->
         <div class="center box">
           <h2>Address</h2>
           <div class="content">
@@ -300,6 +490,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Contact Form Section -->
         <div class="right box">
           <h2>Contact us</h2>
           <div class="content">
@@ -319,6 +511,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Copyright Section -->
       <div class="bottom">
         <center>
           <span class="credit">Created By <a href="https://www.codingnepalweb.com">CodingNepal</a> | </span>
@@ -327,8 +521,9 @@
       </div>
     </footer>
 
-    <!-- js script -->
+    <!-- JavaScript Files -->
     <script src="index.js"></script>
+    <!-- AOS Animation Initialization -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init({
@@ -336,6 +531,6 @@
       });
     </script>
 
- </body>
+  </body>
 </html>
     
