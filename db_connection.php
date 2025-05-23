@@ -1,7 +1,4 @@
 <?php
-
-//lets make a connection with Addtocart database
-
 // Database connection parameters
 $host = 'localhost';
 $username = 'root';
@@ -16,4 +13,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-?>
+// Set charset to utf8mb4
+$conn->set_charset("utf8mb4");
+?> 
