@@ -223,15 +223,15 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
-                                                        Membership Package
+                                                        Membership product
                                                     </td>
-                                                    <td><span id="displayMembershipPackage"><?php echo $row['membershipPackage']; ?></span></td>
+                                                    <td><span id="displayMembershipproduct"><?php echo $row['membershipproduct']; ?></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
                                                         Expiry Date
                                                     </td>
-                                                    <td><span id="displayMembershipPackage"><?php echo $row['packageExpiry']; ?></span></td>
+                                                    <td><span id="displayMembershipproduct"><?php echo $row['productExpiry']; ?></span></td>
                                                 </tr>  
                                                 <tr>
                                                     <td style="padding-left:110px">
