@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -48,6 +49,60 @@
       </div>
     </header>
 
+    <div class="product-view">
+      <?php
+        require_once 'connection.php';
+
+        // Fetch only Jelly
+        $sql = "SELECT * FROM products WHERE 	variety = 'Jelly'";
+        $result = $conn->query($sql);
+
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        if ($result->num_rows === 0) {
+            echo "<p>No product named Jelly found.</p>";
+        }
+        ?>
+
+        <?php while($row = $result->fetch_assoc()): ?>
+          <article class="card__article">
+              <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="image" class="card__img">
+              
+              <div class="card__data">
+                  <div class="card-header">
+                      <h2 class="card__title"><?php echo htmlspecialchars($row['name']); ?></h2>
+                      <?php if ($row['veg_status'] === 'Veg'): ?>
+                          <div class="veg-icon" title="Vegetarian"></div>
+                      <?php else: ?>
+                          <div class="non-veg-icon" title="Non-Vegetarian"></div>
+                      <?php endif; ?>
+                  </div>
+
+                  <?php if (!empty($row['description'])): ?>
+                      <p class="card-description">
+                          <?php echo htmlspecialchars($row['description']); ?>
+                      </p>
+                  <?php endif; ?>
+
+                  <div class="price-row">
+                      <span class="label">Price:</span>
+                      <span class="value">$<?php echo number_format($row['price'], 2); ?></span>
+                  </div>
+
+                  <?php if (!is_null($row['price_per_gram'])): ?>
+                      <div class="price-row">
+                          <span class="label">Price per gram:</span>
+                          <span class="value">$<?php echo number_format($row['price_per_gram'], 2); ?>/g</span>
+                      </div>
+                  <?php endif; ?>
+              </div>
+          </article>
+        <?php endwhile; ?>
+
+
+    </div>
 
    <!-- footer  -->
   <footer>
@@ -64,6 +119,7 @@
             </div>
           </div>
         </div>
+        
         <div class="center box">
           <h2>Address</h2>
           <div class="content">
