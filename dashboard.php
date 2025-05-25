@@ -96,11 +96,24 @@
                     <span>Members</span>
                 </a>
             </li>
-            <li>
-                <a href="#product">
+            <li class="sidebar-submenu">
+                <a href="#" class="sidebar-menu-dropdown">
                     <i class='bx bx-category'></i>
                     <span>Products</span>
+                    <div class="dropdown-icon"></div>
                 </a>
+                <ul class="sidebar-menu sidebar-menu-dropdown-content">
+                    <li>
+                        <a href="#product">
+                            <i class='bx bx-category'></i>
+                            <span>Add Products</span>
+                        </a>
+                        <a href="#product">
+                            <i class='bx bx-category'></i>
+                            <span>Delete Products</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="sidebar-submenu">
                 <a href="#" class="sidebar-menu-dropdown">
@@ -192,11 +205,11 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="imageUpload">Upload Image:</label>
+                <div class="form-group full-width image-upload-group">
                     <input type="file" id="imageUpload" name="imageUpload" accept="image/*" required>
                     <div class="image-preview"></div>
                 </div>
+
 
                 <button type="submit" class="submit-btn">Insert Product</button>
             </form>

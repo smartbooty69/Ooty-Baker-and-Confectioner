@@ -535,111 +535,141 @@ a {
 
 
 
-
-/* Product Insertion Form Styles */
-.product-form {
-    max-width: 800px;
+.insert-product {
+    min-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px;
+    background-color: var(--box-bg);
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    left: 60%;
+    top: 55%;
 }
 
-.product-form .form-group {
-    margin-bottom: 20px;
-}
-
-.product-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
+.insert-product h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
     color: var(--text-color);
 }
 
-.product-form input[type="text"],
-.product-form input[type="number"],
-.product-form input[type="file"],
-.product-form textarea,
-.product-form select {
-    width: 100%;
-    padding: 10px;
+.product-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    padding: 10px 12px;
+    font-size: 14px;
     border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
     background-color: var(--box-bg);
     color: var(--text-color);
-    font-size: 14px;
-    transition: border-color 0.3s ease;
 }
 
-.product-form input[type="text"]:focus,
-.product-form input[type="number"]:focus,
-.product-form textarea:focus,
-.product-form select:focus {
-    outline: none;
-    border-color: var(--main-color);
+.form-group textarea {
+    resize: none;
 }
 
-.product-form textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.product-form .image-preview {
-    width: 200px;
-    height: 200px;
-    border: 2px dashed var(--border-color);
-    border-radius: 5px;
+.form-group.full-width {
+    grid-column: 1 / -1;
+    align-items: stretch;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upload-block {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     justify-content: center;
-    margin-top: 10px;
-    overflow: hidden;
+    width: 100%;
+    gap: 20px;
 }
 
-.product-form .image-preview img {
+.upload-block input[type="file"] {
+    width: 100%;
     max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    color: var(--text-color);
 }
 
-.product-form .submit-btn {
+.image-preview {
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    margin-top: 0;
+    grid-column: unset;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: var(--box-bg);
+}
+
+.submit-btn {
+    grid-column: 1 / -1;
+    padding: 12px 20px;
     background-color: var(--main-color);
     color: white;
-    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 16px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
 }
 
-.product-form .submit-btn:hover {
-    background-color: #0540b0;
+.submit-btn:hover {
+    background-color: #4b55db;
 }
 
-.product-form .error-message {
-    color: #dc3545;
-    font-size: 14px;
-    margin-top: 5px;
+.full-width {
+    width: 100%;
 }
 
-.product-form .success-message {
-    color: #28a745;
-    font-size: 14px;
-    margin-top: 5px;
+.image-upload-group {
+    align-items: center;
+    text-align: center;
 }
 
-/* Dark mode adjustments */
-.dark .product-form input[type="text"],
-.dark .product-form input[type="number"],
-.dark .product-form input[type="file"],
-.dark .product-form textarea,
-.dark .product-form select {
+.image-upload-group input[type="file"] {
+    width: fit-content;
+    margin: 0 auto;
+    color: var(--text-color);
+}
+
+.image-upload-group .image-preview {
+    margin: 10px auto 0 auto;
+    height: 90px;
+    min-width: 300px;
     background-color: var(--box-bg);
-    border-color: var(--border-color);
-}
-
-.dark .product-form .image-preview {
-    border-color: var(--border-color);
 }
 
 

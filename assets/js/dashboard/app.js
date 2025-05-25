@@ -119,7 +119,7 @@ var addMembersBtn = document.getElementById("myBtn");
 // Get the <span> element that closes the first modal
 var addMembersCloseSpan = addMembersModal.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the first modal
+// When the user clicks on the button, open the first modall
 addMembersBtn.onclick = function() {
   addMembersModal.style.display = "block";
 }
