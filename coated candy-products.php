@@ -38,7 +38,7 @@
 
       <ul class="navlist">
         <li><a href="#">About</a></li>
-        <li><a href="#">Membership</a></li>
+        <li><a href="#">membership</a></li>
         <li><a href="#">Events</a></li>
         <li><a href="#">Contact</a></li>
       </ul>

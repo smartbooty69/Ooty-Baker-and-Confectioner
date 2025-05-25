@@ -91,9 +91,9 @@
         <!-- SIDEBAR MENU -->
         <ul class="sidebar-menu">
             <li>
-                <a href="#member" class="active">
+                <a href="#business-inquiries" class="active">
                     <i class='bx bx-home'></i>
-                    <span>Members</span>
+                    <span>business-inquiries</span>
                 </a>
             </li>
             <li class="sidebar-submenu">
@@ -153,10 +153,96 @@
     
 
         <!--======= DASHBOARD SECTION =======-->
-        <Section id= "member"> 
+        <Section id= "business-inquiries"> 
             
-            
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- COUNTER -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    Total Inquiries
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-count">
+                                        <?php
+                                            $con = new mysqli("localhost", "root", "", "ooty_baker");
+                                            $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries");
+                                            $count = $result->fetch_assoc();
+                                            echo $count['total'];
+                                        ?>
+                                    </div>
+                                    <i class='bx bxs-business'></i>
+                                </div>
+                            </div>
+                            <!-- END COUNTER -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <!-- INQUIRIES TABLE -->
+                        <div class="box">
+                            <div class="box-header">
+                                <h2 class="box-title">Business Inquiries</h2>
+                                <div class="box-actions">
+                                    <button class="btn btn-outline" id="deleteAllBtn">Delete All</button>
+                                    <button class="btn btn-outline" id="exportBtn">Export</button>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <table id="display-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Business</th>
+                                            <th>Contact</th>
+                                            <th>Phone</th>
+                                            <th>Quantity</th>
+                                            <th>Frequency</th>
+                                            <th>Nature</th>
+                                            <th>Actions</th>
+                                        </tr>    
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        $con = new mysqli("localhost", "root", "", "ooty_baker");
+                                        $query = "SELECT * FROM business_inquiries ORDER BY created_at DESC";
+                                        $result = $con->query($query);
+                                        while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($row['business_name']) ?></td>
+                                            <td><?= htmlspecialchars($row['contact_person_name']) ?></td>
+                                            <td><?= $row['phone'] ?></td>
+                                            <td><?= $row['estimated_quantity'] ?></td>
+                                            <td><?= $row['delivery_frequency'] ?></td>
+                                            <td><?= $row['business_nature'] ?></td>
+                                            <td>
+                                                <div class="table-button">
+                                                    <button class="blue-button btn btn-outline">
+                                                        <a href="view_inquiry.php?id=<?= $row['id'] ?>"><i class='bx bx-show'></i></a>
+                                                    </button>
+                                                    <button class="red-button btn btn-outline">
+                                                        <a href="delete_inquiry.php?id=<?= $row['id'] ?>"><i class='bx bxs-trash'></i></a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- END INQUIRIES TABLE -->
+                    </div>
+                </div>
+            </div>
         </Section>
+
+            
         
         <!--======= END OF DASHBOARD =======-->
 
@@ -236,17 +322,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Make AJAX request to fetch member count
+            // Make AJAX request to fetch business-inquiries count
             $.ajax({
                 type: "GET",
                 url: "total_count.php",
                 success: function(response) {
-                    // Update the HTML content with the retrieved member count
+                    // Update the HTML content with the retrieved business-inquiries count
                     $('.counter-count').text(response);
                 },
                 error: function() {
                     // Handle AJAX error (optional)
-                    console.log('Error fetching member count.');
+                    console.log('Error fetching business-inquiries count.');
                 }
             });
         });
@@ -317,6 +403,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+    </script>
+    <script>
+        document.getElementById('deleteAllBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete all inquiries? This action cannot be undone.')) {
+                window.location.href = 'delete_all_inquiries.php';
+            }
+        });
     </script>
     
 

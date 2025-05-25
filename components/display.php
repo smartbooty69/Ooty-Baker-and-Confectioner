@@ -8,7 +8,7 @@
 { 
     font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-            #displayMemberImage{
+            #displaybusinessinquiriesImage{
                 border-radius: 120px;
             }
             table{
@@ -163,7 +163,7 @@
         // Wait for the document to be fully loaded
         document.addEventListener("DOMContentLoaded", function() {
             // Find the div element by its ID
-            var redirectDiv = document.getElementById("full-member-detail");
+            var redirectDiv = document.getElementById("full-business-inquiries-detail");
 
             // Add a click event listener to the div
             redirectDiv.addEventListener("click", function() {
@@ -182,7 +182,7 @@
                     die("Connection failed: " . mysqli_connect_error());
                 } 
                 $id=$_GET['id'];
-                $query="SELECT * FROM `member_details` where memberId='$id'";
+                $query="SELECT * FROM `business_inquiries_details` where businessInquiriesId='$id'";
                 $result=mysqli_query($con,$query);
                 if(!$result)
                     die("query failed".mysqli_error());
@@ -191,29 +191,29 @@
                     {
 
             ?>  
-                    <div id="full-member-detail" class="modal">
+                    <div id="full-business-inquiries-detail" class="modal">
                                 <!-- Modal content -->
                                 <div class="modal-content">
                                     
                                     <div class="modal-form" style="margin-bottom:10px">
-                                        <form id="displayMemberForm" enctype="multipart/form-data">
+                                        <form id="displaybusinessinquiriesForm" enctype="multipart/form-data">
                                             <table>
                                             <tr>
                                                     
-                                                    <td colspan="2" align="center"><img src="uploads/<?php echo $row['memberImage']; ?>" id="displayMemberImage" alt="Member Image" height="125" width="125"></td>
+                                                    <td colspan="2" align="center"><img src="uploads/<?php echo $row['businessInquiriesImage']; ?>" id="displaybusinessinquiriesImage" alt="business-inquiries Image" height="125" width="125"></td>
                                                 </tr>
                                             <tr>
                                                     <td style="padding-left:110px">
-                                                        Member ID
+                                                        business-inquiries ID
                                                     </td>
-                                                    <td><span id="displayMemberImage"><?php echo $row['memberId']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesImage"><?php echo $row['businessInquiriesId']; ?></span></td>
                                                 </tr> 
                                                  
                                                 <tr>
                                                     <td style="padding-left:110px">
-                                                        Member Name
+                                                        business-inquiries Name
                                                     </td>
-                                                    <td><span id="displayMemberName"><?php echo $row['memberName']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesName"><?php echo $row['businessInquiriesName']; ?></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
@@ -223,45 +223,45 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
-                                                        Membership product
+                                                        business-inquiries product
                                                     </td>
-                                                    <td><span id="displayMembershipproduct"><?php echo $row['membershipproduct']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesproduct"><?php echo $row['businessinquiriesproduct']; ?></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
                                                         Expiry Date
                                                     </td>
-                                                    <td><span id="displayMembershipproduct"><?php echo $row['productExpiry']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesproduct"><?php echo $row['productExpiry']; ?></span></td>
                                                 </tr>  
                                                 <tr>
                                                     <td style="padding-left:110px">
                                                         Phone Number
                                                     </td>
-                                                    <td><span id="displayMemberPhone"><?php echo $row['memberPhone']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesPhone"><?php echo $row['businessInquiriesPhone']; ?></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
                                                         Email
                                                     </td>
-                                                    <td><span id="displayMemberEmail"><?php echo $row['memberEmail']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesEmail"><?php echo $row['businessInquiriesEmail']; ?></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
                                                         Age
                                                     </td>
-                                                    <td><span id="displayMemberAge"><?php echo $row['memberAge']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesAge"><?php echo $row['businessInquiriesAge']; ?></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
                                                         Address
                                                     </td>
-                                                    <td><span id="displayMemberAddress"><?php echo $row['memberAddress']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesAddress"><?php echo $row['businessInquiriesAddress']; ?></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-left:110px">
                                                         Gender
                                                     </td>
-                                                    <td><span id="displayMemberGender"><?php echo $row['memberGender']; ?></span></td>
+                                                    <td><span id="displaybusinessinquiriesGender"><?php echo $row['businessInquiriesGender']; ?></span></td>
                                                 </tr> 
                                                 <tr>
                                                     

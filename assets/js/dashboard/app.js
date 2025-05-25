@@ -111,28 +111,28 @@ logoutButton.addEventListener('click', function(event) {
 
 
 // Get the first modal
-var addMembersModal = document.getElementById("add-members");
+var addbusinessinquiriesModal = document.getElementById("add-business-inquiries");
 
 // Get the button that opens the first modal
-var addMembersBtn = document.getElementById("myBtn");
+var addbusinessinquiriesBtn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the first modal
-var addMembersCloseSpan = addMembersModal.getElementsByClassName("close")[0];
+var addbusinessinquiriesCloseSpan = addbusinessinquiriesModal.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the first modall
-addMembersBtn.onclick = function() {
-  addMembersModal.style.display = "block";
+addbusinessinquiriesBtn.onclick = function() {
+  addbusinessinquiriesModal.style.display = "block";
 }
 
 // When the user clicks on <span> (x) in the first modal, close it
-addMembersCloseSpan.onclick = function() {
-  addMembersModal.style.display = "none";
+addbusinessinquiriesCloseSpan.onclick = function() {
+  addbusinessinquiriesModal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the first modal, close it
 window.onclick = function(event) {
-  if (event.target == addMembersModal) {
-    addMembersModal.style.display = "none";
+  if (event.target == addbusinessinquiriesModal) {
+    addbusinessinquiriesModal.style.display = "none";
   }
 }
 
@@ -141,28 +141,28 @@ window.onclick = function(event) {
 
 
 // Get the second modal
-var fullMemberDetailModal = document.getElementById("full-member-detail");
+var fullbusinessinquiriesDetailModal = document.getElementById("full-business-inquiries-detail");
 
 // Get the button that opens the second modal
 var showDataBtn = document.getElementById("show-data-button");
 
 // Get the <span> element that closes the second modal
-var fullMemberDetailCloseSpan = fullMemberDetailModal.getElementsByClassName("close")[0];
+var fullbusinessinquiriesDetailCloseSpan = fullbusinessinquiriesDetailModal.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the second modal
 showDataBtn.onclick = function() {
-  fullMemberDetailModal.style.display = "block";
+  fullbusinessinquiriesDetailModal.style.display = "block";
 }
 
 // When the user clicks on <span> (x) in the second modal, close it
-fullMemberDetailCloseSpan.onclick = function() {
-  fullMemberDetailModal.style.display = "none";
+fullbusinessinquiriesDetailCloseSpan.onclick = function() {
+  fullbusinessinquiriesDetailModal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the second modal, close it
 window.onclick = function(event) {
-  if (event.target == fullMemberDetailModal) {
-    fullMemberDetailModal.style.display = "none";
+  if (event.target == fullbusinessinquiriesDetailModal) {
+    fullbusinessinquiriesDetailModal.style.display = "none";
   }
 }
 
@@ -194,7 +194,7 @@ window.onclick = function(event) {
 }
 
 
-// Function to submit the add member form
+// Function to submit the add business-inquiries form
 function handleSubmit(event) {
     // Prevent the default form submission behavior
     event.preventDefault();
@@ -203,18 +203,18 @@ function handleSubmit(event) {
     const formData = new FormData(event.target);
   
     // You can access form data using the FormData API like formData.get('fieldName')
-    const memberName = formData.get('memberName');
+    const businessinquiriesName = formData.get('businessinquiriesName');
     const joinDate = formData.get('joinDate');
-    const membershipproduct = formData.get('membershipproduct');
-    const memberPhone = formData.get('memberPhone');
-    const memberEmail = formData.get('memberEmail');
-    const memberAge = formData.get('memberAge');
-    const memberAddress = formData.get('memberAddress');
-    const memberGender = formData.get('memberGender');
+    const businessinquiriesproduct = formData.get('businessinquiriesproduct');
+    const businessinquiriesPhone = formData.get('businessinquiriesPhone');
+    const businessinquiriesEmail = formData.get('businessinquiriesEmail');
+    const businessinquiriesAge = formData.get('businessinquiriesAge');
+    const businessinquiriesAddress = formData.get('businessinquiriesAddress');
+    const businessinquiriesGender = formData.get('businessinquiriesGender');
   
-    // Now you can use these variables (memberId, memberName, joinDate, membershipproduct)
-    // in your code. For example, you might want to add the new member to a table:
-    addMember(memberId, memberName, joinDate, membershipproduct, memberPhone, memberEmail, memberAge, memberAddress, memberGender);
+    // Now you can use these variables (businessinquiriesId, businessinquiriesName, joinDate, businessinquiriesproduct)
+    // in your code. For example, you might want to add the new business-inquiries to a table:
+    addbusinessinquiries(businessinquiriesId, businessinquiriesName, joinDate, businessinquiriesproduct, businessinquiriesPhone, businessinquiriesEmail, businessinquiriesAge, businessinquiriesAddress, businessinquiriesGender);
   
     // Close the modal
     const modal = document.getElementById('myModal');
@@ -238,9 +238,9 @@ document.getElementById('exp-btn').addEventListener('click', function() {
   var displayTable = document.getElementById('display-table');
   displayTable.parentNode.insertBefore(sendButton, displayTable.nextSibling);
 
-  // Remove the "Add Member" button
-  var addMemberButton = document.getElementById('myBtn');
-  addMemberButton.parentNode.removeChild(addMemberButton);
+  // Remove the "Add business-inquiries" button
+  var addbusinessinquiriesButton = document.getElementById('myBtn');
+  addbusinessinquiriesButton.parentNode.removeChild(addbusinessinquiriesButton);
 
   // Disable the "Expiring" button
   this.disabled = true;
@@ -249,22 +249,22 @@ document.getElementById('exp-btn').addEventListener('click', function() {
 
 document.getElementById('all-btn').addEventListener('click', function() {
   var sendButton = document.querySelector('.send-container');
-  var addMemberButton = document.getElementById('myBtn');
+  var addbusinessinquiriesButton = document.getElementById('myBtn');
 
   // If the "Send" button exists, remove it
   if (sendButton) {
       sendButton.parentNode.removeChild(sendButton);
   }
 
-  // If the "Add Member" button doesn't exist, create it
-  if (!addMemberButton) {
-      addMemberButton = document.createElement('button');
-      addMemberButton.setAttribute('class', 'btn btn-outline');
-      addMemberButton.setAttribute('id', 'myBtn');
-      addMemberButton.textContent = 'Add Member';
+  // If the "Add business-inquiries" button doesn't exist, create it
+  if (!addbusinessinquiriesButton) {
+      addbusinessinquiriesButton = document.createElement('button');
+      addbusinessinquiriesButton.setAttribute('class', 'btn btn-outline');
+      addbusinessinquiriesButton.setAttribute('id', 'myBtn');
+      addbusinessinquiriesButton.textContent = 'Add business-inquiries';
 
       var boxHeaderButtonDiv = document.querySelector('.box-header-button');
-      boxHeaderButtonDiv.appendChild(addMemberButton);
+      boxHeaderButtonDiv.appendChild(addbusinessinquiriesButton);
   }
 
   // Enable the "Expiring" button
@@ -272,28 +272,28 @@ document.getElementById('all-btn').addEventListener('click', function() {
   this.disabled = true;
 
   // Get the first modal
-  var addMembersModal = document.getElementById("add-members");
+  var addbusinessinquiriesModal = document.getElementById("add-business-inquiries");
 
   // Get the button that opens the first modal
-  var addMembersBtn = document.getElementById("myBtn");
+  var addbusinessinquiriesBtn = document.getElementById("myBtn");
 
   // Get the <span> element that closes the first modal
-  var addMembersCloseSpan = addMembersModal.getElementsByClassName("close")[0];
+  var addbusinessinquiriesCloseSpan = addbusinessinquiriesModal.getElementsByClassName("close")[0];
 
   // When the user clicks on the button, open the first modal
-  addMembersBtn.onclick = function() {
-    addMembersModal.style.display = "block";
+  addbusinessinquiriesBtn.onclick = function() {
+    addbusinessinquiriesModal.style.display = "block";
   }
 
   // When the user clicks on <span> (x) in the first modal, close it
-  addMembersCloseSpan.onclick = function() {
-    addMembersModal.style.display = "none";
+  addbusinessinquiriesCloseSpan.onclick = function() {
+    addbusinessinquiriesModal.style.display = "none";
   }
 
   // When the user clicks anywhere outside of the first modal, close it
   window.onclick = function(event) {
-    if (event.target == addMembersModal) {
-      addMembersModal.style.display = "none";
+    if (event.target == addbusinessinquiriesModal) {
+      addbusinessinquiriesModal.style.display = "none";
     }
   }
 
