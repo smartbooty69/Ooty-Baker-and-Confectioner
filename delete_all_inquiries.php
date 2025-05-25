@@ -17,15 +17,11 @@ try {
 
     // If everything went well, commit the transaction
     $conn->commit();
-    
-    // Redirect back to dashboard with success message
-    header("Location: dashboard.php?delete_all=success");
+    echo "success";
 } catch (Exception $e) {
     // If there was an error, rollback the transaction
     $conn->rollback();
-    
-    // Redirect back to dashboard with error message
-    header("Location: dashboard.php?delete_all=error");
+    echo "Error: " . $e->getMessage();
 }
 
 // Close the statements and connection

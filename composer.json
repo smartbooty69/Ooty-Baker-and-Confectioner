@@ -1,0 +1,9 @@
+{
+    "name": "ooty-baker/confectioner",
+    "description": "Ooty Baker and Confectioner Website",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "phpoffice/phpspreadsheet": "^4.2"
+    }
+}

@@ -1,10 +1,14 @@
-/* Import external stylesheets */
+/* ==================== */
+/* Import Statements */
+/* ==================== */
 @import 'config/variables';
 @import 'base/base';
 @import 'components/card';
 @import 'components/breakpoints';
 
-/* Reset default styles and set base font */
+/* ==================== */
+/* Base Styles */
+/* ==================== */
 * {
   padding: 0;
   margin: 0;
@@ -14,7 +18,9 @@
   font-family: "Roboto", serif;
 }
 
-/* Define CSS custom properties (variables) */
+/* ==================== */
+/* CSS Variables */
+/* ==================== */
 :root {
   --bg-color: #ffffff;
   --text-color: #fff;
@@ -23,14 +29,18 @@
   --p-font: 1rem;
 }
 
-/* Base body styles */
+/* ==================== */
+/* Body Styles */
+/* ==================== */
 body {
   background: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
 }
 
-/* Header styles */
+/* ==================== */
+/* Header Styles */
+/* ==================== */
 header {
   position: relative;
   width: 95%;
@@ -61,7 +71,9 @@ header {
   transform: translateY(-5px);
 }
 
-/* Navigation list container */
+/* ==================== */
+/* Navigation Styles */
+/* ==================== */
 .navlist {
   display: flex;
   align-items: center;
@@ -140,7 +152,9 @@ section {
   padding: 0 14%;
 }
 
-/* Hero section styles */
+/* ==================== */
+/* Hero Section Styles */
+/* ==================== */
 .hero {
   position: relative;
   width: 100%;
@@ -187,7 +201,9 @@ section {
   align-items: center;
 }
 
-/* Button styles */
+/* ==================== */
+/* Button Styles */
+/* ==================== */
 .btn {
   display: inline-block;
   padding: 13px 32px;
@@ -222,7 +238,9 @@ section {
   margin-left: 10px;
 }
 
-/* Social media icons container */
+/* ==================== */
+/* Social Media Icons */
+/* ==================== */
 .icons {
   position: absolute;
   top: 50%;
@@ -264,136 +282,9 @@ section {
   margin-right: 6px;
 }
 
-/* Responsive design breakpoints */
-@media (max-width: 1770px) {
-  header {
-    padding: 22px 4%;
-  }
-  .icons {
-    padding: 0 4%;
-  }
-  .scroll {
-    right: 4%;
-  }
-}
-
-@media (max-width: 1670px) {
-  :root {
-    --big-font: 5.5rem;
-    --p-font: 15px;
-  }
-}
-
-@media (max-width: 1370px) {
-}
-
-@media (max-width: 1150px) {
-  :root {
-    --big-font: 4.6rem;
-  }
-  .price {
-    font-size: 20px;
-  }
-  .btn {
-    padding: 10px 23px;
-  }
-
-  .icons {
-    display: none;
-  }
-
-  section {
-    padding: 0 4%;
-  }
-}
-
-/* Mobile navigation styles */
-@media (max-width: 950px) {
-  #menu-icon {
-    display: block;
-  }
-  .navlist {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    padding: 100px 50px;
-    top: 0;
-    right: 0;
-    left: 100%;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(32px);
-    transition: all 0.6s ease-in-out;
-  }
-
-  .navlist a {
-    display: block;
-    padding: 0;
-    margin: 0px 0px 25px 0px;
-    font-size: 1.7rem;
-  }
-  .navlist.open {
-    left: 0;
-  }
-}
-
-/* Tablet and smaller screen adjustments */
-@media (max-width: 920px) {
-  .scroll {
-    display: none;
-  }
-  .hero {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-  .hero-text {
-    padding-top: 130px;
-  }
-  .hero-img {
-    width: 500px;
-    height: 500px;
-    margin: 0 auto;
-  }
-  .hero-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-}
-
-/* Mobile screen adjustments */
-@media (max-width: 570px) {
-  :root {
-    --big-font: 4rem;
-  }
-  .hero {
-    height: 100vh;
-  }
-
-  .hero-img {
-    width: 400px;
-    height: 400px;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 440px) {
-  :root {
-    --big-font: 3.4rem;
-  }
-
-  .hero-text h5 {
-    font-size: 15px;
-  }
-
-  .hero-img {
-    width: 360px;
-    height: 360px;
-    margin: 0 auto;
-  }
-}
-
-/* Image slider styles */
+/* ==================== */
+/* Image Slider Styles */
+/* ==================== */
 .slider {
   position: relative;
   width: 100%;
@@ -642,7 +533,9 @@ img.slide.active {
   }
 }
 
-/* Card article styles */
+/* ==================== */
+/* Product Card Styles */
+/* ==================== */
 .card__article {
   position: relative;
   overflow: hidden;
@@ -944,7 +837,9 @@ body {
   color: #f3e4e4;
 }
 
-/* Footer styles */
+/* ==================== */
+/* Footer Styles */
+/* ==================== */
 footer {
   position: relative;
   bottom: 0;
@@ -1162,16 +1057,18 @@ footer {
     margin: 6rem;
 }
 
-/* Customer Form Styles */
-.container{
-    position: relative;
-    max-width: 900px;
-    width: 100%;
-    border-radius: 6px;
-    padding: 30px;
-    margin: 0 15px;
-    background-color: #fff;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+/* ==================== */
+/* Form Styles */
+/* ==================== */
+.container {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  border-radius: 6px;
+  padding: 30px;
+  margin: 0 15px;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
 .container header{
@@ -1396,5 +1293,136 @@ form .fields .input-field {
     .product-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* ==================== */
+/* Media Queries */
+/* ==================== */
+@media (max-width: 1770px) {
+  header {
+    padding: 22px 4%;
+  }
+  .icons {
+    padding: 0 4%;
+  }
+  .scroll {
+    right: 4%;
+  }
+}
+
+@media (max-width: 1670px) {
+  :root {
+    --big-font: 5.5rem;
+    --p-font: 15px;
+  }
+}
+
+@media (max-width: 1370px) {
+}
+
+@media (max-width: 1150px) {
+  :root {
+    --big-font: 4.6rem;
+  }
+  .price {
+    font-size: 20px;
+  }
+  .btn {
+    padding: 10px 23px;
+  }
+
+  .icons {
+    display: none;
+  }
+
+  section {
+    padding: 0 4%;
+  }
+}
+
+/* Mobile navigation styles */
+@media (max-width: 950px) {
+  #menu-icon {
+    display: block;
+  }
+  .navlist {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    padding: 100px 50px;
+    top: 0;
+    right: 0;
+    left: 100%;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(32px);
+    transition: all 0.6s ease-in-out;
+  }
+
+  .navlist a {
+    display: block;
+    padding: 0;
+    margin: 0px 0px 25px 0px;
+    font-size: 1.7rem;
+  }
+  .navlist.open {
+    left: 0;
+  }
+}
+
+/* Tablet and smaller screen adjustments */
+@media (max-width: 920px) {
+  .scroll {
+    display: none;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .hero-text {
+    padding-top: 130px;
+  }
+  .hero-img {
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+  }
+  .hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* Mobile screen adjustments */
+@media (max-width: 570px) {
+  :root {
+    --big-font: 4rem;
+  }
+  .hero {
+    height: 100vh;
+  }
+
+  .hero-img {
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 440px) {
+  :root {
+    --big-font: 3.4rem;
+  }
+
+  .hero-text h5 {
+    font-size: 15px;
+  }
+
+  .hero-img {
+    width: 360px;
+    height: 360px;
+    margin: 0 auto;
+  }
 }
 

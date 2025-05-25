@@ -81,7 +81,7 @@
         <div class="sidebar-container">
             <div class="sidebar-logo">
                 <a href="../index.html"><img src="../assets/img/landingpage/logo-nav-inverted.png"></a>
-                <span><a href="../index.html">HORIZON GYM</a></span>
+                <span><a href="../index.html">Ooty Baker</a></span>
             </div>
             <div class="sidebar-close" id="sidebar-close">
                 <i class='bx bx-left-arrow-alt'></i>
@@ -108,7 +108,7 @@
                             <i class='bx bx-category'></i>
                             <span>Add Products</span>
                         </a>
-                        <a href="#product">
+                        <a href="#product-delete">
                             <i class='bx bx-category'></i>
                             <span>Delete Products</span>
                         </a>
@@ -188,8 +188,8 @@
                             <div class="box-header">
                                 <h2 class="box-title">Business Inquiries</h2>
                                 <div class="box-actions">
-                                    <button class="btn btn-outline" id="deleteAllBtn">Delete All</button>
-                                    <button class="btn btn-outline" id="exportBtn">Export</button>
+                                    <button class="btn btn-outline" onclick="deleteAllInquiries()">Delete All</button>
+                                    <button class="btn btn-outline" onclick="exportInquiries()">Export</button>
                                 </div>
                             </div>
 
@@ -213,7 +213,7 @@
                                         $result = $con->query($query);
                                         while ($row = $result->fetch_assoc()) {
                                     ?>
-                                        <tr>
+                                        <tr data-inquiry-id="<?= $row['id'] ?>">
                                             <td><?= htmlspecialchars($row['business_name']) ?></td>
                                             <td><?= htmlspecialchars($row['contact_person_name']) ?></td>
                                             <td><?= $row['phone'] ?></td>
@@ -226,7 +226,7 @@
                                                         <a href="view_inquiry.php?id=<?= $row['id'] ?>"><i class='bx bx-show'></i></a>
                                                     </button>
                                                     <button class="red-button btn btn-outline">
-                                                        <a href="delete_inquiry.php?id=<?= $row['id'] ?>"><i class='bx bxs-trash'></i></a>
+                                                        <a href="javascript:void(0)" onclick="deleteInquiry(<?= $row['id'] ?>)"><i class='bx bxs-trash'></i></a>
                                                     </button>
                                                 </div>
                                             </td>
@@ -253,7 +253,7 @@
     <Section id="product" class="hidden">
        <div class="insert-product">
             <h2>Insert New Product</h2>
-            <form class="product-form" action="insert_product.php" method="POST" enctype="multipart/form-data">
+            <form class="product-form" id="productForm" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
@@ -296,12 +296,82 @@
                     <div class="image-preview"></div>
                 </div>
 
-
                 <button type="submit" class="submit-btn">Insert Product</button>
             </form>
         </div>
 
     </Section>
+
+
+
+
+    <section id="product-delete" class="hidden">
+    <div class="product-view">
+        <?php
+        require_once 'connection.php';
+
+        // Handle delete action
+        if (isset($_GET['delete_id'])) {
+            $delete_id = $_GET['delete_id'];
+            $delete_sql = "DELETE FROM products WHERE id = ?";
+            $stmt = $conn->prepare($delete_sql);
+            $stmt->bind_param("i", $delete_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        // Fetch products
+        $sql = "SELECT * FROM products";
+        $result = $conn->query($sql);
+
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        if ($result->num_rows === 0) {
+            echo "<p>No products found.</p>";
+        }
+        ?>
+
+        <?php while($row = $result->fetch_assoc()): ?>
+        <article class="card__article">
+            <!-- Delete button -->
+            <a href="javascript:void(0)" class="delete-btn" onclick="deleteProduct(<?php echo $row['id']; ?>)">×</a>
+            
+            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="image" class="card__img">
+            
+            <div class="card__data">
+                <div class="card-header">
+                    <h2 class="card__title"><?php echo htmlspecialchars($row['name']); ?></h2>
+                    <?php if ($row['veg_status'] === 'Veg'): ?>
+                        <div class="veg-icon" title="Vegetarian"></div>
+                    <?php else: ?>
+                        <div class="non-veg-icon" title="Non-Vegetarian"></div>
+                    <?php endif; ?>
+                </div>
+
+                <?php if (!empty($row['description'])): ?>
+                    <p class="card-description">
+                        <?php echo htmlspecialchars($row['description']); ?>
+                    </p>
+                <?php endif; ?>
+
+                <div class="price-row">
+                    <span class="label">Price:</span>
+                    <span class="value">$<?php echo number_format($row['price'], 2); ?></span>
+                </div>
+
+                <?php if (!is_null($row['price_per_gram'])): ?>
+                    <div class="price-row">
+                        <span class="label">Price per gram:</span>
+                        <span class="value">$<?php echo number_format($row['price_per_gram'], 2); ?>/g</span>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </article>
+        <?php endwhile; ?>
+    </div>
+</section>
 
     <!--======= END OF product =======-->
    
@@ -313,96 +383,82 @@
 
 
     <!-- SCRIPT -->
-    <!-- BOOTSTARP JS -->
+    <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- APP JS -->
-    <script src="../assets/js/dashboard/app.js"></script>
-    <!-- TEXT EDITOR -->
-    <script src="./assets/js/dashboard/app.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="assets/js/dashboard/app.js"></script>
+    <script src="assets/js/dashboard/sidebar.js"></script>
+
+    <!-- Export button functionality -->
     <script>
-        $(document).ready(function() {
-            // Make AJAX request to fetch business-inquiries count
-            $.ajax({
-                type: "GET",
-                url: "total_count.php",
-                success: function(response) {
-                    // Update the HTML content with the retrieved business-inquiries count
-                    $('.counter-count').text(response);
+        function deleteAllInquiries() {
+            if (confirm('Are you sure you want to delete all inquiries? This action cannot be undone.')) {
+                fetch('delete_all_inquiries.php', {
+                    method: 'GET'
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.includes('success')) {
+                        showMessage('All inquiries deleted successfully');
+                        // Clear the table body
+                        document.querySelector('#display-table tbody').innerHTML = '';
+                        // Update the total count to 0
+                        const countElement = document.querySelector('.counter-count');
+                        if (countElement) {
+                            countElement.textContent = '0';
+                        }
+                    } else {
+                        showMessage('Error deleting inquiries: ' + data, false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showMessage('Error deleting inquiries', false);
+                });
+            }
+        }
+
+        function exportInquiries() {
+            // Show loading state
+            const exportBtn = document.querySelector('.box-actions button:last-child');
+            const originalText = exportBtn.innerHTML;
+            exportBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Exporting...';
+            exportBtn.disabled = true;
+
+            fetch('export_inquiries.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                error: function() {
-                    // Handle AJAX error (optional)
-                    console.log('Error fetching business-inquiries count.');
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Export failed');
                 }
+                return response.blob();
+            })
+            .then(blob => {
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `business_inquiries_${new Date().toISOString().slice(0,10)}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                showMessage('Inquiries exported successfully');
+            })
+            .catch(error => {
+                console.error('Export error:', error);
+                showMessage('Error exporting inquiries: ' + error.message, false);
+            })
+            .finally(() => {
+                // Reset button state
+                exportBtn.innerHTML = originalText;
+                exportBtn.disabled = false;
             });
-        });
-    </script>
-    <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    const sendButton = document.querySelector('.send');
-
-    sendButton.addEventListener('click', function() {
-        // Perform AJAX request to send email
-        const messageContent = document.getElementById('text-input').innerHTML;
-
-        // Example AJAX request using Fetch API
-        fetch('email_index.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'message=' + encodeURIComponent(messageContent)
-        })
-        .then(response => {
-            if (response.ok) {
-                // Show success modal
-                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-            } else {
-                console.error('Failed to send message.');
-            }
-        })
-        .catch(error => {
-            console.error('Error sending message:', error);
-        });
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const sendReminderButton = document.querySelector('.send_remainder');
-
-    sendReminderButton.addEventListener('click', function() {
-        // Retrieve message content from the mail editor section
-        const messageContent = document.getElementById('text-input').innerHTML;
-
-        // Perform AJAX request to send reminder emails
-        fetch('rem_email.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'message=' + encodeURIComponent(messageContent)
-        })
-        .then(response => {
-            if (response.ok) {
-                // Show success modal
-                showSuccessModal();
-            } else {
-                console.error('Failed to send reminder emails.');
-            }
-        })
-        .catch(error => {
-            console.error('Error sending reminder emails:', error);
-        });
-    });
-
-    // Function to show success modal
-    function showSuccessModal() {
-        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-        successModal.show();
-    }
-});
-
+        }
     </script>
     <script>
         document.getElementById('deleteAllBtn').addEventListener('click', function() {
@@ -412,6 +468,128 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     </script>
     
+    <script>
+        function showMessage(message, isSuccess = true) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.position = 'fixed';
+            messageDiv.style.top = '20px';
+            messageDiv.style.right = '20px';
+            messageDiv.style.padding = '15px 25px';
+            messageDiv.style.borderRadius = '5px';
+            messageDiv.style.color = '#fff';
+            messageDiv.style.zIndex = '1000';
+            messageDiv.style.transition = 'opacity 0.5s ease-in-out';
+            messageDiv.style.backgroundColor = isSuccess ? '#28a745' : '#dc3545';
+            messageDiv.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            messageDiv.style.fontWeight = '500';
+            messageDiv.style.fontSize = '14px';
+            messageDiv.style.minWidth = '300px';
+            messageDiv.style.textAlign = 'center';
+            messageDiv.textContent = message;
+
+            document.body.appendChild(messageDiv);
+
+            // Remove the message after 3 seconds
+            setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(messageDiv);
+                }, 500);
+            }, 3000);
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                fetch('delete_product.php?id=' + id, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage('Product deleted successfully');
+                        // Fetch updated product list
+                        fetch('get_products.php')
+                            .then(response => response.text())
+                            .then(html => {
+                                document.querySelector('.product-view').innerHTML = html;
+                            })
+                            .catch(error => {
+                                console.error('Error fetching products:', error);
+                            });
+                    } else {
+                        showMessage('Error deleting product: ' + data.message, false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showMessage('Error deleting product', false);
+                });
+            }
+        }
+    </script>
+
+    <script>
+        // Add this to your existing JavaScript
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('insert_product.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes('success')) {
+                    showMessage('Product uploaded successfully');
+                    // Clear the form
+                    this.reset();
+                    // Clear the image preview
+                    document.querySelector('.image-preview').innerHTML = '';
+                } else {
+                    showMessage('Error uploading product: ' + data, false);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('Error uploading product', false);
+            });
+        });
+    </script>
+
+    <script>
+        function deleteInquiry(id) {
+            if (confirm('Are you sure you want to delete this inquiry?')) {
+                fetch('delete_inquiry.php?id=' + id, {
+                    method: 'GET'
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.includes('success')) {
+                        showMessage('Inquiry deleted successfully');
+                        // Remove the row from the table
+                        const row = document.querySelector(`tr[data-inquiry-id="${id}"]`);
+                        if (row) {
+                            row.remove();
+                        }
+                        // Update the total count
+                        const countElement = document.querySelector('.counter-count');
+                        if (countElement) {
+                            const currentCount = parseInt(countElement.textContent);
+                            countElement.textContent = currentCount - 1;
+                        }
+                    } else {
+                        showMessage('Error deleting inquiry: ' + data, false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showMessage('Error deleting inquiry', false);
+                });
+            }
+        }
+    </script>
 
 </body>
 

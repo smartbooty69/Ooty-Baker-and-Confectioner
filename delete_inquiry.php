@@ -3,7 +3,8 @@ require_once 'connection.php';
 
 // Check if ID parameter exists
 if (!isset($_GET['id'])) {
-    die("Error: No inquiry ID specified.");
+    echo "Error: No inquiry ID specified.";
+    exit;
 }
 
 $inquiry_id = intval($_GET['id']);
@@ -20,11 +21,9 @@ $delete_inquiry_stmt = $conn->prepare($delete_inquiry_query);
 $delete_inquiry_stmt->bind_param("i", $inquiry_id);
 
 if ($delete_inquiry_stmt->execute()) {
-    // Redirect back to dashboard with success message
-    header("Location: dashboard.php?delete=success");
+    echo "success";
 } else {
-    // Redirect back to dashboard with error message
-    header("Location: dashboard.php?delete=error");
+    echo "Error: " . $delete_inquiry_stmt->error;
 }
 
 // Close the statements and connection

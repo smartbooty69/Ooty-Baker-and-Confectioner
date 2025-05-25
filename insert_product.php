@@ -21,9 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $upload_ok = 1;
 
     if ($fileSize === 0) {
-        die("Error: File size is 0. Please upload a valid image.");
+        echo "Error: File size is 0. Please upload a valid image.";
+        exit;
     } elseif (!in_array($imageType, ['jpg', 'jpeg', 'png', 'gif'])) {
-        die("Error: Only JPG, JPEG, PNG, and GIF formats are allowed.");
+        echo "Error: Only JPG, JPEG, PNG, and GIF formats are allowed.";
+        exit;
     }
 
     if ($upload_ok) {
@@ -33,20 +35,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $stmt = $conn->prepare($sql);
             if (!$stmt) {
-                die("Prepare failed: " . $conn->error);
+                echo "Error: " . $conn->error;
+                exit;
             }
 
             $stmt->bind_param("sssddss", $name, $description, $variety, $price, $price_per_gram, $veg_status, $upload_file);
 
             if ($stmt->execute()) {
-                echo "Product uploaded successfully.";
+                echo "success";
             } else {
-                die("Database error: " . $stmt->error);
+                echo "Error: " . $stmt->error;
             }
 
             $stmt->close();
         } else {
-            die("Error: Failed to move uploaded image.");
+            echo "Error: Failed to move uploaded image.";
         }
     }
 }
