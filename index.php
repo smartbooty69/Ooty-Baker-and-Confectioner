@@ -83,45 +83,142 @@ foreach ($categories as $category) {
       </div>
     </div>
     
-    <?php foreach ($products_by_category as $category => $products): ?>
-    <div class="section-header">
-        <h2 class="section-title"><?= strtoupper($category) ?></h2>
-        <p class="section-description">Explore our latest range of delicious <?= strtolower($category) ?>!</p>
-    </div>
-
-    <div class="wrapper">
-        <i class="fa-solid fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
-        <div class="carousel">
-            <?php foreach ($products as $product): ?>
-                <article class="card__article">
-                    <img src="<?= $product['image_path'] ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="card__img">
-                    <div class="card__data">
-                        <div class="card-header">
-                            <h2 class="card__title"><?= htmlspecialchars($product['name']) ?></h2>
-                            <div class="<?= $product['veg_status'] == 'Veg' ? 'veg-icon' : 'non-veg-icon' ?>" title="<?= $product['veg_status'] ?>"></div>
-                        </div>
-                        <p class="card-description"><?= htmlspecialchars($product['description']) ?></p>
-                        <div class="price-row">
-                            <span class="label">Price:</span>
-                            <span class="value">$<?= number_format($product['price'], 2) ?></span>
-                        </div>
-                        <?php if (!is_null($product['price_per_gram'])): ?>
-                            <div class="price-row">
-                                <span class="label">Price per gram:</span>
-                                <span class="value">$<?= number_format($product['price_per_gram'], 2) ?>/g</span>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </article>
-            <?php endforeach; ?>
+      <?php foreach ($products_by_category as $category => $products): ?>
+        <div class="section-header">
+            <h2 class="section-title"><?= strtoupper($category) ?></h2>
+            <p class="section-description">Explore our latest range of delicious <?= strtolower($category) ?>!</p>
         </div>
-        <i class="fa-solid fa-angle-right arrow-btn" data-direction="right" aria-label="Next items"></i>
-    </div>
 
-    <div class="view-more-container">
-        <a href="<?= strtolower($category) ?>-products.php" class="view-more-btn">View More <?= $category ?> Products</a>
-    </div>
-<?php endforeach; ?>
+        <div class="wrapper">
+            <i class="fa-solid fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
+            <div class="carousel">
+                <?php foreach ($products as $product): ?>
+                    <article class="card__article">
+                        <img src="<?= $product['image_path'] ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="card__img">
+                        <div class="card__data">
+                            <div class="card-header">
+                                <h2 class="card__title"><?= htmlspecialchars($product['name']) ?></h2>
+                                <div class="<?= $product['veg_status'] == 'Veg' ? 'veg-icon' : 'non-veg-icon' ?>" title="<?= $product['veg_status'] ?>"></div>
+                            </div>
+                            <p class="card-description"><?= htmlspecialchars($product['description']) ?></p>
+                            <div class="price-row">
+                                <span class="label">Price:</span>
+                                <span class="value">$<?= number_format($product['price'], 2) ?></span>
+                            </div>
+                            <?php if (!is_null($product['price_per_gram'])): ?>
+                                <div class="price-row">
+                                    <span class="label">Price per gram:</span>
+                                    <span class="value">$<?= number_format($product['price_per_gram'], 2) ?>/g</span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+            <i class="fa-solid fa-angle-right arrow-btn" data-direction="right" aria-label="Next items"></i>
+        </div>
+
+        <div class="view-more-container">
+            <a href="<?= strtolower($category) ?>-products.php" class="view-more-btn">View More <?= $category ?> Products</a>
+        </div>
+      <?php endforeach; ?>
+
+      <section>
+      <div class="container">
+          <header>Business Details</header>
+
+          <form action="customer_submit.php" method="POST">
+              <div class="form single">
+
+                  <!-- Business Details -->
+                  <div class="details personal">
+                      <span class="title">Business Details</span>
+                      <div class="fields">
+                          <div class="input-field">
+                              <label>Business Name</label>
+                              <input type="text" name="business_name" placeholder="e.g. CandyCo Pvt. Ltd" required>
+                          </div>
+                          <div class="input-field">
+                              <label>Contact Person</label>
+                              <input type="text" name="contact_person_name" placeholder="Full name" required>
+                          </div>
+                          <div class="input-field">
+                              <label>Email</label>
+                              <input type="email" name="email" placeholder="example@mail.com" required>
+                          </div>
+                          <div class="input-field">
+                              <label>Phone</label>
+                              <input type="text" name="phone" placeholder="Mobile number" required>
+                          </div>
+                          <div class="input-field">
+                              <label>Estimated Quantity</label>
+                              <input type="text" name="estimated_quantity" placeholder="e.g. 100kg / 500 units" required>
+                          </div>
+                          <div class="input-field">
+                              <label>Delivery Frequency</label>
+                              <select name="delivery_frequency" required>
+                                  <option disabled selected value="">Select</option>
+                                  <option value="One-time">One-time</option>
+                                  <option value="Weekly">Weekly</option>
+                                  <option value="Monthly">Monthly</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Product Interest -->
+                  <div class="details ID">
+                      <span class="title">Product Interest</span>
+                      <div class="product-grid">
+                          <?php
+                          $conn = new mysqli("localhost", "root", "", "ooty_baker");
+                          $res = $conn->query("SELECT id, name FROM products ORDER BY name ASC");
+                          while($row = $res->fetch_assoc()):
+                          ?>
+                              <label class="checkbox-label">
+                                  <input type="checkbox" name="product_interest[]" value="<?= htmlspecialchars($row['id'], ENT_QUOTES) ?>"> 
+                                  <?= htmlspecialchars($row['name']) ?>
+                              </label>
+                          <?php endwhile; $conn->close(); ?>
+                      </div>
+                  </div>
+
+                  <!-- Address and Notes -->
+                  <div class="details address">
+                      <span class="title">Address & Notes</span>
+                      <div class="fields">
+                          <div class="input-field field-full-width">
+                              <label>Full Address</label>
+                              <input type="text" name="address" placeholder="Enter address" required>
+                          </div>
+                          <div class="input-field field-full-width">
+                              <label>Additional Notes</label>
+                              <input type="text" name="additional_notes" placeholder="Anything else to add?">
+                          </div>
+                          <div class="input-field field-full-width">
+                              <label>Nature of Business</label>
+                              <select name="business_nature" required>
+                                  <option disabled selected value="">Select</option>
+                                  <option value="Customer">Customer</option>
+                                  <option value="Consumer">Consumer</option>
+                                  <option value="Dealer">Dealer</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Submit -->
+                  <div class="form-submit">
+                      <button class="submit" type="submit">
+                          <span class="btnText">Submit</span>
+                          <i class="uil uil-navigator"></i>
+                      </button>
+                  </div>
+              </div>
+          </form>
+      </div>
+
+      </section>
 
     <!-- Footer Section -->
     <footer>

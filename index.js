@@ -82,3 +82,4 @@ document.addEventListener("DOMContentLoaded", function() {
         carousel.addEventListener("mouseleave", dragStop);
     });
 });
+
