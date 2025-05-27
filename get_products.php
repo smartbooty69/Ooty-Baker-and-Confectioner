@@ -19,7 +19,7 @@ while($row = $result->fetch_assoc()): ?>
         <!-- Delete button -->
         <a href="javascript:void(0)" class="delete-btn" onclick="deleteProduct(<?php echo $row['id']; ?>)">×</a>
         
-        <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="image" class="card__img">
+        <img src="<?php echo str_replace('\\', '/', htmlspecialchars($row['image_path'])); ?>" alt="image" class="card__img">
         
         <div class="card__data">
             <div class="card-header">

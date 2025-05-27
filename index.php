@@ -1,4 +1,7 @@
 <?php
+// =============================================
+// START: Database Connection and Data Fetching
+// =============================================
 require_once 'connection.php';
 
 $categories = ['Jelly', 'Candy', 'Coated Candy'];
@@ -11,10 +14,16 @@ foreach ($categories as $category) {
     $result = $stmt->get_result();
     $products_by_category[$category] = $result->fetch_all(MYSQLI_ASSOC);
 }
+// =============================================
+// END: Database Connection and Data Fetching
+// =============================================
 ?>
 <!DOCTYPE html>
 <html lang="es">
-  <!-- Head Section: Contains meta tags, title, and external resource links -->
+  <!-- =============================================
+       START: Head Section
+       Meta tags, title, and resources
+       ============================================= -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,9 +55,15 @@ foreach ($categories as $category) {
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
+  <!-- =============================================
+       END: Head Section
+       ============================================= -->
 
   <body>
-    <!-- Header Section: Contains logo, navigation menu, and sign-in button -->
+    <!-- =============================================
+         START: Header Section
+         Navigation and branding
+         ============================================= -->
     <header>
       <!-- Logo -->
       <a href="#" class="logo">
@@ -68,8 +83,14 @@ foreach ($categories as $category) {
         <div class="bx bx-menu" id="menu-icon"></div>
       </div>
     </header>
+    <!-- =============================================
+         END: Header Section
+         ============================================= -->
 
-    <!-- Main Banner Slider Section -->
+    <!-- =============================================
+         START: Main Banner Section
+         Image slider
+         ============================================= -->
     <div class="slider">
       <div class="slides">
           <img src="images/Banne2.jpg" class="slide active" alt="Slider Image 1">
@@ -82,145 +103,182 @@ foreach ($categories as $category) {
           <button class="next">&#10095;</button>
       </div>
     </div>
+    <!-- =============================================
+         END: Main Banner Section
+         ============================================= -->
     
-      <?php foreach ($products_by_category as $category => $products): ?>
-        <div class="section-header">
-            <h2 class="section-title"><?= strtoupper($category) ?></h2>
-            <p class="section-description">Explore our latest range of delicious <?= strtolower($category) ?>!</p>
-        </div>
-
-        <div class="wrapper">
-            <i class="fa-solid fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
-            <div class="carousel">
-                <?php foreach ($products as $product): ?>
-                    <article class="card__article">
-                        <img src="<?= $product['image_path'] ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="card__img">
-                        <div class="card__data">
-                            <div class="card-header">
-                                <h2 class="card__title"><?= htmlspecialchars($product['name']) ?></h2>
-                                <div class="<?= $product['veg_status'] == 'Veg' ? 'veg-icon' : 'non-veg-icon' ?>" title="<?= $product['veg_status'] ?>"></div>
-                            </div>
-                            <p class="card-description"><?= htmlspecialchars($product['description']) ?></p>
-                            <div class="price-row">
-                                <span class="label">Price:</span>
-                                <span class="value">$<?= number_format($product['price'], 2) ?></span>
-                            </div>
-                            <?php if (!is_null($product['price_per_gram'])): ?>
-                                <div class="price-row">
-                                    <span class="label">Price per gram:</span>
-                                    <span class="value">$<?= number_format($product['price_per_gram'], 2) ?>/g</span>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-            <i class="fa-solid fa-angle-right arrow-btn" data-direction="right" aria-label="Next items"></i>
-        </div>
-
-        <div class="view-more-container">
-            <a href="<?= strtolower($category) ?>-products.php" class="view-more-btn">View More <?= $category ?> Products</a>
-        </div>
-      <?php endforeach; ?>
-
-      <section>
-      <div class="container">
-          <header>Business Details</header>
-
-          <form action="customer_submit.php" method="POST">
-              <div class="form single">
-
-                  <!-- Business Details -->
-                  <div class="details personal">
-                      <span class="title">Business Details</span>
-                      <div class="fields">
-                          <div class="input-field">
-                              <label>Business Name</label>
-                              <input type="text" name="business_name" placeholder="e.g. CandyCo Pvt. Ltd" required>
-                          </div>
-                          <div class="input-field">
-                              <label>Contact Person</label>
-                              <input type="text" name="contact_person_name" placeholder="Full name" required>
-                          </div>
-                          <div class="input-field">
-                              <label>Email</label>
-                              <input type="email" name="email" placeholder="example@mail.com" required>
-                          </div>
-                          <div class="input-field">
-                              <label>Phone</label>
-                              <input type="text" name="phone" placeholder="Mobile number" required>
-                          </div>
-                          <div class="input-field">
-                              <label>Estimated Quantity</label>
-                              <input type="text" name="estimated_quantity" placeholder="e.g. 100kg / 500 units" required>
-                          </div>
-                          <div class="input-field">
-                              <label>Delivery Frequency</label>
-                              <select name="delivery_frequency" required>
-                                  <option disabled selected value="">Select</option>
-                                  <option value="One-time">One-time</option>
-                                  <option value="Weekly">Weekly</option>
-                                  <option value="Monthly">Monthly</option>
-                              </select>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!-- Product Interest -->
-                  <div class="details ID">
-                      <span class="title">Product Interest</span>
-                      <div class="product-grid">
-                          <?php
-                          $conn = new mysqli("localhost", "root", "", "ooty_baker");
-                          $res = $conn->query("SELECT id, name FROM products ORDER BY name ASC");
-                          while($row = $res->fetch_assoc()):
-                          ?>
-                              <label class="checkbox-label">
-                                  <input type="checkbox" name="product_interest[]" value="<?= htmlspecialchars($row['id'], ENT_QUOTES) ?>"> 
-                                  <?= htmlspecialchars($row['name']) ?>
-                              </label>
-                          <?php endwhile; $conn->close(); ?>
-                      </div>
-                  </div>
-
-                  <!-- Address and Notes -->
-                  <div class="details address">
-                      <span class="title">Address & Notes</span>
-                      <div class="fields">
-                          <div class="input-field field-full-width">
-                              <label>Full Address</label>
-                              <input type="text" name="address" placeholder="Enter address" required>
-                          </div>
-                          <div class="input-field field-full-width">
-                              <label>Additional Notes</label>
-                              <input type="text" name="additional_notes" placeholder="Anything else to add?">
-                          </div>
-                          <div class="input-field field-full-width">
-                              <label>Nature of Business</label>
-                              <select name="business_nature" required>
-                                  <option disabled selected value="">Select</option>
-                                  <option value="Customer">Customer</option>
-                                  <option value="Consumer">Consumer</option>
-                                  <option value="Dealer">Dealer</option>
-                              </select>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!-- Submit -->
-                  <div class="form-submit">
-                      <button class="submit" type="submit">
-                          <span class="btnText">Submit</span>
-                          <i class="uil uil-navigator"></i>
-                      </button>
-                  </div>
+    <!-- =============================================
+         START: Products Section
+         Category-wise product display
+         ============================================= -->
+    <?php foreach ($products_by_category as $category => $products): ?>
+      <div class="product-section" data-aos="fade-up">
+          <div class="section-header">
+              <div class="section-title-wrapper">
+                  <span class="section-icon">
+                      <i class="fas fa-star"></i>
+                  </span>
+                  <h2 class="section-title"><?= strtoupper($category) ?></h2>
+                  <span class="section-icon">
+                      <i class="fas fa-star"></i>
+                  </span>
               </div>
-          </form>
+              <div class="section-divider"></div>
+              <p class="section-description">Discover our premium collection of handcrafted <?= strtolower($category) ?> made with love and finest ingredients!</p>
+          </div>
+
+          <div class="wrapper">
+              <i class="fa-solid fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
+              <div class="carousel">
+                  <?php foreach ($products as $product): ?>
+                      <li class="card__article">
+                          <div class="veg-badge <?= $product['veg_status'] == 'Veg' ? 'veg' : 'non-veg' ?>" title="<?= $product['veg_status'] ?>"></div>
+                          <div class="card">
+                              <img src="<?= htmlspecialchars($product['image_path']) ?>" class="card__image" alt="<?= htmlspecialchars($product['name']) ?>" />
+                              <div class="card__overlay">
+                                  <div class="card__header">
+                                      <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
+                                      <div class="card__header-text">
+                                          <h3 class="card__title"><?= htmlspecialchars($product['name']) ?></h3>
+                                          <p class="card__description"><?= htmlspecialchars($product['description']) ?></p>
+                                      </div>
+                                  </div>
+                                  <?php if (!is_null($product['price_per_gram'])): ?>
+                                    <div class="price-container">
+                                      <span class="card__price">Price/g: ₹<?= number_format($product['price_per_gram'], 2) ?></span>
+                                      <span class="card__price_pergram">Price: ₹<?= number_format($product['price'], 2) ?></span>
+                                    </div>
+                                  <?php else: ?>
+                                    <div class="price-container">
+                                      <span class="card__price_pergram">Price: ₹<?= number_format($product['price'], 2) ?></span>
+                                    </div>
+                                  <?php endif; ?>
+                              </div>
+                          </div>
+                      </li>
+                  <?php endforeach; ?>
+              </div>
+              <i class="fa-solid fa-angle-right arrow-btn" data-direction="right" aria-label="Next items"></i>
+          </div>
+
+          <div class="view-more-container">
+              <a href="<?= strtolower($category) ?>-products.php" class="view-more-btn">View More <?= $category ?> Products</a>
+          </div>
+          
+          <div class="section-divider-large"></div>
       </div>
+    <?php endforeach; ?>
+    <!-- =============================================
+         END: Products Section
+         ============================================= -->
 
-      </section>
+    <!-- =============================================
+         START: Business Inquiry Form Section
+         ============================================= -->
+    <section>
+    <div class="container">
+        <header class="contact-header">Contact Details</header>
 
-    <!-- Footer Section -->
+        <form action="customer_submit.php" method="POST">
+            <div class="form single">
+
+                <!-- Business Details -->
+                <div class="details personal">
+                    <span class="title">Business Details</span>
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Business Name</label>
+                            <input type="text" name="business_name" placeholder="e.g. CandyCo Pvt. Ltd" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Contact Person</label>
+                            <input type="text" name="contact_person_name" placeholder="Full name" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="example@mail.com" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Phone</label>
+                            <input type="text" name="phone" placeholder="Mobile number" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Estimated Quantity</label>
+                            <input type="text" name="estimated_quantity" placeholder="e.g. 100kg / 500 units" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Delivery Frequency</label>
+                            <select name="delivery_frequency" required>
+                                <option disabled selected value="">Select</option>
+                                <option value="One-time">One-time</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Interest -->
+                <div class="details ID">
+                    <span class="title">Product Interest</span>
+                    <div class="product-grid">
+                        <?php
+                        $conn = new mysqli("localhost", "root", "", "ooty_baker");
+                        $res = $conn->query("SELECT id, name FROM products ORDER BY name ASC");
+                        while($row = $res->fetch_assoc()):
+                        ?>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="product_interest[]" value="<?= htmlspecialchars($row['id'], ENT_QUOTES) ?>"> 
+                                <?= htmlspecialchars($row['name']) ?>
+                            </label>
+                        <?php endwhile; $conn->close(); ?>
+                    </div>
+                </div>
+
+                <!-- Address and Notes -->
+                <div class="details address">
+                    <span class="title">Address & Notes</span>
+                    <div class="fields">
+                        <div class="input-field field-full-width">
+                            <label>Full Address</label>
+                            <input type="text" name="address" placeholder="Enter address" required>
+                        </div>
+                        <div class="input-field field-full-width">
+                            <label>Additional Notes</label>
+                            <input type="text" name="additional_notes" placeholder="Anything else to add?">
+                        </div>
+                        <div class="input-field field-full-width">
+                            <label>Nature of Business</label>
+                            <select name="business_nature" required>
+                                <option disabled selected value="">Select</option>
+                                <option value="Customer">Customer</option>
+                                <option value="Consumer">Consumer</option>
+                                <option value="Dealer">Dealer</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-submit">
+                    <button class="submit" type="submit">
+                        <span class="btnText">Submit</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    </section>
+    <!-- =============================================
+         END: Business Inquiry Form Section
+         ============================================= -->
+
+    <!-- =============================================
+         START: Footer Section
+         Contact info and social links
+         ============================================= -->
     <footer>
       <div class="main-content">
         <!-- About Us Section -->
@@ -285,16 +343,23 @@ foreach ($categories as $category) {
         </center>
       </div>
     </footer>
+    <!-- =============================================
+         END: Footer Section
+         ============================================= -->
 
-    <!-- JavaScript Files -->
+    <!-- =============================================
+         START: JavaScript and Animation Libraries
+         ============================================= -->
     <script src="index.js"></script>
-    <!-- AOS Animation Initialization -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init({
         offset: 1,
       });
     </script>
+    <!-- =============================================
+         END: JavaScript and Animation Libraries
+         ============================================= -->
 
   </body>
 </html>
