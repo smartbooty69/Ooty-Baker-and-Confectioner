@@ -67,18 +67,20 @@ foreach ($categories as $category) {
          <nav>
           <div class="nav-bar">
               <i class='bx bx-menu sidebarOpen' ></i>
-              <span class="logo navLogo"><a href="#">CodingLab</a></span>
+              <a href="#" class="logo">
+  <img src="images\gimmie-loo.jpg" alt="CandyLab Logo">
+</a>
+
               <div class="menu">
                   <div class="logo-toggle">
                       <span class="logo"><a href="#">CodingLab</a></span>
                       <i class='bx bx-x siderbarClose'></i>
                   </div>
                   <ul class="nav-links">
-                      <li><a href="#">Home</a></li>
+                      
                       <li><a href="#">About</a></li>
-                      <li><a href="#">Portfolio</a></li>
-                      <li><a href="#">Services</a></li>
-                      <li><a href="#">Contact</a></li>
+                      <li><a href="#">products</a></li>
+                      <li><a href="#">Contact us</a></li>
                   </ul>
               </div>
               <div class="darkLight-searchBox">
@@ -304,10 +306,8 @@ foreach ($categories as $category) {
             <p>Ooty Baker & Confectioner is a renowned bakery and confectionery establishment based in Bangalore, Karnataka. Known for its delectable range of baked goods and sweets, the company has been serving customers with quality products for several years. Their commitment to traditional recipes combined with modern baking techniques has made them a favorite among locals and tourists alike..</p>
             <!-- Social Media Links -->
             <div class="social">
-              <a href="https://facebook.com/coding.np"><span class="fab fa-facebook-f"></span></a>
-              <a href="#"><span class="fab fa-twitter"></span></a>
-              <a href="https://instagram.com/coding.np"><span class="fab fa-instagram"></span></a>
-              <a href="https://youtube.com/c/codingnepal"><span class="fab fa-youtube"></span></a>
+              <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/"><span class="fab fa-facebook-f"></span></a>
+              <a href="https://www.instagram.com/ootybakerandconfectioner/"><span class="fab fa-instagram"></span></a>
             </div>
           </div>
         </div>
@@ -318,11 +318,16 @@ foreach ($categories as $category) {
           <div class="content">
             <div class="place">
               <span class="fas fa-map-marker-alt"></span>
-              <span class="text">Birendranagar, Surkhet</span>
+              <span class="text">
+Ooty Baker & Confectioner
+
+#40,  Muniswammappa Layout,  Bengaluru, Hosur Road,  Hosur Road 1st Cross Road, Bommanahalli-560068
+
+https://jsdl.in/DT-15HNGHNJXMV</span>
             </div>
             <div class="phone">
               <span class="fas fa-phone-alt"></span>
-              <span class="text">+089-765432100</span>
+              <span class="text">+07947120466</span>
             </div>
             <div class="email">
               <span class="fas fa-envelope"></span>

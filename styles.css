@@ -44,7 +44,7 @@
   --big-font: 6.6rem;
   --p-font: 1rem;
   --body-color: #E4E9F7;
-  --nav-color: #4070F4;
+  --nav-color: #378a32;
   --side-nav: #010718;
   --text-color: #FFF;
   --search-bar: #F2F2F2;
@@ -62,7 +62,32 @@ body {
 
 /* ===== Google Font Import - Poppins ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:wght@400;600&display=swap');
+
+
 /* ===== Colours ===== */
+
+nav, .navbar, .nav-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+  color: #ba68c8; /* Lollipop purple */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+/* Funky font for headings, logos, titles */
+h1, h2, h3, .site-title, .logo {
+  font-family: 'Chewy', cursive;
+  color: #ff4da6; /* Optional candy pink */
+}
+
+/* Clean, readable font for body and other text */
+body, p, span, li, a {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
 
 
 nav{
@@ -1050,9 +1075,7 @@ footer {
 .right form .btn button {
   height: 40px;
   width: 100%;
-  border: none;
-  background: #218d17;
-  color: #fff;
+  color: #000000;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -1070,7 +1093,7 @@ footer {
 .bottom center {
   padding: 10px;
   font-size: 0.875rem;
-  background: #222;
+  background: hsla(100, 9%, 46%, 0.337);
   color: #ccc;
 }
 
@@ -1080,7 +1103,7 @@ footer {
   text-decoration: none;
   font-weight: bold;
 }
-
+s
 /* Footer link hover effect */
 .bottom center a:hover {
   text-decoration: underline;
