@@ -59,12 +59,12 @@ body {
 /* ==================== */
 header {
   position: relative;
-  width: 95%;
+  width: 100%;
   top: 0;
   right: 0px;
   left: 20px;
   z-index: 1000;
-  padding: 35px 7%;
+  padding:0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,6 +93,8 @@ header {
 .navlist {
   display: flex;
   align-items: center;
+  transition: all 0.3s ease-in-out;
+
 }
 
 /* Individual navigation items */
@@ -440,7 +442,7 @@ img.slide.active {
   line-height: 1.6;
 }
 
-/* Product carousel wrapper */
+/* Product carousel wrapper */ 
 .wrapper {
   margin: 0;
   padding: 0;
@@ -1619,5 +1621,3 @@ section {
     text-align: center;
     margin-bottom: 20px;
 }
-
-
