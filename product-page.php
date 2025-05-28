@@ -233,21 +233,48 @@
   <body>
     <!-- header -->
     <header>
-      <a href="#" class="logo">
-        <img src="gimmie logo (1).jpg" alt="logo coffe" />
-      </a>
-
-      <ul class="navlist">
-        <li><a href="#">About</a></li>
-        <li><a href="#">membership</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-
-      <div class="reght-content">
-        <a href="#" class="nav-btn">Sign In</a>
-        <div class="bx bx-menu" id="menu-icon"></div>
-      </div>
+      <nav>
+          <div class="nav-bar">
+              <i class='bx bx-menu sidebarOpen' ></i>
+              <a href="#" class="logo">
+                  <img src="images/gimmielogo.jpg" alt="CandyLab Logo"></a>
+              <div class="menu">
+                  <div class="logo-toggle">
+                      <span class="logo"><a href="#">gimmie</a></span>
+                      <i class='bx bx-x siderbarClose'></i>
+                  </div>
+                  <ul class="nav-links">
+                      
+                      <li><a href="#">About</a></li>
+                      <li class="dropdown">
+        <a href="#" class="drop-btn">Products ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Jelly Candy</a></li>
+          <li><a href="#"> Candy</a></li>
+          <li><a href="#">coated Candy</a></li>
+        </ul>
+      
+                      <li><a href="#">Contact us</a></li>
+                  </ul>
+              </div>
+              <div class="darkLight-searchBox">
+                  <div class="dark-light">
+                      <i class='bx bx-moon moon'></i>
+                      <i class='bx bx-sun sun'></i>
+                  </div>
+                  <div class="searchBox">
+                    <div class="searchToggle">
+                      <i class='bx bx-x cancel'></i>
+                      <i class='bx bx-search search'></i>
+                    </div>
+                      <div class="search-field">
+                          <input type="text" placeholder="Search...">
+                          <i class='bx bx-search'></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </nav>
     </header>
 
     <div class="product-view">
@@ -309,31 +336,32 @@
     </div>
 
    <!-- footer  -->
-  <footer>
+   <footer>
       <div class="main-content">
+        <!-- About Us Section -->
         <div class="left box">
           <h2>About us</h2>
           <div class="content">
-            <p>CodinNepal is a YouTube channel where you can learn web designing, web development, ui/ux designing, html css tutorial, hover animation and effects, javascript and jquery tutorial and related so on.</p>
+            <p>Ooty Baker & Confectioner is a renowned bakery and confectionery establishment based in Bangalore, Karnataka. Known for its delectable range of baked goods and sweets, the company has been serving customers with quality products for several years. Their commitment to traditional recipes combined with modern baking techniques has made them a favorite among locals and tourists alike..</p>
+            <!-- Social Media Links -->
             <div class="social">
-              <a href="https://facebook.com/coding.np"><span class="fab fa-facebook-f"></span></a>
-              <a href="#"><span class="fab fa-twitter"></span></a>
-              <a href="https://instagram.com/coding.np"><span class="fab fa-instagram"></span></a>
-              <a href="https://youtube.com/c/codingnepal"><span class="fab fa-youtube"></span></a>
+              <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/"><span class="fab fa-facebook-f"></span></a>
+              <a href="https://www.instagram.com/ootybakerandconfectioner/"><span class="fab fa-instagram"></span></a>
             </div>
           </div>
         </div>
-        
+
+        <!-- Contact Information Section -->
         <div class="center box">
           <h2>Address</h2>
           <div class="content">
             <div class="place">
               <span class="fas fa-map-marker-alt"></span>
-              <span class="text">Birendranagar, Surkhet</span>
+              <span class="text">Ooty Baker & Confectioner #40,  Muniswammappa Layout,  Bengaluru, Hosur Road,  Hosur Road 1st Cross Road, Bommanahalli-560068</span>
             </div>
             <div class="phone">
               <span class="fas fa-phone-alt"></span>
-              <span class="text">+089-765432100</span>
+              <span class="text">+07947120466</span>
             </div>
             <div class="email">
               <span class="fas fa-envelope"></span>
@@ -341,6 +369,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Contact Form Section -->
         <div class="right box">
           <h2>Contact us</h2>
           <div class="content">
@@ -360,14 +390,14 @@
           </div>
         </div>
       </div>
+
+      <!-- Copyright Section -->
       <div class="bottom">
         <center>
-          <span class="credit">Created By <a href="https://www.codingnepalweb.com">CodingNepal</a> | </span>
-          <span class="far fa-copyright"></span><span> 2020 All rights reserved.</span>
+          <span class="far fa-copyright"></span><span> gimmie. All rights reserved.</span>
         </center>
       </div>
     </footer>
-
     <!-- js script -->
     <script src="index.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>

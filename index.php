@@ -323,12 +323,7 @@ foreach ($categories as $category) {
           <div class="content">
             <div class="place">
               <span class="fas fa-map-marker-alt"></span>
-              <span class="text">
-Ooty Baker & Confectioner
-
-#40,  Muniswammappa Layout,  Bengaluru, Hosur Road,  Hosur Road 1st Cross Road, Bommanahalli-560068
-
-https://jsdl.in/DT-15HNGHNJXMV</span>
+              <span class="text">Ooty Baker & Confectioner #40,  Muniswammappa Layout,  Bengaluru, Hosur Road,  Hosur Road 1st Cross Road, Bommanahalli-560068</span>
             </div>
             <div class="phone">
               <span class="fas fa-phone-alt"></span>
