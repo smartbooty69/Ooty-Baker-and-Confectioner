@@ -74,13 +74,89 @@ nav, .navbar, .nav-link {
   color: #ba68c8; /* Lollipop purple */
   letter-spacing: 1px;
   text-transform: uppercase;
+  background-color: #fff0f5;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.logo img {
+  height: 50px;
+}
+
+/* Parent Dropdown Item */
+.nav-links li.dropdown {
+  position: relative;
+}
+
+/* Dropdown Toggle Button (e.g. "Products ▾") */
+.nav-links .drop-btn {
+  text-decoration: none;
+  color: #ffffff;
+  font-family: 'Chewy', cursive;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* Dropdown Menu Styling */
+.nav-links .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff0f5;
+  list-style: none;
+  padding: 10px 0;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-width: 160px;
+  z-index: 10;
+}
+
+/* Dropdown Links */
+.nav-links .dropdown-menu li a {
+  display: block;
+  padding: 10px 20px;
+  color: #1a8815;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Hover Behavior for Desktop */
+.nav-links li.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Responsive: Show dropdown on mobile when .active is added via JS */
+@media (max-width: 768px) {
+  .nav-links .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    padding-left: 20px;
+  }
+
+  .nav-links li.dropdown:hover .dropdown-menu {
+    display: none; /* disable hover on small screens */
+  }
+
+  .nav-links li.dropdown.active .dropdown-menu {
+    display: block; /* show on click for mobile */
+  }
+}
+
+
 
 
 /* Funky font for headings, logos, titles */
 h1, h2, h3, .site-title, .logo {
   font-family: 'Chewy', cursive;
-  color: #ff4da6; /* Optional candy pink */
+  color: #29930c; /* Optional candy pink */
 }
 
 /* Clean, readable font for body and other text */
@@ -267,6 +343,13 @@ body.dark .search-field input{
 body.dark .search-field i{
     color: var(--text-color);
 }
+
+.menu-toggle {
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
 @media (max-width: 790px) {
     nav .nav-bar .sidebarOpen{
         display: block;

@@ -68,18 +68,23 @@ foreach ($categories as $category) {
           <div class="nav-bar">
               <i class='bx bx-menu sidebarOpen' ></i>
               <a href="#" class="logo">
-  <img src="images\gimmie-loo.jpg" alt="CandyLab Logo">
-</a>
-
+                  <img src="images/gimmielogo.jpg" alt="CandyLab Logo"></a>
               <div class="menu">
                   <div class="logo-toggle">
-                      <span class="logo"><a href="#">CodingLab</a></span>
+                      <span class="logo"><a href="#">gimmie</a></span>
                       <i class='bx bx-x siderbarClose'></i>
                   </div>
                   <ul class="nav-links">
                       
                       <li><a href="#">About</a></li>
-                      <li><a href="#">products</a></li>
+                      <li class="dropdown">
+        <a href="#" class="drop-btn">Products ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Jelly Candy</a></li>
+          <li><a href="#"> Candy</a></li>
+          <li><a href="#">coated Candy</a></li>
+        </ul>
+      
                       <li><a href="#">Contact us</a></li>
                   </ul>
               </div>
@@ -377,6 +382,7 @@ https://jsdl.in/DT-15HNGHNJXMV</span>
       AOS.init({
         offset: 1,
       });
+      
     </script>
     <!-- =============================================
          END: JavaScript and Animation Libraries

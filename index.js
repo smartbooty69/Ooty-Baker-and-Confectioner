@@ -100,3 +100,35 @@ body.addEventListener("click" , e =>{
     }
 });
 
+// Toggle mobile nav
+document.getElementById("menu-toggle").addEventListener("click", function () {
+  document.getElementById("nav-links").classList.toggle("active");
+});
+
+// Toggle dropdown on mobile
+document.querySelectorAll(".drop-btn").forEach(button => {
+  button.addEventListener("click", function (e) {
+    e.preventDefault();
+    this.parentElement.classList.toggle("active");
+  });
+});
+
+
+
+let prevScrollPos = window.pageYOffset;
+const navbar = document.querySelector("nav, .navbar");
+
+window.addEventListener("scroll", () => {
+  const currentScrollPos = window.pageYOffset;
+
+  if (prevScrollPos > currentScrollPos) {
+    // Scrolling up
+    navbar.style.top = "0";
+  } else {
+    // Scrolling down
+    navbar.style.top = "-80px";  // adjust height if needed
+  }
+
+  prevScrollPos = currentScrollPos;
+});
+
