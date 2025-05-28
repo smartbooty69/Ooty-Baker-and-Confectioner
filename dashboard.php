@@ -68,6 +68,74 @@
        .box101{
         margin-left:300px;
        }
+       .counter-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .counter-info:hover {
+        transform: translateY(-5px);
+    }
+
+    .counter-details {
+        flex: 1;
+    }
+
+    .counter-count {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .counter-subtitle {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+    }
+
+    .counter-trend {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .counter-icon {
+        font-size: 2.5rem;
+        color: #40aad1;
+        opacity: 0.8;
+    }
+
+    .text-success {
+        color: #28a745;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .counter-count.animate {
+        animation: countUp 0.5s ease-out;
+    }
     </style>
     
 
@@ -80,8 +148,15 @@
     <div class="sidebar">
         <div class="sidebar-container">
             <div class="sidebar-logo">
-                <a href="../index.html"><img src="../assets/img/landingpage/logo-nav-inverted.png"></a>
-                <span><a href="../index.html">Ooty Baker</a></span>
+                <a href="./index.php" class="logo-wrapper">
+                    <div class="logo-image">
+                        <img src="images/gimmie-logo.jpg" alt="Gimmie Logo">
+                    </div>
+                    <div class="logo-text">
+                        <h1>Gimmie</h1>
+                        <span>Bakery & Confectionery</span>
+                    </div>
+                </a>
             </div>
             <div class="sidebar-close" id="sidebar-close">
                 <i class='bx bx-left-arrow-alt'></i>
@@ -165,15 +240,34 @@
                                     Total Inquiries
                                 </div>
                                 <div class="counter-info">
-                                    <div class="counter-count">
-                                        <?php
-                                            $con = new mysqli("localhost", "root", "", "ooty_baker");
-                                            $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries");
-                                            $count = $result->fetch_assoc();
-                                            echo $count['total'];
-                                        ?>
+                                    <div class="counter-details">
+                                        <div class="counter-count" id="inquiryCounter">
+                                            <?php
+                                                $con = new mysqli("localhost", "root", "", "ooty_baker");
+                                                $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries");
+                                                $count = $result->fetch_assoc();
+                                                echo $count['total'];
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">Total Business Inquiries</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                // Get count from previous period (e.g., last 7 days)
+                                                $result = $con->query("SELECT COUNT(*) as prev_total FROM business_inquiries WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $prev_count = $result->fetch_assoc();
+                                                $trend = $count['total'] - $prev_count['prev_total'];
+                                                $trend_icon = $trend >= 0 ? 'bx-up-arrow-alt' : 'bx-down-arrow-alt';
+                                                $trend_color = $trend >= 0 ? 'text-success' : 'text-danger';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                <?php echo abs($trend); ?> this week
+                                            </span>
+                                        </div>
                                     </div>
-                                    <i class='bx bxs-business'></i>
+                                    <div class="counter-icon">
+                                        <i class='bx bxs-business'></i>
+                                    </div>
                                 </div>
                             </div>
                             <!-- END COUNTER -->
@@ -589,6 +683,22 @@
                 });
             }
         }
+    </script>
+
+    <script>
+        // Add animation when counter updates
+        function updateCounter(newValue) {
+            const counter = document.getElementById('inquiryCounter');
+            counter.classList.add('animate');
+            counter.textContent = newValue;
+            setTimeout(() => counter.classList.remove('animate'), 500);
+        }
+
+        // Update counter when inquiries are deleted
+        document.addEventListener('inquiryDeleted', function(e) {
+            const currentCount = parseInt(document.getElementById('inquiryCounter').textContent);
+            updateCounter(currentCount - 1);
+        });
     </script>
 
 </body>
