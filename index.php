@@ -64,48 +64,56 @@ foreach ($categories as $category) {
          START: Header Section
          Navigation and branding
          ============================================= -->
-         <nav>
-          <div class="nav-bar">
-              <i class='bx bx-menu sidebarOpen' ></i>
-              <a href="#" class="logo">
-                  <img src="images/gimmielogo.jpg" alt="CandyLab Logo"></a>
-              <div class="menu">
-                  <div class="logo-toggle">
-                      <span class="logo"><a href="#">gimmie</a></span>
-                      <i class='bx bx-x siderbarClose'></i>
-                  </div>
-                  <ul class="nav-links">
-                      
-                      <li><a href="#">About</a></li>
-                      <li class="dropdown">
-        <a href="#" class="drop-btn">Products ▾</a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Jelly Candy</a></li>
-          <li><a href="#"> Candy</a></li>
-          <li><a href="#">coated Candy</a></li>
-        </ul>
-      
-                      <li><a href="#">Contact us</a></li>
-                  </ul>
+         <header class="gimme-main-header">
+             <div class="gimme-logo-container">
+                 <div class="gimme-logo-images">
+                     <img src="images/brand-logo.png" alt="Brand Logo" class="brand-logo">
+                     <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="gimmie-logo">
+                 </div>
+             </div>
+
+              <nav class="gimme-nav-desktop">
+                  <a href="#treatments">Products</a>
+                  <a href="#supplements">About Us</a>
+                  <a href="#membership">Contact Us</a>
+                  <button class="gimme-get-started-btn-desktop">
+                      <span>Login</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M9 5L16 12L9 19"/>
+                      </svg>
+                  </button>
+              </nav>
+
+              <button class="gimme-menu-toggle" id="menuToggle">MENU</button>
+          </header>
+
+          <div class="gimme-mobile-sidebar" id="mobileSidebar">
+              <div class="gimme-sidebar-header">
+                  <button class="gimme-sidebar-close-btn" id="sidebarClose">CLOSE</button>
               </div>
-              <div class="darkLight-searchBox">
-                  <div class="dark-light">
-                      <i class='bx bx-moon moon'></i>
-                      <i class='bx bx-sun sun'></i>
+              <nav class="gimme-sidebar-nav">
+                  <div class="gimme-sidebar-nav-item">
+                      <a href="#treatments">PRODUCTS</a>
+                      <span class="icon">+</span>
                   </div>
-                  <div class="searchBox">
-                    <div class="searchToggle">
-                      <i class='bx bx-x cancel'></i>
-                      <i class='bx bx-search search'></i>
-                    </div>
-                      <div class="search-field">
-                          <input type="text" placeholder="Search...">
-                          <i class='bx bx-search'></i>
-                      </div>
+                  <div class="gimme-sidebar-nav-item">
+                      <a href="#supplements">ABOUT US</a>
+                      <span class="icon">&nearrow;</span>
                   </div>
-              </div>
+                  <div class="gimme-sidebar-nav-item">
+                      <a href="#membership">CONTACT US</a>
+                      <span class="icon">&nearrow;</span>
+                  </div>
+              </nav>
+              <button class="gimme-get-started-btn-mobile">
+                  <span>Login</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 5L16 12L9 19"/>
+                  </svg>
+              </button>
           </div>
-      </nav>
+
+          <div class="gimme-overlay" id="sidebarOverlay"></div>
     <!-- =============================================
          END: Header Section
          ============================================= -->
@@ -130,19 +138,8 @@ foreach ($categories as $category) {
          END: Main Banner Section
          ============================================= -->
    
-<section id="about">
-    <h2 class="fade-in">About Our Company</h2>
-    <p class="fade-in">
-      At Candy Heaven, we believe in delivering smiles one candy at a time. Our chocolates and sweets are crafted with passion and the finest ingredients to satisfy every sweet tooth.
-    </p>
-    <div class="quotes">
-      <div class="quote fade-in">"Life is like a box of chocolates, you never know what you're gonna get."</div>
-      <div class="quote fade-in">"Keep calm and eat chocolate."</div>
-      <div class="quote fade-in">"Chocolate is happiness that you can eat."</div>
-    </div>
-  </section>
 
-  <script src="script.js"></script>
+
   
     <!-- =============================================
          START: Products Section

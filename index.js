@@ -1,4 +1,35 @@
+// JavaScript for mobile sidebar functionality
+const menuToggle = document.getElementById('menuToggle');
+const mobileSidebar = document.getElementById('mobileSidebar');
+const sidebarClose = document.getElementById('sidebarClose');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
 
+function toggleSidebar() {
+    mobileSidebar.classList.toggle('is-open');
+    sidebarOverlay.classList.toggle('is-active');
+    // Prevent body scroll when sidebar is open
+    document.body.style.overflow = mobileSidebar.classList.contains('is-open') ? 'hidden' : '';
+}
+
+menuToggle.addEventListener('click', toggleSidebar);
+sidebarClose.addEventListener('click', toggleSidebar);
+sidebarOverlay.addEventListener('click', toggleSidebar);
+
+// Close sidebar if a nav item is clicked (optional, good for UX)
+document.querySelectorAll('.gimme-sidebar-nav-item a').forEach(item => {
+    item.addEventListener('click', () => {
+        if (mobileSidebar.classList.contains('is-open')) {
+            toggleSidebar();
+        }
+    });
+});
+
+ // Close sidebar if Get Started button is clicked (optional, good for UX)
+ document.querySelector('.gimme-get-started-btn-mobile').addEventListener('click', () => {
+    if (mobileSidebar.classList.contains('is-open')) {
+        toggleSidebar();
+    }
+});
 
 const slides = document.querySelectorAll(".slide");
 const next = document.querySelector(".next");
@@ -76,56 +107,4 @@ document.addEventListener("DOMContentLoaded", function() {
         carousel.addEventListener("mouseleave", dragStop);
     });
 });
-
-
-
-const 
-      nav = document.querySelector("nav"), 
-      searchToggle = document.querySelector(".searchToggle"),
-      sidebarOpen = document.querySelector(".sidebarOpen"),
-      siderbarClose = document.querySelector(".siderbarClose");
-// js code to toggle search box
-        searchToggle.addEventListener("click" , () =>{
-        searchToggle.classList.toggle("active");
-      });
-      
-//   js code to toggle sidebar
-sidebarOpen.addEventListener("click" , () =>{
-    nav.classList.add("active");
-});
-body.addEventListener("click" , e =>{
-    let clickedElm = e.target;
-    if(!clickedElm.classList.contains("sidebarOpen") && !clickedElm.classList.contains("menu")){
-        nav.classList.remove("active");
-    }
-});
-
-// Toggle mobile nav
-document.getElementById("menu-toggle").addEventListener("click", function () {
-  document.getElementById("nav-links").classList.toggle("active");
-});
-
-// Toggle dropdown on mobile
-document.querySelectorAll(".drop-btn").forEach(button => {
-  button.addEventListener("click", function (e) {
-    e.preventDefault();
-    this.parentElement.classList.toggle("active");
-  });
-});
-
-
-
-function fadeInOnScroll() {
-  const elements = document.querySelectorAll('.fade-in');
-
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 100) {
-      el.classList.add('visible');
-    }
-  });
-}
-
-window.addEventListener('scroll', fadeInOnScroll);
-window.addEventListener('load', fadeInOnScroll);
 
