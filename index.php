@@ -162,7 +162,7 @@ foreach ($categories as $category) {
           </div>
 
           <div class="view-more-container">
-              <a href="<?= strtolower($category) ?>-products.php" class="view-more-btn">View More <?= $category ?> Products</a>
+              <a href="product-page.php?category=<?= urlencode($category) ?>" class="view-more-btn">View More <?= $category ?> Products</a>
           </div>
           
           <div class="section-divider-large"></div>
