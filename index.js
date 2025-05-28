@@ -1,10 +1,4 @@
-const menu = document.querySelector("#menu-icon");
-const navlist = document.querySelector(".navlist");
 
-menu.onclick = () => {
-  menu.classList.toggle("bx-x");
-  navlist.classList.toggle("open"); 
-};
 
 const slides = document.querySelectorAll(".slide");
 const next = document.querySelector(".next");
@@ -81,5 +75,28 @@ document.addEventListener("DOMContentLoaded", function() {
         document.addEventListener("mouseup", dragStop);
         carousel.addEventListener("mouseleave", dragStop);
     });
+});
+
+
+
+const 
+      nav = document.querySelector("nav"), 
+      searchToggle = document.querySelector(".searchToggle"),
+      sidebarOpen = document.querySelector(".sidebarOpen"),
+      siderbarClose = document.querySelector(".siderbarClose");
+// js code to toggle search box
+        searchToggle.addEventListener("click" , () =>{
+        searchToggle.classList.toggle("active");
+      });
+      
+//   js code to toggle sidebar
+sidebarOpen.addEventListener("click" , () =>{
+    nav.classList.add("active");
+});
+body.addEventListener("click" , e =>{
+    let clickedElm = e.target;
+    if(!clickedElm.classList.contains("sidebarOpen") && !clickedElm.classList.contains("menu")){
+        nav.classList.remove("active");
+    }
 });
 
