@@ -68,7 +68,7 @@
 /* ==================== */
 /* Body */
 body {
-  background: var(--bg-color);
+  background: linear-gradient(to right, #1b6e49, #34C759);
   color: var(--text-color);
   overflow-x: hidden; /* Prevent horizontal scroll for the entire body */
 }
@@ -87,13 +87,13 @@ section {
 .product-section {
   padding: 2rem 0;
   position: relative;
-  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  background: linear-gradient(to bottom, transparent, transparent);
   width: 100%; /* Ensure product section itself is responsive */
   box-sizing: border-box;
 }
 
 .product-section:nth-child(even) {
-  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  background: linear-gradient(to bottom, transparent, transparent);
 }
 
 /* ==================== */
@@ -403,22 +403,22 @@ section {
 .view-more-btn {
   display: inline-block;
   padding: 12px 30px;
-  background: var(--main-color);
+  background: transparent;
   color: var(--text-color);
   font-size: 1.1rem;
   font-weight: 500;
   border-radius: 7px;
   transition: all 0.6s ease;
   text-decoration: none;
-  border: 2px solid transparent;
+  border: 2px solid;
 }
 
 /* View More button hover effect */
 .view-more-btn:hover {
   transform: translateY(-5px);
-  background: transparent;
   border-color: var(--main-color);
   color: var(--main-color);
+  background: var(--bg-color);
 }
 
 
@@ -652,6 +652,8 @@ img.slide.active {
   margin: 0 auto;
   background-color: #fff;
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  margin-top: 64px;
+  margin-bottom: 64px;
 }
 
 .container header {
@@ -843,17 +845,13 @@ footer {
   position: relative;
   bottom: 0;
   width: 100%;
-  background: #f4f4f4;
-  font-family: "Times New Roman", Times, serif;
-  color: #333;
-  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, #1b6e49, #34C759);
+  font-family: "Poppins", sans-serif;
+  color: #FFFFFF;
+  box-shadow: none;
   padding: 20px 0;
-  transition: all 0.3s ease-in-out;
-}
-
-footer:hover {
-  background: #e0e0e0;
-  box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 0%;
+  padding-bottom: 0%;
 }
 
 /* Footer content layout */
@@ -874,9 +872,9 @@ footer:hover {
   font-size: 1.25rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #555;
+  color: #FFFFFF; /* Gimmie: White text */
   margin-bottom: 10px;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #FFFFFF; /* Gimmie: White border */
   padding-bottom: 5px;
 }
 
@@ -893,7 +891,7 @@ footer:hover {
   top: -5px;
   height: 2px;
   width: 100%;
-  background: #ddd;
+  background: #FFFFFF; /* Gimmie: White border */
 }
 
 .box .content:after {
@@ -901,7 +899,7 @@ footer:hover {
   content: '';
   height: 2px;
   width: 20%;
-  background: #555;
+  background: #FFFFFF; /* Gimmie: White border */
   top: -5px;
 }
 
@@ -910,6 +908,7 @@ footer:hover {
   text-align: justify;
   font-size: 1rem;
   line-height: 1.5;
+  color: #FFFFFF; /* Gimmie: White text */
 }
 
 /* Social media container */
@@ -926,8 +925,8 @@ footer:hover {
 .left .content .social a span {
   height: 40px;
   width: 40px;
-  background: #555;
-  color: #fff;
+  background: #007A2F; /* Gimmie: Hover/Shadow Green */
+  color: #FFFFFF; /* Gimmie: White text */
   line-height: 40px;
   text-align: center;
   font-size: 18px;
@@ -937,19 +936,19 @@ footer:hover {
 
 /* Social media icon hover effect */
 .left .content .social a span:hover {
-  background: #218d17;
+  background: #009639; /* Gimmie: Primary Color (Brand Green) */
   transform: scale(1.1);
 }
 
 /* Center section icons */
 .center .content .fas {
   font-size: 1.5rem;
-  background: #555;
+  background: #007A2F; /* Gimmie: Hover/Shadow Green */
   height: 45px;
   width: 45px;
   line-height: 45px;
   text-align: center;
-  color: #fff;
+  color: #FFFFFF; /* Gimmie: White text */
   border-radius: 50%;
   margin-right: 10px;
   transition: 0.3s;
@@ -957,7 +956,7 @@ footer:hover {
 
 /* Center section icon hover effect */
 .center .content .fas:hover {
-  background: #4eec70;
+  background: #009639; /* Gimmie: Primary Color (Brand Green) */
   transform: scale(1.1);
 }
 
@@ -965,7 +964,7 @@ footer:hover {
 .center .content .text {
   font-size: 1rem;
   font-weight: 500;
-  color: #555;
+  color: #FFFFFF; /* Gimmie: White text */
 }
 
 /* Phone contact section */
@@ -977,7 +976,7 @@ footer:hover {
 .right form .text {
   font-size: 1rem;
   margin-bottom: 5px;
-  color: #555;
+  color: #FFFFFF; /* Gimmie: White text */
 }
 
 .right form .msg {
@@ -988,25 +987,27 @@ footer:hover {
 .right form input, .right form textarea {
   width: 100%;
   font-size: 1rem;
-  background: #fff;
+  background: #F5F5F5; /* Gimmie: Alternate Section Background */
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #DDDDDD; /* Gimmie: Border Color */
   border-radius: 5px;
   margin-bottom: 10px;
+  color: #222222; /* Gimmie: Text Primary */
 }
 
 /* Form input focus styles */
 .right form input:focus,
 .right form textarea:focus {
-  outline-color: #218d17;
-  border-color: #218d17;
+  outline-color: #009639; /* Gimmie: Primary Color (Brand Green) */
+  border-color: #009639; /* Gimmie: Primary Color (Brand Green) */
 }
 
 /* Submit button styles */
 .right form .btn button {
   height: 40px;
   width: 100%;
-  color: #000000;
+  color: #FFFFFF; /* Gimmie: White text */
+  background: #009639; /* Gimmie: Primary Color (Brand Green) */
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -1016,7 +1017,7 @@ footer:hover {
 
 /* Submit button hover effect */
 .right form .btn button:hover {
-  background: #333;
+  background: #007A2F; /* Gimmie: Hover/Shadow Green */
   transform: scale(1.05);
 }
 
@@ -1024,13 +1025,14 @@ footer:hover {
 .bottom center {
   padding: 10px;
   font-size: 0.875rem;
-  background: hsla(100, 9%, 46%, 0.337);
-  color: #ccc;
+  background: #007A2F; /* Gimmie: Hover/Shadow Green */
+  color: #FFFFFF; /* Gimmie: White text */
+  margin-bottom: 0%;
 }
 
 /* Footer links */
 .bottom center a {
-  color: #cddacd;
+  color: #FFFFFF; /* Gimmie: White text */
   text-decoration: none;
   font-weight: bold;
 }
@@ -1038,6 +1040,19 @@ footer:hover {
 /* Footer link hover effect */
 .bottom center a:hover {
   text-decoration: underline;
+}
+
+/* Footer responsiveness */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-content .box {
+    flex-basis: 100%;
+    margin: 10px 0;
+    text-align: center;
+  }
 }
 
 /* ==================== */

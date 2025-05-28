@@ -232,53 +232,65 @@
   </head>
   <body>
     <!-- header -->
-    <header>
-      <nav>
-          <div class="nav-bar">
-              <i class='bx bx-menu sidebarOpen' ></i>
-              <a href="#" class="logo">
-                  <img src="images/gimmielogo.jpg" alt="CandyLab Logo"></a>
-              <div class="menu">
-                  <div class="logo-toggle">
-                      <span class="logo"><a href="#">gimmie</a></span>
-                      <i class='bx bx-x siderbarClose'></i>
-                  </div>
-                  <ul class="nav-links">
-                      
-                      <li><a href="#">About</a></li>
-                      <li class="dropdown">
-        <a href="#" class="drop-btn">Products ▾</a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Jelly Candy</a></li>
-          <li><a href="#"> Candy</a></li>
-          <li><a href="#">coated Candy</a></li>
-        </ul>
-      
-                      <li><a href="#">Contact us</a></li>
-                  </ul>
-              </div>
-              <div class="darkLight-searchBox">
-                  <div class="dark-light">
-                      <i class='bx bx-moon moon'></i>
-                      <i class='bx bx-sun sun'></i>
-                  </div>
-                  <div class="searchBox">
-                    <div class="searchToggle">
-                      <i class='bx bx-x cancel'></i>
-                      <i class='bx bx-search search'></i>
-                    </div>
-                      <div class="search-field">
-                          <input type="text" placeholder="Search...">
-                          <i class='bx bx-search'></i>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </nav>
-    </header>
+    <!-- =============================================
+         START: Header Section
+         Navigation and branding
+         ============================================= -->
+         <header class="gimme-main-header">
+             <div class="gimme-logo-container">
+                 <div class="gimme-logo-images">
+                     <img src="images/brand-logo.png" alt="Brand Logo" class="brand-logo">
+                     <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="gimmie-logo">
+                 </div>
+             </div>
 
-    <div class="product-view">
-      <?php
+              <nav class="gimme-nav-desktop">
+                  <a href="#treatments">Products</a>
+                  <a href="#supplements">About Us</a>
+                  <a href="#membership">Contact Us</a>
+                  <button class="gimme-get-started-btn-desktop">
+                      <span>Login</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M9 5L16 12L9 19"/>
+                      </svg>
+                  </button>
+              </nav>
+
+              <button class="gimme-menu-toggle" id="menuToggle">MENU</button>
+          </header>
+
+          <div class="gimme-mobile-sidebar" id="mobileSidebar">
+              <div class="gimme-sidebar-header">
+                  <button class="gimme-sidebar-close-btn" id="sidebarClose">CLOSE</button>
+              </div>
+              <nav class="gimme-sidebar-nav">
+                  <div class="gimme-sidebar-nav-item">
+                      <a href="#treatments">PRODUCTS</a>
+                      <span class="icon">+</span>
+                  </div>
+                  <div class="gimme-sidebar-nav-item">
+                      <a href="#supplements">ABOUT US</a>
+                      <span class="icon">&nearrow;</span>
+                  </div>
+                  <div class="gimme-sidebar-nav-item">
+                      <a href="#membership">CONTACT US</a>
+                      <span class="icon">&nearrow;</span>
+                  </div>
+              </nav>
+              <button class="gimme-get-started-btn-mobile">
+                  <span>Login</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 5L16 12L9 19"/>
+                  </svg>
+              </button>
+          </div>
+
+          <div class="gimme-overlay" id="sidebarOverlay"></div>
+    <!-- =============================================
+         END: Header Section
+         ============================================= -->
+
+    <?php
         require_once 'connection.php';
 
         // Get the category from the URL parameter
@@ -287,7 +299,24 @@
         if (empty($category)) {
             die("No category specified");
         }
+    ?>
 
+    <div class="section-header">
+        <div class="section-title-wrapper">
+            <span class="section-icon">
+                <i class="fas fa-star"></i>
+            </span>
+            <h2 class="section-title"><?= strtoupper($category) ?></h2>
+            <span class="section-icon">
+                <i class="fas fa-star"></i>
+            </span>
+        </div>
+        <div class="section-divider"></div>
+        <p class="section-description">Discover our premium collection of handcrafted <?= strtolower($category) ?> made with love and finest ingredients!</p>
+    </div>
+
+    <div class="product-view">
+        <?php
         // Fetch products for the specified category
         $sql = "SELECT * FROM products WHERE variety = ?";
         $stmt = $conn->prepare($sql);
