@@ -399,6 +399,80 @@ section {
   padding: 0 14%;
 }
 
+/* Import funky font */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Comic Neue', cursive;
+}
+
+/* Dummy navbar & slider */
+.navbar {
+  background-color: #8B4513;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.slider {
+  height: 300px;
+  background: linear-gradient(45deg, #d2691e, #ffb347);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  color: #fff;
+}
+
+/* About section with local background image */
+#about {
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+  background: url('images/chocolate-bg.jpg') no-repeat center center/cover;
+  background-blend-mode: multiply;
+  font-size: 20px;
+}
+
+#about h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px #000;
+}
+
+#about p {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.quotes {
+  max-width: 700px;
+  margin: 0 auto;
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  text-shadow: 1px 1px 4px #000;
+}
+
+.quote {
+  margin-bottom: 25px;
+}
+
+/* Fade-in transition on scroll */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ==================== */
 /* Hero Section Styles */
 /* ==================== */

@@ -129,7 +129,21 @@ foreach ($categories as $category) {
     <!-- =============================================
          END: Main Banner Section
          ============================================= -->
-    
+   
+<section id="about">
+    <h2 class="fade-in">About Our Company</h2>
+    <p class="fade-in">
+      At Candy Heaven, we believe in delivering smiles one candy at a time. Our chocolates and sweets are crafted with passion and the finest ingredients to satisfy every sweet tooth.
+    </p>
+    <div class="quotes">
+      <div class="quote fade-in">"Life is like a box of chocolates, you never know what you're gonna get."</div>
+      <div class="quote fade-in">"Keep calm and eat chocolate."</div>
+      <div class="quote fade-in">"Chocolate is happiness that you can eat."</div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+  
     <!-- =============================================
          START: Products Section
          Category-wise product display

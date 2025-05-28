@@ -115,20 +115,17 @@ document.querySelectorAll(".drop-btn").forEach(button => {
 
 
 
-let prevScrollPos = window.pageYOffset;
-const navbar = document.querySelector("nav, .navbar");
+function fadeInOnScroll() {
+  const elements = document.querySelectorAll('.fade-in');
 
-window.addEventListener("scroll", () => {
-  const currentScrollPos = window.pageYOffset;
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      el.classList.add('visible');
+    }
+  });
+}
 
-  if (prevScrollPos > currentScrollPos) {
-    // Scrolling up
-    navbar.style.top = "0";
-  } else {
-    // Scrolling down
-    navbar.style.top = "-80px";  // adjust height if needed
-  }
-
-  prevScrollPos = currentScrollPos;
-});
+window.addEventListener('scroll', fadeInOnScroll);
+window.addEventListener('load', fadeInOnScroll);
 
