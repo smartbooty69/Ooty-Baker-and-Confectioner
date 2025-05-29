@@ -100,10 +100,8 @@ logoutButton.addEventListener('click', function(event) {
     // Prevent the default behavior of the link
     event.preventDefault();
 
-    // Perform logout actions here (e.g., clearing session storage, revoking tokens)
-
-    // Redirect the user to index.html
-    window.location.href = "../index.html";
+    // Call the logout handler
+    window.location.href = "../logout.php";
 });
 
 

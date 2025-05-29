@@ -380,18 +380,38 @@ a {
 }
 
 #logout {
-    justify-content: space-between;
-    color: #dc3545;
+    width: 268px;
+    padding: 12px 20px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: var(--sidebar-transition);
+    border-radius: 8px;
+    margin: 4px 0px;
+    width: calc(100% - 16px);
+    border: none;
+    color: #32cd32;
+    cursor: pointer;
+    margin-left: 15px;
+    padding-right: 15px;
+}
+
+#logout span {
+    padding: 0;
+    margin: 0;
 }
 
 #logout:hover {
-    background-color: rgba(220, 53, 69, 0.1);
+    background-color: #ccffcc;
 }
 
 #logout i {
-    margin-right: 10px;
     font-size: 1.5rem;
-    color: #dc3545;
+    color: #32cd32;
 }
 
 .main {
