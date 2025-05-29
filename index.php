@@ -74,7 +74,7 @@ foreach ($categories as $category) {
 
               <nav class="gimme-nav-desktop">
                   <a href="#treatments">Products</a>
-                  <a href="#supplements">About Us</a>
+                  <a href="#about.html">About Us</a>
                   <a href="#membership">Contact Us</a>
                   <button class="gimme-get-started-btn-desktop">
                       <span>Login</span>
@@ -141,8 +141,9 @@ foreach ($categories as $category) {
 
          <section class="about-section-wrapper">
             <div class="about-content-box">
-                <h1>ABOUT</h1>
-                <p>Pharetra magna ac placerat vestibulum lectus mauris ultrices. Ut pharetra sit amet aliquam id diam maecenas ultricies mi. Sollicitudin ac orci phasellus egestas tellus rutrum. Venenatis cras sed felis eget. Amet risus nullam eget felis eget nunc. Lacus vestibulum sed arcu non odio euismod. Consectetur adipiscing elit duis tristique. Pharetra magna ac placerat vestibulum lectus mauris ultrices. Ut pharetra sit amet aliquam id diam maecenas ultricies mi. Sollicitudin ac orci phasellus egestas tellus rutrum. Venenatis cras sed felis eget. Amet risus nullam eget felis eget nunc. Lacus vestibulum sed arcu non odio euismod. Consectetur adipiscing elit duis tristique.</p>
+                <h1>ABOUT US</h1>
+                <p>About Ooty Baker & Confectioner
+Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite tells a story of quality, care, and creativity. Located in the bustling area of Bommanahalli, Bengaluru, we are a proud local bakery that has built a reputation for excellence in both baked goods and confections. Our journey began with a simple idea — to bring joy to people’s lives through delightful treats made with love and the finest ingredients.</p>
                 <div class="social-icons">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
