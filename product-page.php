@@ -265,15 +265,15 @@
               </div>
               <nav class="gimme-sidebar-nav">
                   <div class="gimme-sidebar-nav-item">
-                      <a href="#treatments">PRODUCTS</a>
+                      <a href="product-page.php">PRODUCTS</a>
                       <span class="icon">+</span>
                   </div>
                   <div class="gimme-sidebar-nav-item">
-                      <a href="#supplements">ABOUT US</a>
+                      <a href="about.html">ABOUT US</a>
                       <span class="icon">&nearrow;</span>
                   </div>
                   <div class="gimme-sidebar-nav-item">
-                      <a href="#membership">CONTACT US</a>
+                      <a href="#footer">CONTACT US</a>
                       <span class="icon">&nearrow;</span>
                   </div>
               </nav>

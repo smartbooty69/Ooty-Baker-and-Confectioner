@@ -73,7 +73,7 @@ foreach ($categories as $category) {
              </div>
 
               <nav class="gimme-nav-desktop">
-                  <a href="#treatments">Products</a>
+                  <a href="product-page.php">Products</a>
                   <a href="about.html">About Us</a>
                   <a href="#footer">Contact Us</a>
                   <button class="gimme-get-started-btn-desktop">
@@ -93,7 +93,7 @@ foreach ($categories as $category) {
               </div>
               <nav class="gimme-sidebar-nav">
                   <div class="gimme-sidebar-nav-item">
-                      <a href="#treatments">PRODUCTS</a>
+                      <a href="product-page.php">PRODUCTS</a>
                       <span class="icon">+</span>
                   </div>
                   <div class="gimme-sidebar-nav-item">
