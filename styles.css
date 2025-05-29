@@ -1836,3 +1836,49 @@ footer {
     transform: scale(0.98);
   }
 }
+html {
+  scroll-behavior: smooth;
+}
+
+/* Main About section styling */
+.about-section-wrapper {
+  padding: 40px 20px;
+  background-color: #fff5ee; /* Soft background for visual appeal */
+  text-align: center;
+}
+
+/* About content box layout */
+.about-content-box {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Logo container centered horizontally */
+.gimme-logo-container {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center;     /* Center content vertically */
+  margin-bottom: 20px;
+}
+
+/* Flex container to hold logos side-by-side */
+.gimme-logo-image {
+  display: flex;
+  gap: 20px;               /* Space between the two logos */
+}
+
+/* Individual logo styling */
+.brand-logo,
+.gimmie-logo {
+  width: 100px;            /* Adjust as needed */
+  height: auto;
+  object-fit: contain;
+}
+
+/* Responsive tweak (optional) */
+@media (max-width: 600px) {
+  .gimme-logo-image {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

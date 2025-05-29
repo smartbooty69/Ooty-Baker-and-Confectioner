@@ -74,8 +74,8 @@ foreach ($categories as $category) {
 
               <nav class="gimme-nav-desktop">
                   <a href="#treatments">Products</a>
-                  <a href="#about.html">About Us</a>
-                  <a href="#membership">Contact Us</a>
+                  <a href="about.html">About Us</a>
+                  <a href="#footer">Contact Us</a>
                   <button class="gimme-get-started-btn-desktop">
                       <span>Login</span>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -97,11 +97,11 @@ foreach ($categories as $category) {
                       <span class="icon">+</span>
                   </div>
                   <div class="gimme-sidebar-nav-item">
-                      <a href="#supplements">ABOUT US</a>
+                      <a href="about.html">ABOUT US</a>
                       <span class="icon">&nearrow;</span>
                   </div>
                   <div class="gimme-sidebar-nav-item">
-                      <a href="#membership">CONTACT US</a>
+                      <a href="#footer">CONTACT US</a>
                       <span class="icon">&nearrow;</span>
                   </div>
               </nav>
@@ -327,7 +327,7 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
     <footer>
       <div class="main-content">
         <!-- About Us Section -->
-        <div class="left box">
+        <div class="left box" id="footer">
           <h2>About us</h2>
           <div class="content">
             <p>Ooty Baker & Confectioner is a renowned bakery and confectionery establishment based in Bangalore, Karnataka. Known for its delectable range of baked goods and sweets, the company has been serving customers with quality products for several years. Their commitment to traditional recipes combined with modern baking techniques has made them a favorite among locals and tourists alike..</p>
