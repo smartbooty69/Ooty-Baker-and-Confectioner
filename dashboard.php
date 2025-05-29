@@ -10,7 +10,7 @@ require_once 'auth-check.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
     <title>
-        Horizon
+        Gimme
     </title>
     <link rel="shortcut icon" href="../img/login/logo-mb.png" type="image/png">
     <!-- GOOGLE FONT -->

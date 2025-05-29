@@ -32,28 +32,18 @@ foreach ($categories as $category) {
     <!-- External CSS Files -->
     <link rel="stylesheet" href="styles.css" />
     <!-- Box Icons Library -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"/>
     <!-- Remix Icons Library -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
     <!-- Google Fonts: Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
     <!-- AOS Animation Library -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
   </head>
   <!-- =============================================
        END: Head Section
@@ -76,7 +66,7 @@ foreach ($categories as $category) {
                   <a href="product-page.php">Products</a>
                   <a href="about.html">About Us</a>
                   <a href="#footer">Contact Us</a>
-                  <button class="gimme-get-started-btn-desktop">
+                  <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
                       <span>Login</span>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M9 5L16 12L9 19"/>
@@ -105,12 +95,12 @@ foreach ($categories as $category) {
                       <span class="icon">&nearrow;</span>
                   </div>
               </nav>
-              <button class="gimme-get-started-btn-mobile">
+              <!-- <button class="gimme-get-started-btn-mobile" onclick="window.location.href='auth.php'">
                   <span>Login</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M9 5L16 12L9 19"/>
                   </svg>
-              </button>
+              </button> -->
           </div>
 
           <div class="gimme-overlay" id="sidebarOverlay"></div>
@@ -143,7 +133,7 @@ foreach ($categories as $category) {
             <div class="about-content-box">
                 <h1>ABOUT US</h1>
                 <p>About Ooty Baker & Confectioner
-Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite tells a story of quality, care, and creativity. Located in the bustling area of Bommanahalli, Bengaluru, we are a proud local bakery that has built a reputation for excellence in both baked goods and confections. Our journey began with a simple idea — to bring joy to people’s lives through delightful treats made with love and the finest ingredients.</p>
+Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite tells a story of quality, care, and creativity. Located in the bustling area of Bommanahalli, Bengaluru, we are a proud local bakery that has built a reputation for excellence in both baked goods and confections. Our journey began with a simple idea — to bring joy to people's lives through delightful treats made with love and the finest ingredients.</p>
                 <div class="social-icons">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
