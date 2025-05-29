@@ -27,7 +27,6 @@
     <!-- aos animation -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
     <style>
         .product-view {
             display: grid;
@@ -265,7 +264,7 @@
               </div>
               <nav class="gimme-sidebar-nav">
                   <div class="gimme-sidebar-nav-item">
-                      <a href="product-page.php">PRODUCTS</a>
+                      <a href="index.php">Home</a>
                       <span class="icon">+</span>
                   </div>
                   <div class="gimme-sidebar-nav-item">
@@ -286,6 +285,7 @@
           </div>
 
           <div class="gimme-overlay" id="sidebarOverlay"></div>
+          
     <!-- =============================================
          END: Header Section
          ============================================= -->
