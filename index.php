@@ -145,9 +145,9 @@ foreach ($categories as $category) {
                 <p>About Ooty Baker & Confectioner
 Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite tells a story of quality, care, and creativity. Located in the bustling area of Bommanahalli, Bengaluru, we are a proud local bakery that has built a reputation for excellence in both baked goods and confections. Our journey began with a simple idea — to bring joy to people’s lives through delightful treats made with love and the finest ingredients.</p>
                 <div class="social-icons">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/ootybakerandconfectioner/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
                 <a href="about.html" class="btn">know More</a>
 
@@ -363,21 +363,13 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
 
         <!-- Contact Form Section -->
         <div class="right box">
-          <h2>Contact us</h2>
+          <h2>Social Media</h2>
           <div class="content">
-            <form action="#">
-              <div class="email">
-                <div class="text">Email *</div>
-                <input type="email" required>
-              </div>
-              <div class="msg">
-                <div class="text">Message *</div>
-                <textarea rows="2" cols="25" required></textarea>
-              </div>
-              <div class="btn">
-                <button type="submit">Send</button>
-              </div>
-            </form>
+             <div class="social">
+              <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/"><span class="fab fa-facebook-f"></span></a>
+              <a href="https://www.instagram.com/ootybakerandconfectioner/"><span class="fab fa-instagram"></span></a>
+            </div>
+           
           </div>
         </div>
       </div>
