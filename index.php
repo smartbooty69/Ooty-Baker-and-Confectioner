@@ -149,6 +149,8 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
                     <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
+                <a href="about.html" class="btn">know More</a>
+
             </div>
         </section>
   
@@ -220,7 +222,8 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
     <!-- =============================================
          START: Business Inquiry Form Section
          ============================================= -->
-    <section>
+    <section class="about-section-wrapper">
+         <section>
     <div class="container">
         <header class="contact-header">Contact Details</header>
 
@@ -314,7 +317,7 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
             </div>
         </form>
     </div>
-
+</section>
     </section>
     <!-- =============================================
          END: Business Inquiry Form Section
