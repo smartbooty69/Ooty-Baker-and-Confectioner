@@ -245,9 +245,9 @@
              </div>
 
               <nav class="gimme-nav-desktop">
-                  <a href="#treatments">Products</a>
-                  <a href="#supplements">About Us</a>
-                  <a href="#membership">Contact Us</a>
+                  <a href="index.php">Home</a>
+                  <a href="about.html">About Us</a>
+                  <a href="#footer">Contact Us</a>
                   <button class="gimme-get-started-btn-desktop">
                       <span>Login</span>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -368,7 +368,7 @@
    <footer>
       <div class="main-content">
         <!-- About Us Section -->
-        <div class="left box">
+        <div class="left box" id="footer">
           <h2>About us</h2>
           <div class="content">
             <p>Ooty Baker & Confectioner is a renowned bakery and confectionery establishment based in Bangalore, Karnataka. Known for its delectable range of baked goods and sweets, the company has been serving customers with quality products for several years. Their commitment to traditional recipes combined with modern baking techniques has made them a favorite among locals and tourists alike..</p>
