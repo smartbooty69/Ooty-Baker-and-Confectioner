@@ -139,7 +139,17 @@ foreach ($categories as $category) {
          ============================================= -->
    
 
-
+         <section class="about-section-wrapper">
+            <div class="about-content-box">
+                <h1>ABOUT</h1>
+                <p>Pharetra magna ac placerat vestibulum lectus mauris ultrices. Ut pharetra sit amet aliquam id diam maecenas ultricies mi. Sollicitudin ac orci phasellus egestas tellus rutrum. Venenatis cras sed felis eget. Amet risus nullam eget felis eget nunc. Lacus vestibulum sed arcu non odio euismod. Consectetur adipiscing elit duis tristique. Pharetra magna ac placerat vestibulum lectus mauris ultrices. Ut pharetra sit amet aliquam id diam maecenas ultricies mi. Sollicitudin ac orci phasellus egestas tellus rutrum. Venenatis cras sed felis eget. Amet risus nullam eget felis eget nunc. Lacus vestibulum sed arcu non odio euismod. Consectetur adipiscing elit duis tristique.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </section>
   
     <!-- =============================================
          START: Products Section

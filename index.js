@@ -96,6 +96,24 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
+        // Add scroll event listener to toggle left and right fades
+        carousel.addEventListener('scroll', () => {
+            // Toggle left fade
+            if (carousel.scrollLeft > 0) {
+                wrapper.classList.add('has-scrolled');
+            } else {
+                wrapper.classList.remove('has-scrolled');
+            }
+
+            // Toggle right fade
+            const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+            if (carousel.scrollLeft >= maxScroll - 10) { // 10px threshold for smoother transition
+                wrapper.classList.add('reached-end');
+            } else {
+                wrapper.classList.remove('reached-end');
+            }
+        });
+
         // Drag functionality (included for completeness)
         let isDragging = false, startX, startScrollLeft;
         const dragStart = (e) => { isDragging = true; carousel.classList.add("dragging"); startX = e.pageX; startScrollLeft = carousel.scrollLeft; };

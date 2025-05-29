@@ -185,8 +185,8 @@ section {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   height: 100%;
-  flex: 0 0 calc((100% / 3) - 12px); /* Default for 3 cards per row */
-  min-width: calc((100% / 3) - 12px);
+  flex: 0 0 calc((100% / 4) - 12px); /* Default for 3 cards per row */
+  min-width: calc((100% / 4) - 12px);
   scroll-snap-align: start;
   list-style: none;
   border-radius: 40px;
@@ -242,14 +242,14 @@ section {
 
 /* Card Typography */
 .card__title {
-  font-size: 3em;
+  font-size: 1.5em;
   margin: 0 0 .3em;
   color: #6A515E;
 }
 
 .card__description {
   display: block;
-  margin: 1em 0;
+  margin: 0;
   font-size: 1rem;
   color: #D7BDCA;
 }
@@ -286,8 +286,6 @@ section {
 /* Card tagline */
 .card__description{
   display: block;
-  margin: 1em 0;
-  font-size: 1rem;
   color: #D7BDCA;
 }
 
@@ -421,6 +419,130 @@ section {
   background: var(--bg-color);
 }
 
+/* ==================== */
+/* About Section Styles */
+/* ==================== */
+
+/* This wrapper will contain the background image and center the content box */
+.about-section-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Takes full viewport height */
+  padding: 20px; /* Add some padding around the content box */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+  background: linear-gradient(
+    to bottom,
+    rgba(27, 110, 73, 1),
+    rgba(27, 110, 73, 0.4) 5%,
+    rgba(27, 110, 73, 0.02) 20%,
+    rgba(27, 110, 73, 0.02) 80%,
+    rgba(52, 199, 89, 0.4) 95%,
+    rgba(52, 199, 89, 1)
+  ),
+  linear-gradient(
+    to right,
+    rgba(27, 110, 73, 0.9),
+    rgba(52, 199, 89, 0.9)
+  ),
+  url('./images/banner.png') no-repeat center center/cover;
+  width: 100%; /* Ensure it takes full width */
+  margin: 0; /* Remove any default margins */
+  position: relative; /* Added for proper gradient overlay */
+}
+
+.about-content-box {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+  padding: 40px;
+  border-radius: 5px; /* Slight rounded corners */
+  text-align: center;
+  max-width: 900px; /* Maximum width for the content box on large screens */
+  width: 100%; /* Ensures it takes full width within its container up to max-width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  color: var(--gimme-dark-text); /* Use a text color from your variables */
+}
+
+.about-content-box h1 {
+  font-size: 3em; /* Adjust as needed, based on the image's "ABOUT" size */
+  font-weight: 300; /* Lighter font weight for a sleek look */
+  letter-spacing: 0.1em; /* Spacing between letters */
+  margin-bottom: 30px;
+  color: var(--gimme-dark-text); /* Use a text color from your variables */
+  font-family: "Roboto Flex", sans-serif; /* Explicitly use your global font */
+}
+
+.about-content-box p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  text-align: justify; /* Justify text as seen in the images */
+  font-family: "Roboto Flex", sans-serif; /* Explicitly use your global font */
+  color: var(--gimme-light-text); /* Use a lighter text color from your variables */
+}
+
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons a {
+  color: var(--gimme-dark-text); /* Use a text color from your variables */
+  font-size: 1.5em;
+  margin: 0 15px;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.social-icons a:hover {
+  color: var(--nav-color); /* Example hover color, using an existing variable */
+}
+
+/* Media Queries for responsiveness of the About Section */
+/* These will be nested or added after your existing responsive design blocks */
+
+/* Adjusts for smaller screens (e.g., tablets) */
+@media (max-width: 768px) {
+  .about-content-box {
+      padding: 30px;
+      max-width: 700px; /* Narrower for tablets */
+  }
+
+  .about-content-box h1 {
+      font-size: 2.5em;
+  }
+
+  .about-content-box p {
+      font-size: 1em;
+  }
+
+  .social-icons a {
+      font-size: 1.3em;
+      margin: 0 10px;
+  }
+}
+
+/* Adjusts for very small screens (e.g., mobile phones) */
+@media (max-width: 480px) {
+  .about-content-box {
+      padding: 20px;
+      max-width: 90%; /* Even narrower for mobile to fit the screen */
+  }
+
+  .about-content-box h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+  }
+
+  .about-content-box p {
+      font-size: 0.9em;
+      margin-bottom: 20px;
+  }
+
+  .social-icons a {
+      font-size: 1.2em;
+      margin: 0 8px;
+  }
+}
 
 /* ==================== */
 /* Social Media and Scroll Indicators */
@@ -555,7 +677,7 @@ img.slide.active {
 /* Product carousel wrapper */
 .wrapper {
   margin: 0 auto; /* Center the wrapper */
-  padding: 0 20px; /* Add some horizontal padding */
+  padding: 0px; /* Add some horizontal padding */
   box-sizing: border-box; /* Essential */
   font-family: "Roboto Flex", sans-serif;
   font-optical-sizing: auto;
@@ -578,7 +700,7 @@ img.slide.active {
   background: transparent;
   width: 100%; /* Ensure it takes full available width */
   max-width: 1400px; /* Set a max-width if desired */
-  position: relative;
+  position: relative; /* Added for fade effect */
   scroll-behavior: smooth;
 }
 
@@ -593,7 +715,7 @@ img.slide.active {
   cursor: pointer;
   position: absolute;
   top: 50%;
-  font-size: 1.25rem; /* Corrected 'rem' unit */
+  font-size: 1.25rem;
   transform: translateY(-50%);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23);
   z-index: 10; /* Ensure arrows are above carousel content */
@@ -627,6 +749,46 @@ img.slide.active {
 /* Hide scrollbar */
 .carousel::-webkit-scrollbar {
   display: none;
+}
+
+/* Fade out effect for the right side */
+.wrapper::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(to right, transparent, #34C759);
+  pointer-events: none; /* Ensures the gradient doesn't interfere with card interactions */
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hide right fade when reached end */
+.wrapper.reached-end::after {
+  opacity: 0;
+}
+
+/* Fade out effect for the left side */
+.wrapper::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(to left, transparent, #1b6e49);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show left fade when scrolled */
+.wrapper.has-scrolled::before {
+  opacity: 1;
 }
 
 /* Dragging state */
