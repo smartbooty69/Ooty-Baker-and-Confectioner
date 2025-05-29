@@ -1,3 +1,6 @@
+<?php
+require_once 'auth-check.php';
+?>
 <!DOCTYPE html>
 <html lang="en" xml:lang="en">
 
@@ -198,14 +201,15 @@
                 </a>
                 <ul class="sidebar-menu sidebar-menu-dropdown-content">
                     <li>
-                        <a href="#" class="darkmode-toggle" id="darkmode-toggle">
-                            darkmode
+                        <!-- <a href="#" class="darkmode-toggle" id="darkmode-toggle">
+                            Darkmode
                             <span class="darkmode-switch"></span>
-                        </a>
-                        <a href="../index.html" id="logout">
-                            Logout
-                            <i class='bx bx-log-out bx-flip-horizontal'></i>
-                        </a>
+                        </a> -->
+                        <form action="logout.php" method="POST" style="display: inline; width: 90%;background-color: var(--box-bg)">
+                            <button type="submit" id="logout">
+                                <i class='bx bx-log-out bx-flip-horizontal'></i><span>Logout</span>
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </li>
