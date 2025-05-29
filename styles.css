@@ -1254,7 +1254,7 @@ footer {
     margin: 30px auto;
     padding: 30px 45px;
     max-width: 1600px;
-    width: 98%;
+    width: 88%;
     box-shadow: 0 4px 15px var(--gimme-subtle-shadow);
     display: flex;
     justify-content: space-between;
@@ -1540,7 +1540,7 @@ footer {
 @media (max-width: 1770px) {
   /* Using specific class name .gimme-main-header instead of generic header to avoid conflicts */
   .gimme-main-header {
-    padding: 22px 4%;
+    padding: 12px 3%;
   }
   .icons {
     padding: 0 4%;
@@ -1885,7 +1885,6 @@ html {
   display: flex;
   justify-content: center; /* Center content horizontally */
   align-items: center;     /* Center content vertically */
-  margin-bottom: 20px;
 }
 
 /* Flex container to hold logos side-by-side */
