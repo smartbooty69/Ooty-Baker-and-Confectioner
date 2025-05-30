@@ -25,11 +25,11 @@ document.querySelectorAll('.gimme-sidebar-nav-item a').forEach(item => {
 });
 
  // Close sidebar if Get Started button is clicked (optional, good for UX)
- document.querySelector('.gimme-get-started-btn-mobile').addEventListener('click', () => {
-    if (mobileSidebar.classList.contains('is-open')) {
-        toggleSidebar();
-    }
-});
+//  document.querySelector('.gimme-get-started-btn-mobile').addEventListener('click', () => {
+//     if (mobileSidebar.classList.contains('is-open')) {
+//         toggleSidebar();
+//     }
+// });
 
 const slides = document.querySelectorAll(".slide");
 const next = document.querySelector(".next");
