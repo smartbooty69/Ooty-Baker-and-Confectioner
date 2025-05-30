@@ -79,56 +79,66 @@ foreach ($categories as $category) {
          START: Header Section
          Navigation and branding
          ============================================= -->
-         <header class="gimme-main-header">
-             <div class="gimme-logo-container">
-                 <div class="gimme-logo-images">
-                     <img src="images/brand-logo.png" alt="Brand Logo" class="brand-logo">
-                     <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="gimmie-logo">
-                 </div>
-             </div>
+    <header class="gimme-main-header">
+        <a href="index.php" class="gimme-logo-link">
+            <div class="gimme-logo-container">
+                <div class="gimme-logo-images">
+                    <img src="images/brand-logo.png" alt="Brand Logo" class="brand-logo">
+                    <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="gimmie-logo">
+                </div>
+            </div>
+        </a>
 
-              <nav class="gimme-nav-desktop">
-                  <a href="product-page.php">Products</a>
-                  <a href="about.html">About Us</a>
-                  <a href="#footer">Contact Us</a>
-                  <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
-                      <span>Login</span>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M9 5L16 12L9 19"/>
-                      </svg>
-                  </button>
-              </nav>
+        <nav class="gimme-nav-desktop">
+            <div class="nav-item-dropdown-container">
+                <a href="#" class="nav-desktop-link" id="desktopProductsToggle" aria-haspopup="true" aria-expanded="false">Products +</a>
+                <div class="dropdown-menu-desktop" id="desktopProductsDropdown" aria-labelledby="desktopProductsToggle">
+                    <?php foreach ($categories as $category): ?>
+                        <a href="product-page.php?category=<?= urlencode($category) ?>"><?= htmlspecialchars($category) ?></a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <a href="#about">About Us</a>
+            <a href="#inquiry">Inquiry</a>
+            <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
+                <span>Login</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 5L16 12L9 19"/>
+                </svg>
+            </button>
+        </nav>
 
-              <button class="gimme-menu-toggle" id="menuToggle">MENU</button>
-          </header>
+        <button class="gimme-menu-toggle" id="menuToggle">MENU</button>
+    </header>
 
-          <div class="gimme-mobile-sidebar" id="mobileSidebar">
-              <div class="gimme-sidebar-header">
-                  <button class="gimme-sidebar-close-btn" id="sidebarClose">CLOSE</button>
-              </div>
-              <nav class="gimme-sidebar-nav">
-                  <div class="gimme-sidebar-nav-item">
-                      <a href="product-page.php">PRODUCTS</a>
-                      <span class="icon">+</span>
-                  </div>
-                  <div class="gimme-sidebar-nav-item">
-                      <a href="about.html">ABOUT US</a>
-                      <span class="icon">&nearrow;</span>
-                  </div>
-                  <div class="gimme-sidebar-nav-item">
-                      <a href="#footer">CONTACT US</a>
-                      <span class="icon">&nearrow;</span>
-                  </div>
-              </nav>
-              <!-- <button class="gimme-get-started-btn-mobile" onclick="window.location.href='auth.php'">
-                  <span>Login</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M9 5L16 12L9 19"/>
-                  </svg>
-              </button> -->
-          </div>
+    <div class="gimme-mobile-sidebar" id="mobileSidebar">
+        <div class="gimme-sidebar-header">
+            <button class="gimme-sidebar-close-btn" id="sidebarClose">CLOSE</button>
+        </div>
+        <nav class="gimme-sidebar-nav">
+            <div class="sidebar-nav-item-dropdown">
+                <div class="sidebar-nav-toggle" id="mobileProductsToggle">
+                    <span>PRODUCTS</span>
+                    <span class="icon" id="mobileProductsIcon">+</span>
+                </div>
+                <ul class="mobile-submenu" id="mobileProductsSubmenu">
+                    <?php foreach ($categories as $category): ?>
+                        <li><a href="product-page.php?category=<?= urlencode($category) ?>"><?= htmlspecialchars($category) ?> <span class="submenu-arrow">&nearrow;</span></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="gimme-sidebar-nav-item">
+                <a href="about.html">ABOUT US</a>
+                <span class="icon">&nearrow;</span>
+            </div>
+            <div class="gimme-sidebar-nav-item">
+                <a href="#inquiry">INQUIRY</a>
+                <span class="icon">&nearrow;</span>
+            </div>
+        </nav>
+    </div>
 
-          <div class="gimme-overlay" id="sidebarOverlay"></div>
+    <div class="gimme-overlay" id="sidebarOverlay"></div>
     <!-- =============================================
          END: Header Section
          ============================================= -->
@@ -154,11 +164,10 @@ foreach ($categories as $category) {
          ============================================= -->
    
 
-         <section class="about-section-wrapper">
+         <section class="about-section-wrapper" id="about">
             <div class="about-content-box">
                 <h1>ABOUT US</h1>
-                <p>About Ooty Baker & Confectioner
-Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite tells a story of quality, care, and creativity. Located in the bustling area of Bommanahalli, Bengaluru, we are a proud local bakery that has built a reputation for excellence in both baked goods and confections. Our journey began with a simple idea — to bring joy to people's lives through delightful treats made with love and the finest ingredients.</p>
+                <p>About Ooty Baker & ConfectionerWelcome to Ooty Baker & Confectioner, where tradition meets taste and every bite tells a story of quality, care, and creativity. Located in the bustling area of Bommanahalli, Bengaluru, we are a proud local bakery that has built a reputation for excellence in both baked goods and confections. Our journey began with a simple idea — to bring joy to people's lives through delightful treats made with love and the finest ingredients.</p>
                 <div class="social-icons">
                     <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fab fa-linkedin"></i></a>
@@ -240,102 +249,102 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
     <!-- =============================================
          START: Business Inquiry Form Section
          ============================================= -->
-    <section class="about-section-wrapper">
+    <section class="about-section-wrapper" id="contact">
          <section>
-    <div class="container">
-        <header class="contact-header">Contact Details</header>
+            <div class="container">
+                <header class="contact-header">Inquiry Details</header>
 
-        <form action="customer_submit.php" method="POST">
-            <div class="form single">
+                <form action="customer_submit.php" method="POST">
+                    <div class="form single">
 
-                <!-- Business Details -->
-                <div class="details personal">
-                    <span class="title">Business Details</span>
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Business Name</label>
-                            <input type="text" name="business_name" placeholder="e.g. CandyCo Pvt. Ltd" required>
+                        <!-- Business Details -->
+                        <div class="details personal">
+                            <span class="title">Business Details</span>
+                            <div class="fields">
+                                <div class="input-field">
+                                    <label>Business Name</label>
+                                    <input type="text" name="business_name" placeholder="e.g. CandyCo Pvt. Ltd" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>Contact Person</label>
+                                    <input type="text" name="contact_person_name" placeholder="Full name" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>Email</label>
+                                    <input type="email" name="email" placeholder="example@mail.com" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>Phone</label>
+                                    <input type="text" name="phone" placeholder="Mobile number" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>Estimated Quantity</label>
+                                    <input type="text" name="estimated_quantity" placeholder="e.g. 100kg / 500 units" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>Delivery Frequency</label>
+                                    <select name="delivery_frequency" required>
+                                        <option disabled selected value="">Select</option>
+                                        <option value="One-time">One-time</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-field">
-                            <label>Contact Person</label>
-                            <input type="text" name="contact_person_name" placeholder="Full name" required>
+
+                        <!-- Product Interest -->
+                        <div class="details ID">
+                            <span class="title">Product Interest</span>
+                            <div class="product-grid">
+                                <?php
+                                $conn = new mysqli("localhost", "root", "", "ooty_baker");
+                                $res = $conn->query("SELECT id, name FROM products ORDER BY name ASC");
+                                while($row = $res->fetch_assoc()):
+                                ?>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="product_interest[]" value="<?= htmlspecialchars($row['id'], ENT_QUOTES) ?>"> 
+                                        <?= htmlspecialchars($row['name']) ?>
+                                    </label>
+                                <?php endwhile; $conn->close(); ?>
+                            </div>
                         </div>
-                        <div class="input-field">
-                            <label>Email</label>
-                            <input type="email" name="email" placeholder="example@mail.com" required>
+
+                        <!-- Address and Notes -->
+                        <div class="details address">
+                            <span class="title">Address & Notes</span>
+                            <div class="fields">
+                                <div class="input-field field-full-width">
+                                    <label>Full Address</label>
+                                    <input type="text" name="address" placeholder="Enter address" required>
+                                </div>
+                                <div class="input-field field-full-width">
+                                    <label>Additional Notes</label>
+                                    <input type="text" name="additional_notes" placeholder="Anything else to add?">
+                                </div>
+                                <div class="input-field field-full-width">
+                                    <label>Nature of Business</label>
+                                    <select name="business_nature" required>
+                                        <option disabled selected value="">Select</option>
+                                        <option value="Customer">Customer</option>
+                                        <option value="Consumer">Consumer</option>
+                                        <option value="Dealer">Dealer</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-field">
-                            <label>Phone</label>
-                            <input type="text" name="phone" placeholder="Mobile number" required>
-                        </div>
-                        <div class="input-field">
-                            <label>Estimated Quantity</label>
-                            <input type="text" name="estimated_quantity" placeholder="e.g. 100kg / 500 units" required>
-                        </div>
-                        <div class="input-field">
-                            <label>Delivery Frequency</label>
-                            <select name="delivery_frequency" required>
-                                <option disabled selected value="">Select</option>
-                                <option value="One-time">One-time</option>
-                                <option value="Weekly">Weekly</option>
-                                <option value="Monthly">Monthly</option>
-                            </select>
+
+                        <!-- Submit -->
+                        <div class="form-submit">
+                            <button class="submit" type="submit">
+                                <span class="btnText">Submit</span>
+                                <i class="uil uil-navigator"></i>
+                            </button>
                         </div>
                     </div>
-                </div>
-
-                <!-- Product Interest -->
-                <div class="details ID">
-                    <span class="title">Product Interest</span>
-                    <div class="product-grid">
-                        <?php
-                        $conn = new mysqli("localhost", "root", "", "ooty_baker");
-                        $res = $conn->query("SELECT id, name FROM products ORDER BY name ASC");
-                        while($row = $res->fetch_assoc()):
-                        ?>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="product_interest[]" value="<?= htmlspecialchars($row['id'], ENT_QUOTES) ?>"> 
-                                <?= htmlspecialchars($row['name']) ?>
-                            </label>
-                        <?php endwhile; $conn->close(); ?>
-                    </div>
-                </div>
-
-                <!-- Address and Notes -->
-                <div class="details address">
-                    <span class="title">Address & Notes</span>
-                    <div class="fields">
-                        <div class="input-field field-full-width">
-                            <label>Full Address</label>
-                            <input type="text" name="address" placeholder="Enter address" required>
-                        </div>
-                        <div class="input-field field-full-width">
-                            <label>Additional Notes</label>
-                            <input type="text" name="additional_notes" placeholder="Anything else to add?">
-                        </div>
-                        <div class="input-field field-full-width">
-                            <label>Nature of Business</label>
-                            <select name="business_nature" required>
-                                <option disabled selected value="">Select</option>
-                                <option value="Customer">Customer</option>
-                                <option value="Consumer">Consumer</option>
-                                <option value="Dealer">Dealer</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Submit -->
-                <div class="form-submit">
-                    <button class="submit" type="submit">
-                        <span class="btnText">Submit</span>
-                        <i class="uil uil-navigator"></i>
-                    </button>
-                </div>
+                </form>
             </div>
-        </form>
-    </div>
-</section>
+        </section>
     </section>
     <!-- =============================================
          END: Business Inquiry Form Section
@@ -345,59 +354,48 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
          START: Footer Section
          Contact info and social links
          ============================================= -->
-    <footer>
-      <div class="main-content">
-        <!-- About Us Section -->
-        <div class="left box" id="footer">
-          <h2>About us</h2>
-          <div class="content">
-            <p>Ooty Baker & Confectioner is a renowned bakery and confectionery establishment based in Bangalore, Karnataka. Known for its delectable range of baked goods and sweets, the company has been serving customers with quality products for several years. Their commitment to traditional recipes combined with modern baking techniques has made them a favorite among locals and tourists alike..</p>
-            <!-- Social Media Links -->
-            <div class="social">
-              <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/"><span class="fab fa-facebook-f"></span></a>
-              <a href="https://www.instagram.com/ootybakerandconfectioner/"><span class="fab fa-instagram"></span></a>
-            </div>
-          </div>
+    <footer class="gimme-site-footer">
+        <div class="gimme-footer-top">
+            <nav class="gimme-footer-nav">
+                <ul class="gimme-nav-desktop">
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="about.php">About</a></li>
+                    <li><a href="#inquiry">Inquiry</a></li>
+                </ul>
+            </nav>
         </div>
 
-        <!-- Contact Information Section -->
-        <div class="center box">
-          <h2>Address</h2>
-          <div class="content">
-            <div class="place">
-              <span class="fas fa-map-marker-alt"></span>
-              <span class="text">Ooty Baker & Confectioner #40,  Muniswammappa Layout,  Bengaluru, Hosur Road,  Hosur Road 1st Cross Road, Bommanahalli-560068</span>
+        <div class="gimme-footer-middle">
+            <div class="gimme-contact-info-section">
+                <h3 class="gimme-section-title">Contact Us</h3>
+                <div class="gimme-contact-details">
+                    <div class="gimme-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Bommanahalli, Bengaluru<br>Karnataka, India</p>
+                    </div>
+                    <div class="gimme-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>info@ootybaker.com</p>
+                    </div>
+                    <div class="gimme-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+91 1234567890</p>
+                    </div>
+                </div>
             </div>
-            <div class="phone">
-              <span class="fas fa-phone-alt"></span>
-              <span class="text">+07947120466</span>
-            </div>
-            <div class="email">
-              <span class="fas fa-envelope"></span>
-              <span class="text">abc@example.com</span>
-            </div>
-          </div>
         </div>
 
-        <!-- Contact Form Section -->
-        <div class="right box">
-          <h2>Social Media</h2>
-          <div class="content">
-             <div class="social">
-              <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/"><span class="fab fa-facebook-f"></span></a>
-              <a href="https://www.instagram.com/ootybakerandconfectioner/"><span class="fab fa-instagram"></span></a>
+        <div class="gimme-footer-bottom">
+            <div class="gimme-social-media-section">
+                <h3 class="gimme-section-title">Follow Us</h3>
+                <div class="gimme-social-icons">
+                    <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/" class="gimme-social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="gimme-social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/ootybakerandconfectioner/" class="gimme-social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
             </div>
-           
-          </div>
+            <p class="gimme-copyright">&copy; <?= date('Y') ?> Ooty Baker & Confectioner. All Rights Reserved.</p>
         </div>
-      </div>
-
-      <!-- Copyright Section -->
-      <div class="bottom">
-        <center>
-          <span class="far fa-copyright"></span><span> gimmie. All rights reserved.</span>
-        </center>
-      </div>
     </footer>
     <!-- =============================================
          END: Footer Section

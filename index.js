@@ -5,31 +5,129 @@ const sidebarClose = document.getElementById('sidebarClose');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
 function toggleSidebar() {
-    mobileSidebar.classList.toggle('is-open');
+    const isOpen = mobileSidebar.classList.toggle('is-open');
     sidebarOverlay.classList.toggle('is-active');
-    // Prevent body scroll when sidebar is open
-    document.body.style.overflow = mobileSidebar.classList.contains('is-open') ? 'hidden' : '';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 
 menuToggle.addEventListener('click', toggleSidebar);
 sidebarClose.addEventListener('click', toggleSidebar);
 sidebarOverlay.addEventListener('click', toggleSidebar);
 
-// Close sidebar if a nav item is clicked (optional, good for UX)
-document.querySelectorAll('.gimme-sidebar-nav-item a').forEach(item => {
+// Mobile Products Submenu Toggle
+const mobileProductsToggle = document.getElementById('mobileProductsToggle');
+const mobileProductsSubmenu = document.getElementById('mobileProductsSubmenu');
+const mobileProductsIcon = document.getElementById('mobileProductsIcon');
+
+if (mobileProductsToggle && mobileProductsSubmenu && mobileProductsIcon) {
+    mobileProductsToggle.addEventListener('click', () => {
+        const isOpen = mobileProductsSubmenu.classList.toggle('is-open');
+        if (isOpen) {
+            mobileProductsSubmenu.style.maxHeight = mobileProductsSubmenu.scrollHeight + 'px';
+            mobileProductsIcon.textContent = '−'; // Minus sign
+        } else {
+            mobileProductsSubmenu.style.maxHeight = '0';
+            mobileProductsIcon.textContent = '+';
+        }
+    });
+}
+
+// Close sidebar if a nav item (excluding submenu toggle) or submenu item is clicked
+document.querySelectorAll('.gimme-sidebar-nav-item a, .mobile-submenu a').forEach(item => {
     item.addEventListener('click', () => {
         if (mobileSidebar.classList.contains('is-open')) {
-            toggleSidebar();
+            // Only close if it's not the submenu toggle itself
+            if (!item.closest('.sidebar-nav-toggle')) {
+                toggleSidebar();
+            }
         }
     });
 });
 
- // Close sidebar if Get Started button is clicked (optional, good for UX)
-//  document.querySelector('.gimme-get-started-btn-mobile').addEventListener('click', () => {
-//     if (mobileSidebar.classList.contains('is-open')) {
-//         toggleSidebar();
-//     }
-// });
+// Desktop dropdown functionality
+const desktopProductsToggle = document.getElementById('desktopProductsToggle');
+const desktopProductsDropdown = document.getElementById('desktopProductsDropdown');
+const dropdownContainer = document.querySelector('.nav-item-dropdown-container');
+
+// Mouse enter event for the container
+dropdownContainer.addEventListener('mouseenter', () => {
+    desktopProductsDropdown.style.display = 'block';
+});
+
+// Mouse leave event for the container
+dropdownContainer.addEventListener('mouseleave', () => {
+    desktopProductsDropdown.style.display = 'none';
+});
+
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        desktopProductsDropdown.style.display = 'none';
+    }
+});
+
+// Mobile Treatments Submenu Toggle
+const mobileTreatmentsToggle = document.getElementById('mobileTreatmentsToggle');
+const mobileTreatmentsSubmenu = document.getElementById('mobileTreatmentsSubmenu');
+const mobileTreatmentsIcon = document.getElementById('mobileTreatmentsIcon');
+
+if (mobileTreatmentsToggle && mobileTreatmentsSubmenu && mobileTreatmentsIcon) {
+    mobileTreatmentsToggle.addEventListener('click', () => {
+        const isOpen = mobileTreatmentsSubmenu.classList.toggle('is-open');
+        if (isOpen) {
+            mobileTreatmentsSubmenu.style.maxHeight = mobileTreatmentsSubmenu.scrollHeight + 'px';
+            mobileTreatmentsIcon.textContent = '−'; // Minus sign
+        } else {
+            mobileTreatmentsSubmenu.style.maxHeight = '0';
+            mobileTreatmentsIcon.textContent = '+';
+        }
+    });
+}
+
+// Close sidebar if a nav item (excluding submenu toggle) or submenu item is clicked
+document.querySelectorAll('.sidebar-nav-item a, .mobile-submenu a, .get-started-btn-mobile').forEach(item => {
+    item.addEventListener('click', () => {
+        if (mobileSidebar.classList.contains('is-open')) {
+            // Only close if it's not the submenu toggle itself
+            if (!item.closest('.sidebar-nav-toggle')) {
+                toggleSidebar();
+            }
+        }
+    });
+});
+
+// Desktop dropdown accessibility (focus management)
+const desktopTreatmentsToggle = document.getElementById('desktopTreatmentsToggle');
+const desktopTreatmentsDropdown = document.getElementById('desktopTreatmentsDropdown');
+
+if(desktopTreatmentsToggle && desktopTreatmentsDropdown) {
+    desktopTreatmentsToggle.addEventListener('click', function(event) {
+        // Prevent default if it's a link with href="#"
+        if (this.getAttribute('href') === '#') {
+            event.preventDefault();
+        }
+        const isExpanded = this.getAttribute('aria-expanded') === 'true' || false;
+        this.setAttribute('aria-expanded', !isExpanded);
+        desktopTreatmentsDropdown.style.display = isExpanded ? 'none' : 'block';
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', function(event) {
+        if (!desktopTreatmentsToggle.contains(event.target) && !desktopTreatmentsDropdown.contains(event.target)) {
+            desktopTreatmentsToggle.setAttribute('aria-expanded', 'false');
+            desktopTreatmentsDropdown.style.display = 'none';
+        }
+    });
+
+    // Keyboard navigation for desktop dropdown
+    desktopTreatmentsDropdown.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            desktopTreatmentsToggle.setAttribute('aria-expanded', 'false');
+            desktopTreatmentsDropdown.style.display = 'none';
+            desktopTreatmentsToggle.focus();
+        }
+    });
+}
 
 const slides = document.querySelectorAll(".slide");
 const next = document.querySelector(".next");

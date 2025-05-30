@@ -1,31 +1,67 @@
+<?php
+// =============================================
+// START: Database Connection and Data Fetching
+// =============================================
+require_once 'connection.php';
+
+// Fetch unique categories from products table
+$sql = "SELECT DISTINCT variety FROM products ORDER BY variety";
+$result = $conn->query($sql);
+$categories = [];
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $categories[] = $row['variety'];
+    }
+}
+// =============================================
+// END: Database Connection and Data Fetching
+// =============================================
+?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OOtys Website</title>
-    <link rel="stylesheet" href="styles.css" />
-    <!-- box icons link -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
-    />
-    <!-- remix icons link -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
+    <title>Products - Ooty Baker & Confectioner | Premium Bakery in Bengaluru</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Products - Ooty Baker & Confectioner | Premium Bakery in Bengaluru">
+    <meta name="description" content="Explore our premium collection of Jelly, Candy, and Coated Candy at Ooty Baker & Confectioner. Handcrafted with love and finest ingredients in Bengaluru.">
+    <meta name="keywords" content="Ooty Baker, Confectioner, Bakery Bengaluru, Products, Jelly, Candy, Coated Candy, Premium Bakery">
+    <meta name="author" content="Ooty Baker & Confectioner">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ootybaker.com/product-page.php">
+    <meta property="og:title" content="Products - Ooty Baker & Confectioner | Premium Bakery in Bengaluru">
+    <meta property="og:description" content="Explore our premium collection of Jelly, Candy, and Coated Candy at Ooty Baker & Confectioner. Handcrafted with love and finest ingredients in Bengaluru.">
+    <meta property="og:image" content="images/brand-logo.png">
 
-    <!-- google fonts link -->
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ootybaker.com/product-page.php">
+    <meta property="twitter:title" content="Products - Ooty Baker & Confectioner | Premium Bakery in Bengaluru">
+    <meta property="twitter:description" content="Explore our premium collection of Jelly, Candy, and Coated Candy at Ooty Baker & Confectioner. Handcrafted with love and finest ingredients in Bengaluru.">
+    <meta property="twitter:image" content="images/brand-logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/brand-logo.png">
+    <link rel="apple-touch-icon" href="images/brand-logo.png">
+    
+    <!-- External CSS Files -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Box Icons Library -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"/>
+    <!-- Remix Icons Library -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+    <!-- Google Fonts: Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- aos animation -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+    <!-- AOS Animation Library -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
         .product-view {
@@ -230,69 +266,75 @@
     </style>
   </head>
   <body>
-    <!-- header -->
     <!-- =============================================
          START: Header Section
          Navigation and branding
          ============================================= -->
-         <header class="gimme-main-header">
-             <div class="gimme-logo-container">
-                 <div class="gimme-logo-images">
-                     <img src="images/brand-logo.png" alt="Brand Logo" class="brand-logo">
-                     <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="gimmie-logo">
-                 </div>
-             </div>
+    <header class="gimme-main-header">
+        <a href="index.php" class="gimme-logo-link">
+            <div class="gimme-logo-container">
+                <div class="gimme-logo-images">
+                    <img src="images/brand-logo.png" alt="Brand Logo" class="brand-logo">
+                    <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="gimmie-logo">
+                </div>
+            </div>
+        </a>
 
-              <nav class="gimme-nav-desktop">
-                  <a href="index.php">Home</a>
-                  <a href="about.html">About Us</a>
-                  <a href="#footer">Contact Us</a>
-                  <button class="gimme-get-started-btn-desktop">
-                      <span>Login</span>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M9 5L16 12L9 19"/>
-                      </svg>
-                  </button>
-              </nav>
+        <nav class="gimme-nav-desktop">
+            <div class="nav-item-dropdown-container">
+                <a href="#" class="nav-desktop-link" id="desktopProductsToggle" aria-haspopup="true" aria-expanded="false">Products +</a>
+                <div class="dropdown-menu-desktop" id="desktopProductsDropdown" aria-labelledby="desktopProductsToggle">
+                    <?php foreach ($categories as $category): ?>
+                        <a href="product-page.php?category=<?= urlencode($category) ?>"><?= htmlspecialchars($category) ?></a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <a href="about.html">About Us</a>
+            <a href="index.php#inquiry">Inquiry</a>
+            <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
+                <span>Login</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 5L16 12L9 19"/>
+                </svg>
+            </button>
+        </nav>
 
-              <button class="gimme-menu-toggle" id="menuToggle">MENU</button>
-          </header>
+        <button class="gimme-menu-toggle" id="menuToggle">MENU</button>
+    </header>
 
-          <div class="gimme-mobile-sidebar" id="mobileSidebar">
-              <div class="gimme-sidebar-header">
-                  <button class="gimme-sidebar-close-btn" id="sidebarClose">CLOSE</button>
-              </div>
-              <nav class="gimme-sidebar-nav">
-                  <div class="gimme-sidebar-nav-item">
-                      <a href="index.php">Home</a>
-                      <span class="icon">+</span>
-                  </div>
-                  <div class="gimme-sidebar-nav-item">
-                      <a href="about.html">ABOUT US</a>
-                      <span class="icon">&nearrow;</span>
-                  </div>
-                  <div class="gimme-sidebar-nav-item">
-                      <a href="#footer">CONTACT US</a>
-                      <span class="icon">&nearrow;</span>
-                  </div>
-              </nav>
-              <button class="gimme-get-started-btn-mobile">
-                  <span>Login</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M9 5L16 12L9 19"/>
-                  </svg>
-              </button>
-          </div>
+    <div class="gimme-mobile-sidebar" id="mobileSidebar">
+        <div class="gimme-sidebar-header">
+            <button class="gimme-sidebar-close-btn" id="sidebarClose">CLOSE</button>
+        </div>
+        <nav class="gimme-sidebar-nav">
+            <div class="sidebar-nav-item-dropdown">
+                <div class="sidebar-nav-toggle" id="mobileProductsToggle">
+                    <span>PRODUCTS</span>
+                    <span class="icon" id="mobileProductsIcon">+</span>
+                </div>
+                <ul class="mobile-submenu" id="mobileProductsSubmenu">
+                    <?php foreach ($categories as $category): ?>
+                        <li><a href="product-page.php?category=<?= urlencode($category) ?>"><?= htmlspecialchars($category) ?> <span class="submenu-arrow">&nearrow;</span></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="gimme-sidebar-nav-item">
+                <a href="about.php">ABOUT US</a>
+                <span class="icon">&nearrow;</span>
+            </div>
+            <div class="gimme-sidebar-nav-item">
+                <a href="index.php#inquiry">INQUIRY</a>
+                <span class="icon">&nearrow;</span>
+            </div>
+        </nav>
+    </div>
 
-          <div class="gimme-overlay" id="sidebarOverlay"></div>
-          
+    <div class="gimme-overlay" id="sidebarOverlay"></div>
     <!-- =============================================
          END: Header Section
          ============================================= -->
 
     <?php
-        require_once 'connection.php';
-
         // Get the category from the URL parameter
         $category = isset($_GET['category']) ? $_GET['category'] : '';
         
@@ -364,70 +406,60 @@
         <?php endwhile; ?>
     </div>
 
-   <!-- footer  -->
-   <footer>
-      <div class="main-content">
-        <!-- About Us Section -->
-        <div class="left box" id="footer">
-          <h2>About us</h2>
-          <div class="content">
-            <p>Ooty Baker & Confectioner is a renowned bakery and confectionery establishment based in Bangalore, Karnataka. Known for its delectable range of baked goods and sweets, the company has been serving customers with quality products for several years. Their commitment to traditional recipes combined with modern baking techniques has made them a favorite among locals and tourists alike..</p>
-            <!-- Social Media Links -->
-            <div class="social">
-              <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/"><span class="fab fa-facebook-f"></span></a>
-              <a href="https://www.instagram.com/ootybakerandconfectioner/"><span class="fab fa-instagram"></span></a>
-            </div>
-          </div>
+    <!-- =============================================
+         START: Footer Section
+         Contact info and social links
+         ============================================= -->
+    <footer class="gimme-site-footer">
+        <div class="gimme-footer-top">
+            <nav class="gimme-footer-nav">
+                <ul class="gimme-nav-desktop">
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="index.php#inquiry">Inquiry</a></li>
+                </ul>
+            </nav>
         </div>
 
-        <!-- Contact Information Section -->
-        <div class="center box">
-          <h2>Address</h2>
-          <div class="content">
-            <div class="place">
-              <span class="fas fa-map-marker-alt"></span>
-              <span class="text">Ooty Baker & Confectioner #40,  Muniswammappa Layout,  Bengaluru, Hosur Road,  Hosur Road 1st Cross Road, Bommanahalli-560068</span>
+        <div class="gimme-footer-middle">
+            <div class="gimme-contact-info-section">
+                <h3 class="gimme-section-title">Contact Us</h3>
+                <div class="gimme-contact-details">
+                    <div class="gimme-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Bommanahalli, Bengaluru<br>Karnataka, India</p>
+                    </div>
+                    <div class="gimme-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>info@ootybaker.com</p>
+                    </div>
+                    <div class="gimme-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+91 1234567890</p>
+                    </div>
+                </div>
             </div>
-            <div class="phone">
-              <span class="fas fa-phone-alt"></span>
-              <span class="text">+07947120466</span>
-            </div>
-            <div class="email">
-              <span class="fas fa-envelope"></span>
-              <span class="text">abc@example.com</span>
-            </div>
-          </div>
         </div>
 
-        <!-- Contact Form Section -->
-        <div class="right box">
-          <h2>Contact us</h2>
-          <div class="content">
-            <form action="#">
-              <div class="email">
-                <div class="text">Email *</div>
-                <input type="email" required>
-              </div>
-              <div class="msg">
-                <div class="text">Message *</div>
-                <textarea rows="2" cols="25" required></textarea>
-              </div>
-              <div class="btn">
-                <button type="submit">Send</button>
-              </div>
-            </form>
-          </div>
+        <div class="gimme-footer-bottom">
+            <div class="gimme-social-media-section">
+                <h3 class="gimme-section-title">Follow Us</h3>
+                <div class="gimme-social-icons">
+                    <a href="https://www.facebook.com/people/Ooty-Baker-Confectioner/100065324206767/" class="gimme-social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="gimme-social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/ootybakerandconfectioner/" class="gimme-social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <p class="gimme-copyright">&copy; <?= date('Y') ?> Ooty Baker & Confectioner. All Rights Reserved.</p>
         </div>
-      </div>
-
-      <!-- Copyright Section -->
-      <div class="bottom">
-        <center>
-          <span class="far fa-copyright"></span><span> gimmie. All rights reserved.</span>
-        </center>
-      </div>
     </footer>
-    <!-- js script -->
+    <!-- =============================================
+         END: Footer Section
+         ============================================= -->
+
+    <!-- =============================================
+         START: JavaScript and Animation Libraries
+         ============================================= -->
     <script src="index.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
@@ -435,6 +467,8 @@
         offset: 1,
       });
     </script>
-
- </body>
+    <!-- =============================================
+         END: JavaScript and Animation Libraries
+         ============================================= -->
+  </body>
 </html> 
