@@ -67,7 +67,7 @@ foreach ($categories as $category) {
     <!-- AOS Animation Library -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="button-57-styles.css" />
   </head>
   <!-- =============================================
@@ -199,7 +199,7 @@ foreach ($categories as $category) {
           </div>
 
           <div class="wrapper">
-              <i class="fa-solid fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
+              <i class="fas fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
               <div class="carousel">
                   <?php foreach ($products as $product): ?>
                       <li class="card__article">
@@ -229,7 +229,7 @@ foreach ($categories as $category) {
                       </li>
                   <?php endforeach; ?>
               </div>
-              <i class="fa-solid fa-angle-right arrow-btn" data-direction="right" aria-label="Next items"></i>
+              <i class="fas fa-angle-right arrow-btn" data-direction="right" aria-label="Next items"></i>
           </div>
 
           <div class="view-more-container">

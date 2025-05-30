@@ -442,9 +442,9 @@ require_once 'auth-check.php';
                 <div class="card-header">
                     <h2 class="card__title"><?php echo htmlspecialchars($row['name']); ?></h2>
                     <?php if ($row['veg_status'] === 'Veg'): ?>
-                        <div class="veg-icon" title="Vegetarian"></div>
+                        <div class="veg-badge veg" title="Vegetarian"></div>
                     <?php else: ?>
-                        <div class="non-veg-icon" title="Non-Vegetarian"></div>
+                        <div class="veg-badge non-veg" title="Non-Vegetarian"></div>
                     <?php endif; ?>
                 </div>
 

@@ -924,22 +924,44 @@ a {
 }
 
 /* Vegetarian and non-vegetarian icons */
-.veg-icon, .non-veg-icon {
-    width: 26px;
-    height: 26px;
-    border: 1.5px solid;
-    border-radius: 3px;
-    margin-left: 1rem;
+.veg-badge {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 35px;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 4px;
+    z-index: 999;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.veg-icon {
-    border-color: #2E8B57;
-    background-color: #2E8B57;
+.veg-badge.veg {
+    border: 1px solid #2ecc71;
 }
 
-.non-veg-icon {
-    border-color: #C0392B;
-    background-color: #C0392B;
+.veg-badge.veg::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+}
+
+.veg-badge.non-veg {
+    border: 1px solid #e74c3c;
+}
+
+.veg-badge.non-veg::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background-color: #e74c3c;
+    border-radius: 50%;
 }
 
 /* Card description styles */
