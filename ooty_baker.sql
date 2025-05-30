@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2025 at 05:19 PM
+-- Generation Time: May 30, 2025 at 08:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,22 @@ CREATE TABLE `business_inquiries` (
   `address` text DEFAULT NULL,
   `additional_notes` text DEFAULT NULL,
   `business_nature` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `status` enum('new','in-progress','completed','cancelled') NOT NULL DEFAULT 'new',
+  `staff_note` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `business_inquiries`
+--
+
+INSERT INTO `business_inquiries` (`id`, `business_name`, `contact_person_name`, `email`, `phone`, `estimated_quantity`, `delivery_frequency`, `address`, `additional_notes`, `business_nature`, `status`, `staff_note`, `created_at`, `updated_at`) VALUES
+(6, 'Sweet Treats Wholesale', 'Anita Rao', 'anita@sweettreats.in', '9876543210', '50kg/month', 'Monthly', '123 MG Road, Bangalore, Karnataka', 'Interested in exclusive pricing for bulk orders.', 'Retail Distributor', 'in-progress', '', '2025-05-30 06:52:11', '2025-05-30 17:54:59'),
+(7, 'Healthy Harvest Mart', 'Rakesh Menon', 'rakesh@hhmart.com', '9123456789', '25kg/week', 'Weekly', 'Plot 17, Industrial Area, Kochi, Kerala', 'Prefers products with no added colors.', 'Organic Retailer', 'new', NULL, '2025-05-30 06:52:11', '2025-05-30 17:33:25'),
+(8, 'Candy World Co.', 'Shalini Iyer', 'shalini@candyworld.in', '9988776655', '100kg/month', 'Biweekly', 'Sector 14, Gurgaon, Haryana', 'Need custom branding options.', 'Supermarket Chain', 'new', NULL, '2025-05-30 06:52:11', '2025-05-30 17:33:25'),
+(9, 'Urban Snacks Pvt Ltd', 'Amit Chawla', 'amit@urbansnacks.com', '8899776655', '10kg/day', 'Daily', '34 Church Street, Mumbai, Maharashtra', 'Will require delivery before 10am.', 'Café Chain', 'new', NULL, '2025-05-30 06:52:11', '2025-05-30 17:33:25'),
+(10, 'Rainbow Delights', 'Priya Shah', 'priya@rainbowdelights.com', '9001122334', '75kg/month', 'Monthly', 'Banjara Hills, Hyderabad, Telangana', 'Looking for new jelly varieties.', 'Party Supply Store', 'new', NULL, '2025-05-30 06:52:11', '2025-05-30 17:33:25');
 
 -- --------------------------------------------------------
 
@@ -52,6 +66,30 @@ CREATE TABLE `business_inquiry_products` (
   `inquiry_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `business_inquiry_products`
+--
+
+INSERT INTO `business_inquiry_products` (`id`, `inquiry_id`, `product_id`) VALUES
+(57, 6, 1),
+(58, 6, 10),
+(59, 6, 15),
+(60, 7, 2),
+(61, 7, 6),
+(62, 7, 12),
+(63, 7, 18),
+(64, 8, 4),
+(65, 8, 5),
+(66, 8, 13),
+(67, 9, 7),
+(68, 9, 14),
+(69, 9, 21),
+(70, 9, 24),
+(71, 10, 16),
+(72, 10, 23),
+(73, 10, 25),
+(74, 10, 26);
 
 -- --------------------------------------------------------
 
@@ -124,7 +162,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `otp_code`, `otp_expiry`, `created_at`, `updated_at`) VALUES
-(1, 'clancymendonca@gmail.com', '$2y$10$c/S5LP.rPgjuxy0JzQ2QHu10pvjz2BRwp8TrM.gdH2lJkfiKN9Ur.', NULL, NULL, '2025-05-29 13:46:38', '2025-05-29 14:05:25');
+(1, 'clancymendonca@gmail.com', '$2y$10$c/S5LP.rPgjuxy0JzQ2QHu10pvjz2BRwp8TrM.gdH2lJkfiKN9Ur.', '564114', '2025-05-30 09:14:52', '2025-05-29 13:46:38', '2025-05-30 07:09:52');
 
 --
 -- Indexes for dumped tables
@@ -165,13 +203,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `business_inquiries`
 --
 ALTER TABLE `business_inquiries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `business_inquiry_products`
 --
 ALTER TABLE `business_inquiry_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `products`

@@ -37,6 +37,36 @@ require_once 'auth-check.php';
             min-height: 100vh; /* Ensure modal takes up full viewport height */
         }
 
+        /* Status badge styles */
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            text-transform: capitalize;
+            display: inline-block;
+        }
+
+        .status-new {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-in-progress {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-completed {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
         /* Ensure modal content is centered */
         #successModal .modal-content {
             text-align: center;
@@ -75,15 +105,15 @@ require_once 'auth-check.php';
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1.5rem;
+        padding: 1rem;
         background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         transition: transform 0.3s ease;
     }
 
     .counter-info:hover {
-        transform: translateY(-5px);
+        transform: translateY(-3px);
     }
 
     .counter-details {
@@ -91,28 +121,28 @@ require_once 'auth-check.php';
     }
 
     .counter-count {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: #2c3e50;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.3rem;
         transition: all 0.3s ease;
     }
 
     .counter-subtitle {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: #6c757d;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.3rem;
     }
 
     .counter-trend {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
+        gap: 0.3rem;
+        font-size: 0.75rem;
     }
 
     .counter-icon {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         color: #40aad1;
         opacity: 0.8;
     }
@@ -139,6 +169,19 @@ require_once 'auth-check.php';
     .counter-count.animate {
         animation: countUp 0.5s ease-out;
     }
+
+    .table-button {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%; /* Ensure the container takes full height */
+        gap: 5px; /* Adds a small gap between buttons */
+    }
+
+    .box-body table td {
+        vertical-align: middle;
+        padding: 20px 0;
+    }
     </style>
     
 
@@ -157,7 +200,7 @@ require_once 'auth-check.php';
                     </div>
                     <div class="logo-text">
                         <h1>Gimmie</h1>
-                        <span>Bakery & Confectionery</span>
+                        <span>Ooty Bakery & Confectionery</span>
                     </div>
                 </a>
             </div>
@@ -256,8 +299,8 @@ require_once 'auth-check.php';
                                         <div class="counter-subtitle">Total Business Inquiries</div>
                                         <div class="counter-trend">
                                             <?php
-                                                // Get count from previous period (e.g., last 7 days)
-                                                $result = $con->query("SELECT COUNT(*) as prev_total FROM business_inquiries WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                // Get count from previous month
+                                                $result = $con->query("SELECT COUNT(*) as prev_total FROM business_inquiries WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 MONTH)");
                                                 $prev_count = $result->fetch_assoc();
                                                 $trend = $count['total'] - $prev_count['prev_total'];
                                                 $trend_icon = $trend >= 0 ? 'bx-up-arrow-alt' : 'bx-down-arrow-alt';
@@ -265,7 +308,7 @@ require_once 'auth-check.php';
                                             ?>
                                             <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
                                             <span class="<?php echo $trend_color; ?>">
-                                                <?php echo abs($trend); ?> this week
+                                                <?php echo $prev_count['prev_total']; ?> last month
                                             </span>
                                         </div>
                                     </div>
@@ -275,6 +318,300 @@ require_once 'auth-check.php';
                                 </div>
                             </div>
                             <!-- END COUNTER -->
+                        </div>
+                    </div>
+
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- New Inquiries This Week -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    New Inquiries This Week
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-details">
+                                        <div class="counter-count">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND status = 'new'");
+                                                $count = $result->fetch_assoc();
+                                                echo $count['total'];
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">New Inquiries</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as prev_total FROM business_inquiries WHERE created_at >= DATE_SUB(NOW(), INTERVAL 14 DAY) AND created_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND status = 'new'");
+                                                $prev_count = $result->fetch_assoc();
+                                                $trend = $count['total'] - $prev_count['prev_total'];
+                                                $trend_icon = $trend >= 0 ? 'bx-up-arrow-alt' : 'bx-down-arrow-alt';
+                                                $trend_color = $trend >= 0 ? 'text-success' : 'text-danger';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                <?php echo $prev_count['prev_total']; ?> last week
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="counter-icon">
+                                        <i class='bx bx-plus-circle'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- In Progress Inquiries -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    In Progress Inquiries
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-details">
+                                        <div class="counter-count">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries WHERE status = 'in-progress'");
+                                                $count = $result->fetch_assoc();
+                                                echo $count['total'];
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">Active Inquiries</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries WHERE status = 'in-progress' AND updated_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $recent = $result->fetch_assoc();
+                                                $trend = $recent['total'];
+                                                $trend_icon = 'bx-time';
+                                                $trend_color = 'text-warning';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                <?php echo $trend; ?> updated this week
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="counter-icon">
+                                        <i class='bx bx-loader-alt'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- Completed Inquiries This Week -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    Completed This Week
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-details">
+                                        <div class="counter-count">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries WHERE status = 'completed' AND updated_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $count = $result->fetch_assoc();
+                                                echo $count['total'];
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">Completed Inquiries</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as prev_total FROM business_inquiries WHERE status = 'completed' AND updated_at >= DATE_SUB(NOW(), INTERVAL 14 DAY) AND updated_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $prev_count = $result->fetch_assoc();
+                                                $trend = $count['total'] - $prev_count['prev_total'];
+                                                $trend_icon = $trend >= 0 ? 'bx-up-arrow-alt' : 'bx-down-arrow-alt';
+                                                $trend_color = $trend >= 0 ? 'text-success' : 'text-danger';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                <?php echo abs($trend); ?> vs last week
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="counter-icon">
+                                        <i class='bx bx-check-circle'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- Cancelled Inquiries This Week -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    Cancelled This Week
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-details">
+                                        <div class="counter-count">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as total FROM business_inquiries WHERE status = 'cancelled' AND updated_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $count = $result->fetch_assoc();
+                                                echo $count['total'];
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">Cancelled Inquiries</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                $result = $con->query("SELECT COUNT(*) as prev_total FROM business_inquiries WHERE status = 'cancelled' AND updated_at >= DATE_SUB(NOW(), INTERVAL 14 DAY) AND updated_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $prev_count = $result->fetch_assoc();
+                                                $trend = $count['total'] - $prev_count['prev_total'];
+                                                $trend_icon = $trend >= 0 ? 'bx-up-arrow-alt' : 'bx-down-arrow-alt';
+                                                $trend_color = $trend >= 0 ? 'text-danger' : 'text-success';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                <?php echo abs($trend); ?> vs last week
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="counter-icon">
+                                        <i class='bx bx-x-circle'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- Average Response Time -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    Average Response Time
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-details">
+                                        <div class="counter-count">
+                                            <?php
+                                                $result = $con->query("SELECT AVG(TIMESTAMPDIFF(HOUR, created_at, updated_at)) as avg_time FROM business_inquiries WHERE status != 'new'");
+                                                $avg = $result->fetch_assoc();
+                                                echo round($avg['avg_time'], 1) . 'h';
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">Hours to First Response</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                $result = $con->query("SELECT AVG(TIMESTAMPDIFF(HOUR, created_at, updated_at)) as avg_time FROM business_inquiries WHERE status != 'new' AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $recent = $result->fetch_assoc();
+                                                $trend = round($recent['avg_time'], 1);
+                                                $trend_icon = 'bx-time';
+                                                $trend_color = 'text-info';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                <?php echo $trend; ?>h this week
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="counter-icon">
+                                        <i class='bx bx-timer'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- Conversion Rate -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    Conversion Rate
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-details">
+                                        <div class="counter-count">
+                                            <?php
+                                                $result = $con->query("SELECT 
+                                                    (COUNT(CASE WHEN status = 'completed' THEN 1 END) * 100.0 / COUNT(*)) as conversion_rate 
+                                                    FROM business_inquiries 
+                                                    WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)");
+                                                $rate = $result->fetch_assoc();
+                                                echo round($rate['conversion_rate'], 1) . '%';
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">Last 30 Days</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                $result = $con->query("SELECT 
+                                                    (COUNT(CASE WHEN status = 'completed' THEN 1 END) * 100.0 / COUNT(*)) as conversion_rate 
+                                                    FROM business_inquiries 
+                                                    WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                                $recent = $result->fetch_assoc();
+                                                $trend = round($recent['conversion_rate'], 1);
+                                                $trend_icon = 'bx-trending-up';
+                                                $trend_color = 'text-success';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                <?php echo $trend; ?>% this week
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="counter-icon">
+                                        <i class='bx bx-line-chart'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="box box-hover">
+                            <!-- Estimated Total Value -->
+                            <div class="counter">
+                                <div class="counter-title">
+                                    Estimated Value
+                                </div>
+                                <div class="counter-info">
+                                    <div class="counter-details">
+                                        <div class="counter-count">
+                                            <?php
+                                                $result = $con->query("
+                                                    SELECT SUM(p.price) as total_value 
+                                                    FROM business_inquiries bi
+                                                    JOIN business_inquiry_products bip ON bi.id = bip.inquiry_id
+                                                    JOIN products p ON bip.product_id = p.id
+                                                    WHERE bi.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+                                                ");
+                                                $value = $result->fetch_assoc();
+                                                echo '₹' . number_format($value['total_value'], 0);
+                                            ?>
+                                        </div>
+                                        <div class="counter-subtitle">This Week's Potential</div>
+                                        <div class="counter-trend">
+                                            <?php
+                                                $result = $con->query("
+                                                    SELECT SUM(p.price) as total_value 
+                                                    FROM business_inquiries bi
+                                                    JOIN business_inquiry_products bip ON bi.id = bip.inquiry_id
+                                                    JOIN products p ON bip.product_id = p.id
+                                                    WHERE bi.created_at >= DATE_SUB(NOW(), INTERVAL 14 DAY) 
+                                                    AND bi.created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)
+                                                ");
+                                                $prev_value = $result->fetch_assoc();
+                                                $trend = $value['total_value'] - $prev_value['total_value'];
+                                                $trend_icon = $trend >= 0 ? 'bx-up-arrow-alt' : 'bx-down-arrow-alt';
+                                                $trend_color = $trend >= 0 ? 'text-success' : 'text-danger';
+                                            ?>
+                                            <i class='bx <?php echo $trend_icon; ?> <?php echo $trend_color; ?>'></i>
+                                            <span class="<?php echo $trend_color; ?>">
+                                                ₹<?php echo number_format(abs($trend), 0); ?> vs last week
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="counter-icon">
+                                        <i class='bx bx-rupee'></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -300,7 +637,7 @@ require_once 'auth-check.php';
                                             <th>Phone</th>
                                             <th>Quantity</th>
                                             <th>Frequency</th>
-                                            <th>Nature</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>    
                                     </thead>
@@ -317,7 +654,11 @@ require_once 'auth-check.php';
                                             <td><?= $row['phone'] ?></td>
                                             <td><?= $row['estimated_quantity'] ?></td>
                                             <td><?= $row['delivery_frequency'] ?></td>
-                                            <td><?= $row['business_nature'] ?></td>
+                                            <td>
+                                                <span class="status-badge status-<?= strtolower(htmlspecialchars($row['status'])) ?>">
+                                                    <?= ucfirst(htmlspecialchars($row['status'])) ?>
+                                                </span>
+                                            </td>
                                             <td>
                                                 <div class="table-button">
                                                     <button class="blue-button btn btn-outline">
@@ -681,18 +1022,95 @@ require_once 'auth-check.php';
     </script>
 
     <script>
-        // Add animation when counter updates
-        function updateCounter(newValue) {
-            const counter = document.getElementById('inquiryCounter');
-            counter.classList.add('animate');
-            counter.textContent = newValue;
-            setTimeout(() => counter.classList.remove('animate'), 500);
+        // Function to update all counters
+        function updateAllCounters() {
+            fetch('get_dashboard_stats.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Update Total Inquiries
+                    document.querySelector('#inquiryCounter').textContent = data.total_inquiries;
+                    document.querySelector('#inquiryCounter').closest('.counter-trend').querySelector('span').textContent = data.last_month_inquiries + ' last month';
+                    
+                    // Update New Inquiries
+                    const newInquiriesCounter = document.querySelector('.counter-title:contains("New Inquiries This Week")').closest('.counter').querySelector('.counter-count');
+                    newInquiriesCounter.textContent = data.new_inquiries;
+                    newInquiriesCounter.closest('.counter-trend').querySelector('span').textContent = data.last_week_new_inquiries + ' last week';
+                    
+                    // Update In Progress
+                    const inProgressCounter = document.querySelector('.counter-title:contains("In Progress Inquiries")').closest('.counter').querySelector('.counter-count');
+                    inProgressCounter.textContent = data.in_progress;
+                    inProgressCounter.closest('.counter-trend').querySelector('span').textContent = data.updated_this_week + ' updated this week';
+                    
+                    // Update Completed
+                    const completedCounter = document.querySelector('.counter-title:contains("Completed This Week")').closest('.counter').querySelector('.counter-count');
+                    completedCounter.textContent = data.completed;
+                    completedCounter.closest('.counter-trend').querySelector('span').textContent = data.completed_vs_last_week + ' vs last week';
+                    
+                    // Update Cancelled
+                    const cancelledCounter = document.querySelector('.counter-title:contains("Cancelled This Week")').closest('.counter').querySelector('.counter-count');
+                    cancelledCounter.textContent = data.cancelled;
+                    cancelledCounter.closest('.counter-trend').querySelector('span').textContent = data.cancelled_vs_last_week + ' vs last week';
+                    
+                    // Update Response Time
+                    const responseTimeCounter = document.querySelector('.counter-title:contains("Average Response Time")').closest('.counter').querySelector('.counter-count');
+                    responseTimeCounter.textContent = data.avg_response_time + 'h';
+                    responseTimeCounter.closest('.counter-trend').querySelector('span').textContent = data.this_week_response_time + 'h this week';
+                    
+                    // Update Conversion Rate
+                    const conversionCounter = document.querySelector('.counter-title:contains("Conversion Rate")').closest('.counter').querySelector('.counter-count');
+                    conversionCounter.textContent = data.conversion_rate + '%';
+                    conversionCounter.closest('.counter-trend').querySelector('span').textContent = data.this_week_conversion + '% this week';
+                    
+                    // Update Estimated Value
+                    const valueCounter = document.querySelector('.counter-title:contains("Estimated Value")').closest('.counter').querySelector('.counter-count');
+                    valueCounter.textContent = '₹' + data.estimated_value;
+                    valueCounter.closest('.counter-trend').querySelector('span').textContent = '₹' + data.value_vs_last_week + ' vs last week';
+                    
+                    // Update trend icons and colors
+                    updateTrendIndicators();
+                })
+                .catch(error => console.error('Error fetching dashboard stats:', error));
         }
 
-        // Update counter when inquiries are deleted
-        document.addEventListener('inquiryDeleted', function(e) {
-            const currentCount = parseInt(document.getElementById('inquiryCounter').textContent);
-            updateCounter(currentCount - 1);
+        // Function to update trend indicators
+        function updateTrendIndicators() {
+            document.querySelectorAll('.counter-trend').forEach(trend => {
+                const count = parseInt(trend.querySelector('.counter-count').textContent);
+                const lastPeriod = parseInt(trend.querySelector('span').textContent);
+                const trend = count - lastPeriod;
+                
+                const icon = trend.querySelector('i');
+                const span = trend.querySelector('span');
+                
+                if (trend >= 0) {
+                    icon.className = 'bx bx-up-arrow-alt text-success';
+                    span.className = 'text-success';
+                } else {
+                    icon.className = 'bx bx-down-arrow-alt text-danger';
+                    span.className = 'text-danger';
+                }
+            });
+        }
+
+        // Set up Server-Sent Events for real-time updates
+        function setupSSE() {
+            const evtSource = new EventSource('dashboard_events.php');
+            
+            evtSource.onmessage = function(event) {
+                updateAllCounters();
+            };
+            
+            evtSource.onerror = function(err) {
+                console.error("EventSource failed:", err);
+                // Attempt to reconnect after 5 seconds
+                setTimeout(setupSSE, 5000);
+            };
+        }
+
+        // Initial update and setup SSE
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAllCounters();
+            setupSSE();
         });
     </script>
 

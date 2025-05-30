@@ -17,7 +17,7 @@ try {
     $sheet->fromArray([
         'Business Name', 'Contact Person', 'Email', 'Phone', 'Products Interested',
         'Estimated Quantity', 'Delivery Frequency', 'Address', 'Additional Notes',
-        'Business Nature', 'Created At'
+        'Business Nature', 'Status', 'Staff Note', 'Created At'
     ], null, 'A1');
 
     // Query inquiries + joined products
@@ -48,13 +48,15 @@ try {
             $inquiry['address'],
             $inquiry['additional_notes'],
             $inquiry['business_nature'],
+            $inquiry['status'],
+            $inquiry['staff_note'],
             $inquiry['created_at']
         ], null, 'A' . $row);
         $row++;
     }
 
     // Auto-size all columns
-    foreach (range('A', 'K') as $col) {
+    foreach (range('A', 'M') as $col) {
         $sheet->getColumnDimension($col)->setAutoSize(true);
     }
 

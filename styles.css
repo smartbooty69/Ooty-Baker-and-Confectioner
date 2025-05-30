@@ -731,7 +731,7 @@ section {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
-  background-color: #aaa;
+  background-color: #e5fee8;
   border-radius: 5%;
 }
 

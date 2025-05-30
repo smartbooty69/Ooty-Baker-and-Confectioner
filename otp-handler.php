@@ -50,18 +50,25 @@ if ($action === 'send-otp') {
         $mail->setFrom('clancymendonca@gmail.com', 'Ooty Baker and Confectioner');
         $mail->addAddress($email);
         $mail->Subject = 'Password Reset Request - Ooty Baker and Confectioner';
-        $mail->Body = "Dear Customer,
-
-You have requested to reset your password for your Ooty Baker and Confectioner account.
-
-Your One-Time Password (OTP) is: $otp
-
-This OTP will expire in 5 minutes for security reasons.
-
-If you did not request this password reset, please ignore this email or contact our support team.
-
-Best regards,
-Ooty Baker and Confectioner Team";
+        $mail->isHTML(true);
+        $mail->Body = '<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+  <div style="margin:50px auto;width:70%;padding:20px 0">
+    <div style="border-bottom:1px solid #eee">
+      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Ooty Baker and Confectioner</a>
+    </div>
+    <p style="font-size:1.1em">Hi,</p>
+    <p>You have requested to reset your password for your Ooty Baker and Confectioner account. Use the following OTP to complete your password reset. OTP is valid for 5 minutes.</p>
+    <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">' . $otp . '</h2>
+    <p style="font-size:0.9em;">If you did not request this password reset, please ignore this email or contact our support team.</p>
+    <p style="font-size:0.9em;">Regards,<br />Ooty Baker and Confectioner Team</p>
+    <hr style="border:none;border-top:1px solid #eee" />
+    <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
+      <p>Ooty Baker and Confectioner</p>
+      <p>Ooty, Tamil Nadu</p>
+      <p>India</p>
+    </div>
+  </div>
+</div>';
 
         $mail->send();
         $_SESSION['reset_email'] = $email;
