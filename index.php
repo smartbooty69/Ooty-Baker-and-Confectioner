@@ -128,7 +128,7 @@ foreach ($categories as $category) {
                 </ul>
             </div>
             <div class="gimme-sidebar-nav-item">
-                <a href="about.html">ABOUT US</a>
+                <a href="about.php">ABOUT US</a>
                 <span class="icon">&nearrow;</span>
             </div>
             <div class="gimme-sidebar-nav-item">
@@ -173,7 +173,7 @@ foreach ($categories as $category) {
                     <a href="#" aria-label="Twitter"><i class="fab fa-linkedin"></i></a>
                     <a href="https://www.instagram.com/ootybakerandconfectioner/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
-                <a href="about.html" class="btn">Know More</a>
+                <a href="about.php" class="btn">Know More</a>
 
             </div>
         </section>
@@ -359,7 +359,7 @@ foreach ($categories as $category) {
             <nav class="gimme-footer-nav">
                 <ul class="gimme-nav-desktop">
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About</a></li>
+                    <li><a href="#about">About</a></li>
                     <li><a href="#inquiry">Inquiry</a></li>
                 </ul>
             </nav>

@@ -289,7 +289,7 @@ if ($result) {
                     <?php endforeach; ?>
                 </div>
             </div>
-            <a href="about.html">About Us</a>
+            <a href="about.php">About Us</a>
             <a href="index.php#inquiry">Inquiry</a>
             <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
                 <span>Login</span>
@@ -415,7 +415,7 @@ if ($result) {
             <nav class="gimme-footer-nav">
                 <ul class="gimme-nav-desktop">
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="about.php">About</a></li>
                     <li><a href="index.php#inquiry">Inquiry</a></li>
                 </ul>
             </nav>

@@ -33,14 +33,14 @@ if ($result) {
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ootybaker.com/about.html">
+    <meta property="og:url" content="https://ootybaker.com/about.php">
     <meta property="og:title" content="About Us - Ooty Baker & Confectioner | Premium Bakery in Bengaluru">
     <meta property="og:description" content="Discover the story of Ooty Baker & Confectioner, a premium bakery in Bommanahalli, Bengaluru. Learn about our journey, our commitment to quality, and our wide range of delectable offerings.">
     <meta property="og:image" content="images/brand-logo.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ootybaker.com/about.html">
+    <meta property="twitter:url" content="https://ootybaker.com/about.php">
     <meta property="twitter:title" content="About Us - Ooty Baker & Confectioner | Premium Bakery in Bengaluru">
     <meta property="twitter:description" content="Discover the story of Ooty Baker & Confectioner, a premium bakery in Bommanahalli, Bengaluru. Learn about our journey, our commitment to quality, and our wide range of delectable offerings.">
     <meta property="twitter:image" content="images/brand-logo.png">
@@ -88,7 +88,7 @@ if ($result) {
                     <?php endforeach; ?>
                 </div>
             </div>
-            <a href="about.html">About Us</a>
+            <a href="about.php">About Us</a>
             <a href="index.php#inquiry">Inquiry</a>
             <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
                 <span>Login</span>
