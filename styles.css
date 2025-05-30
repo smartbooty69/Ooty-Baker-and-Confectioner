@@ -26,13 +26,7 @@ a {
     color: inherit;
 }
 
-button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 0;
-    font-family: inherit;
-}
+
 
 ul {
     list-style: none;
@@ -2403,44 +2397,48 @@ html {
   }
 }
 
-/* Button 57 Styles */
-.button-57 {
+/* ==================== */
+/* Button-57 Styles */
+/* ==================== */
+button.gimme-button-57 {
   position: relative;
   overflow: hidden;
   border: 1px solid #18181a;
   color: #18181a;
   display: inline-block;
-  font-size: 18px;
-  line-height: 18px;
-  padding: 15px 35px 14px; /* Reduced vertical padding from 25px/24px to 15px/14px */
+  font-size: 15px;
+  line-height: 15px;
+  padding: 18px 18px 17px;
   text-decoration: none;
   cursor: pointer;
   background: #fff;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  border-radius: 50px;
 }
 
-.button-57 span:first-child {
+button.gimme-button-57 span:first-child {
   position: relative;
   transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
   z-index: 10;
 }
 
-.button-57 span:last-child {
+button.gimme-button-57 span:last-child {
   color: white;
   display: block;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 100%); /* Position initially below the button */
+  bottom: 0;
   transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
   z-index: 100;
   opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translateY(225%) translateX(-50%);
+  height: 14px;
+  line-height: 13px;
 }
 
-.button-57:after {
+button.gimme-button-57:after {
   content: "";
   position: absolute;
   bottom: -50%;
@@ -2452,18 +2450,24 @@ html {
   transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
   transform: skewY(9.3deg) scaleY(0);
   z-index: 50;
-  border-radius: 50px;
 }
 
-.button-57:hover:after {
+button.gimme-button-57:hover:after {
   transform-origin: bottom center;
   transform: skewY(9.3deg) scaleY(2);
 }
 
-.button-57:hover span:last-child {
+button.gimme-button-57:hover span:last-child {
+  transform: translateX(-50%) translateY(-100%);
   opacity: 1;
-  /* Target the perfect center on hover */
-  transform: translate(-50%, -50%); /* Standard centering */
   transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
-  /* top and left are already 50% from the base style */
 }
+
+/* View More button container */
+.view-more-container {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 0 7%;
+  margin-bottom: 2rem;
+}
+
