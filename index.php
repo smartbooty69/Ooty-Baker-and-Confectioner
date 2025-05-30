@@ -19,7 +19,7 @@ foreach ($categories as $category) {
 // =============================================
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <!-- =============================================
        START: Head Section
        Meta tags, title, and resources
@@ -27,7 +27,32 @@ foreach ($categories as $category) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OOtys Website</title>
+    <title>Ooty Baker & Confectioner - Premium Bakery in Bengaluru</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Ooty Baker & Confectioner - Premium Bakery in Bengaluru">
+    <meta name="description" content="Welcome to Ooty Baker & Confectioner, your premium bakery in Bommanahalli, Bengaluru. We offer handcrafted Jelly, Candy, and Coated Candy made with love and finest ingredients.">
+    <meta name="keywords" content="Ooty Baker, Confectioner, Bakery, Bengaluru, Bommanahalli, Jelly, Candy, Coated Candy, Premium Bakery">
+    <meta name="author" content="Ooty Baker & Confectioner">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ootybaker.com/">
+    <meta property="og:title" content="Ooty Baker & Confectioner - Premium Bakery in Bengaluru">
+    <meta property="og:description" content="Welcome to Ooty Baker & Confectioner, your premium bakery in Bommanahalli, Bengaluru. We offer handcrafted Jelly, Candy, and Coated Candy made with love and finest ingredients.">
+    <meta property="og:image" content="images/brand-logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ootybaker.com/">
+    <meta property="twitter:title" content="Ooty Baker & Confectioner - Premium Bakery in Bengaluru">
+    <meta property="twitter:description" content="Welcome to Ooty Baker & Confectioner, your premium bakery in Bommanahalli, Bengaluru. We offer handcrafted Jelly, Candy, and Coated Candy made with love and finest ingredients.">
+    <meta property="twitter:image" content="images/brand-logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/brand-logo.png">
+    <link rel="apple-touch-icon" href="images/brand-logo.png">
     
     <!-- External CSS Files -->
     <link rel="stylesheet" href="styles.css" />
