@@ -378,21 +378,60 @@ section {
 /* Button Styles */
 /* ==================== */
 .btn {
-  display: inline-block;
-  padding: 13px 32px;
-  background: var(--main-color);
-  border: 2px solid transparent;
-  border-radius: 7px;
-  color: var(--text-color);
-  font-size: 15px;
+  --b: 3px;   /* border thickness */
+  --s: .45em; /* size of the corner */
+  --color: #000000;
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 1.1em;
   font-weight: 500;
-  transition: all 0.6s ease;
-  margin-right: 20px;
+  letter-spacing: 0.5px;
+  border: 0;
+  border-radius: 0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-/* Button hover effect */
-.btn:hover {
-  transform: scale(1.1);
+.btn:hover,
+.btn:focus-visible {
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  background: var(--color);
+  color: #fff;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .btn {
+    font-size: 1em;
+    padding: calc(.4em + var(--s)) calc(.8em + var(--s));
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    font-size: 0.95em;
+    padding: calc(.35em + var(--s)) calc(.7em + var(--s));
+  }
 }
 
 /* View More button container */
@@ -535,9 +574,14 @@ section {
 
 /* Adjusts for smaller screens (e.g., tablets) */
 @media (max-width: 768px) {
+  .about-section-wrapper {
+    min-height: auto;
+    padding: 40px 20px;
+  }
+  
   .about-content-box {
-      padding: 30px;
-      max-width: 700px; /* Narrower for tablets */
+    padding: 30px;
+    max-width: 700px;
   }
 
   .about-content-box h1 {
@@ -643,13 +687,14 @@ section {
   display: flex;
   position: relative;
   width: 100%;
+  height: 100%;
 }
 
 /* Individual slide styles */
 img.slide {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -702,6 +747,34 @@ img.slide.active {
 .navigation button:hover {
   background-color: #fff;
   color: #000;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .slider {
+    height: 300px;
+    margin-top: 10%;
+    top: 0;
+  }
+
+  .navigation button {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .slider {
+    height: 200px;
+    border-radius: 0;
+  }
+
+  .navigation button {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
 }
 
 /* ==================== */
@@ -1884,17 +1957,123 @@ html {
 /* about us - know more btn */
 /* ==================== */
 .btn {
-  display: inline-block;           /* Makes the anchor behave like a block element but sit inline */
-  padding: 12px 24px;              /* Adds space inside the button (top/bottom: 12px, left/right: 24px) */
-  background-color: #28a745;       /* Sets the background color to green */
-  color: white;                    /* Sets the text color to white */
-  text-decoration: none;           /* Removes the underline from the link */
-  border-radius: 6px;              /* Rounds the corners of the button */
-  font-weight: bold;               /* Makes the text bold */
-  transition: background-color 0.3s ease; /* Smooth transition when background color changes on hover */
-  margin-top: 20px;
+  --b: 3px;   /* border thickness */
+  --s: .45em; /* size of the corner */
+  --color: #000000;
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 1.1em;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border: 0;
+  border-radius: 0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-.btn:hover {
-  background-color: #218838;       /* Darker green color on hover for better visual feedback */
+.btn:hover,
+.btn:focus-visible {
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  background: var(--color);
+  color: #fff;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .btn {
+    font-size: 1em;
+    padding: calc(.4em + var(--s)) calc(.8em + var(--s));
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    font-size: 0.95em;
+    padding: calc(.35em + var(--s)) calc(.7em + var(--s));
+  }
+}
+
+/* Button 57 Styles */
+.button-57 {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #18181a;
+  color: #18181a;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 18px;
+  padding: 15px 35px 14px; /* Reduced vertical padding from 25px/24px to 15px/14px */
+  text-decoration: none;
+  cursor: pointer;
+  background: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  border-radius: 50px;
+}
+
+.button-57 span:first-child {
+  position: relative;
+  transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 10;
+}
+
+.button-57 span:last-child {
+  color: white;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 100%); /* Position initially below the button */
+  transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+  z-index: 100;
+  opacity: 0;
+}
+
+.button-57:after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  transform-origin: bottom center;
+  transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+  transform: skewY(9.3deg) scaleY(0);
+  z-index: 50;
+  border-radius: 50px;
+}
+
+.button-57:hover:after {
+  transform-origin: bottom center;
+  transform: skewY(9.3deg) scaleY(2);
+}
+
+.button-57:hover span:last-child {
+  opacity: 1;
+  /* Target the perfect center on hover */
+  transform: translate(-50%, -50%); /* Standard centering */
+  transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+  /* top and left are already 50% from the base style */
 }

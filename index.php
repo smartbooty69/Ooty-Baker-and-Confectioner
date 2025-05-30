@@ -139,7 +139,7 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
                     <a href="#" aria-label="Twitter"><i class="fab fa-linkedin"></i></a>
                     <a href="https://www.instagram.com/ootybakerandconfectioner/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
-                <a href="about.html" class="btn">know More</a>
+                <a href="about.html" class="btn">Know More</a>
 
             </div>
         </section>
@@ -199,7 +199,10 @@ Welcome to Ooty Baker & Confectioner, where tradition meets taste and every bite
           </div>
 
           <div class="view-more-container">
-              <a href="product-page.php?category=<?= urlencode($category) ?>" class="view-more-btn">View More <?= $category ?> Products</a>
+              <button class="button-57" role="button" onclick="window.location.href='product-page.php?category=<?= urlencode($category) ?>'">
+                  <span class="text">View More</span>
+                  <span><?= $category ?></span>
+              </button>
           </div>
           
           <div class="section-divider-large"></div>

@@ -517,26 +517,17 @@ require_once 'auth-check.php';
         }
 
         function exportInquiries() {
-            // Show loading state
             const exportBtn = document.querySelector('.box-actions button:last-child');
             const originalText = exportBtn.innerHTML;
             exportBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Exporting...';
             exportBtn.disabled = true;
 
-            fetch('export_inquiries.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
+            fetch('export_inquiries.php') // ← GET by default, no JSON header
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Export failed');
-                }
+                if (!response.ok) throw new Error('Export failed');
                 return response.blob();
             })
             .then(blob => {
-                // Create download link
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -552,11 +543,11 @@ require_once 'auth-check.php';
                 showMessage('Error exporting inquiries: ' + error.message, false);
             })
             .finally(() => {
-                // Reset button state
                 exportBtn.innerHTML = originalText;
                 exportBtn.disabled = false;
             });
         }
+
     </script>
     <script>
         document.getElementById('deleteAllBtn').addEventListener('click', function() {

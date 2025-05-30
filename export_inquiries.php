@@ -1,103 +1,78 @@
 <?php
-require_once 'connection.php';
-
-// Set headers for Excel file download
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="business_inquiries_' . date('Y-m-d') . '.xlsx"');
-header('Cache-Control: max-age=0');
-header('Pragma: public');
-
-// Include PhpSpreadsheet library
+require_once 'connection.php'; // uses $conn
 require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 try {
-    // Create new Spreadsheet object
+    // Clean output buffer to prevent corruption
+    if (ob_get_length()) ob_end_clean();
+    ini_set('display_errors', 0); // prevent error output in Excel stream
+
     $spreadsheet = new Spreadsheet();
-
-    // Set document properties
-    $spreadsheet->getProperties()
-        ->setCreator("Ooty Baker")
-        ->setLastModifiedBy("Ooty Baker")
-        ->setTitle("Business Inquiries")
-        ->setSubject("Business Inquiries")
-        ->setDescription("Export of business inquiries from the system.");
-
-    // Create the worksheet
     $sheet = $spreadsheet->getActiveSheet();
-    $sheet->setTitle('Business Inquiries');
 
     // Add headers
-    $sheet->setCellValue('A1', 'Business Name')
-          ->setCellValue('B1', 'Contact Person')
-          ->setCellValue('C1', 'Email')
-          ->setCellValue('D1', 'Phone')
-          ->setCellValue('E1', 'Estimated Quantity')
-          ->setCellValue('F1', 'Delivery Frequency')
-          ->setCellValue('G1', 'Business Nature')
-          ->setCellValue('H1', 'Address')
-          ->setCellValue('I1', 'Additional Notes')
-          ->setCellValue('J1', 'Inquiry Date');
+    $sheet->fromArray([
+        'Business Name', 'Contact Person', 'Email', 'Phone', 'Products Interested',
+        'Estimated Quantity', 'Delivery Frequency', 'Address', 'Additional Notes',
+        'Business Nature', 'Created At'
+    ], null, 'A1');
 
-    // Style for headers
-    $headerStyle = [
-        'font' => ['bold' => true],
-        'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
-        'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN]],
-        'fill' => [
-            'fillType' => Fill::FILL_SOLID,
-            'startColor' => ['rgb' => 'E6E6E6']
-        ]
-    ];
-    $sheet->getStyle('A1:J1')->applyFromArray($headerStyle);
+    // Query inquiries + joined products
+    $query = "SELECT bi.*, GROUP_CONCAT(p.name SEPARATOR ', ') AS products
+              FROM business_inquiries bi
+              LEFT JOIN business_inquiry_products bip ON bi.id = bip.inquiry_id
+              LEFT JOIN products p ON bip.product_id = p.id
+              GROUP BY bi.id
+              ORDER BY bi.created_at DESC";
 
-    // Fetch data from database
-    $query = "SELECT * FROM business_inquiries ORDER BY created_at DESC";
-    $result = $con->query($query);
+    $result = $conn->query($query); // ✅ using $conn from connection.php
 
-    // Populate data rows
+    if (!$result) {
+        throw new Exception("Query failed: " . $conn->error);
+    }
+
+    // Populate rows
     $row = 2;
     while ($inquiry = $result->fetch_assoc()) {
-        $sheet->setCellValue('A'.$row, $inquiry['business_name'])
-              ->setCellValue('B'.$row, $inquiry['contact_person_name'])
-              ->setCellValue('C'.$row, $inquiry['email'])
-              ->setCellValue('D'.$row, $inquiry['phone'])
-              ->setCellValue('E'.$row, $inquiry['estimated_quantity'])
-              ->setCellValue('F'.$row, $inquiry['delivery_frequency'])
-              ->setCellValue('G'.$row, $inquiry['business_nature'])
-              ->setCellValue('H'.$row, $inquiry['address'])
-              ->setCellValue('I'.$row, $inquiry['additional_notes'])
-              ->setCellValue('J'.$row, $inquiry['created_at']);
-        
+        $sheet->fromArray([
+            $inquiry['business_name'],
+            $inquiry['contact_person_name'],
+            $inquiry['email'],
+            $inquiry['phone'],
+            $inquiry['products'],
+            $inquiry['estimated_quantity'],
+            $inquiry['delivery_frequency'],
+            $inquiry['address'],
+            $inquiry['additional_notes'],
+            $inquiry['business_nature'],
+            $inquiry['created_at']
+        ], null, 'A' . $row);
         $row++;
     }
 
-    // Auto-size columns
-    foreach(range('A','J') as $columnID) {
-        $sheet->getColumnDimension($columnID)->setAutoSize(true);
+    // Auto-size all columns
+    foreach (range('A', 'K') as $col) {
+        $sheet->getColumnDimension($col)->setAutoSize(true);
     }
 
-    // Create Excel file
-    $writer = new Xlsx($spreadsheet);
-    
-    // Clear any previous output
-    if (ob_get_length()) {
-        ob_end_clean();
-    }
-    
+    // Final headers for download
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="business_inquiries_' . date('Y-m-d') . '.xlsx"');
+    header('Cache-Control: max-age=0');
+    header('Pragma: public');
+
     // Save to output
+    $writer = new Xlsx($spreadsheet);
     $writer->save('php://output');
     exit;
 
 } catch (Exception $e) {
-    // Handle errors gracefully
-    header('Content-Type: text/plain');
-    echo "Error generating Excel file: " . $e->getMessage();
+    // Clean buffer and return error
+    if (ob_get_length()) ob_end_clean();
+    http_response_code(500);
+    echo "Export failed: " . $e->getMessage();
     exit;
 }
-?>
