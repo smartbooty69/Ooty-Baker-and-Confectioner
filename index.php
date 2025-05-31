@@ -78,12 +78,45 @@ foreach ($categories as $category) {
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="button-57-styles.css" />
+    <style>
+        .custom-popup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .custom-popup.error {
+            background-color: #f44336;
+        }
+    </style>
   </head>
   <!-- =============================================
        END: Head Section
        ============================================= -->
 
   <body>
+    <!-- Custom Popup -->
+    <div id="customPopup" class="custom-popup"></div>
+    
     <!-- =============================================
          START: Header Section
          Navigation and branding
@@ -443,6 +476,30 @@ foreach ($categories as $category) {
         offset: 1,
       });
       
+      // Handle status messages
+      document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const message = urlParams.get('message');
+        
+        if (status && message) {
+          const popup = document.getElementById('customPopup');
+          popup.textContent = decodeURIComponent(message);
+          if (status === 'error') {
+            popup.classList.add('error');
+          }
+          popup.style.display = 'block';
+          
+          // Remove the status parameters from URL without refreshing
+          const newUrl = window.location.pathname;
+          window.history.replaceState({}, '', newUrl);
+          
+          // Hide popup after 3 seconds
+          setTimeout(function() {
+            popup.style.display = 'none';
+          }, 3000);
+        }
+      });
     </script>
     <!-- =============================================
          END: JavaScript and Animation Libraries

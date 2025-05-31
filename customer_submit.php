@@ -30,9 +30,11 @@ if ($stmt->execute()) {
         $prod_stmt->execute();
     }
 
-    echo "<script>alert('Inquiry submitted successfully.'); window.location.href='index.php';</script>";
+    header("Location: index.php?status=success&message=" . urlencode("Inquiry submitted successfully."));
+    exit();
 } else {
-    echo "Error: " . $stmt->error;
+    header("Location: index.php?status=error&message=" . urlencode("Error: " . $stmt->error));
+    exit();
 }
 
 $conn->close();
