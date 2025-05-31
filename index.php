@@ -133,7 +133,7 @@ foreach ($categories as $category) {
 
         <nav class="gimme-nav-desktop">
             <div class="nav-item-dropdown-container">
-                <a href="#" class="nav-desktop-link" id="desktopProductsToggle" aria-haspopup="true" aria-expanded="false">Products +</a>
+                <a href="#products" class="nav-desktop-link" id="desktopProductsToggle" aria-haspopup="true" aria-expanded="false">Products +</a>
                 <div class="dropdown-menu-desktop" id="desktopProductsDropdown" aria-labelledby="desktopProductsToggle">
                     <?php foreach ($categories as $category): ?>
                         <a href="product-page.php?category=<?= urlencode($category) ?>"><?= htmlspecialchars($category) ?></a>
@@ -224,7 +224,7 @@ foreach ($categories as $category) {
          START: Products Section
          Category-wise product display
          ============================================= -->
-        <div class="section__data">
+        <div class="section__data" id="products">
             <div class="section__titles">
                 <h1 class="section__title">PRODUCTS</h1>
                 <h1 class="section__title-border">collection</h1>
@@ -425,6 +425,7 @@ foreach ($categories as $category) {
                 <ul class="gimme-nav-desktop">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
                     <li><a href="#inquiry">Inquiry</a></li>
                 </ul>
             </nav>

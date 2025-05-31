@@ -132,7 +132,7 @@ if ($result) {
 
         <nav class="gimme-nav-desktop">
             <div class="nav-item-dropdown-container">
-                <a href="#" class="nav-desktop-link" id="desktopProductsToggle" aria-haspopup="true" aria-expanded="false">Products +</a>
+                <a href="index.php#products" class="nav-desktop-link" id="desktopProductsToggle" aria-haspopup="true" aria-expanded="false">Products +</a>
                 <div class="dropdown-menu-desktop" id="desktopProductsDropdown" aria-labelledby="desktopProductsToggle">
                     <?php foreach ($categories as $category): ?>
                         <a href="product-page.php?category=<?= urlencode($category) ?>"><?= htmlspecialchars($category) ?></a>
@@ -229,6 +229,7 @@ if ($result) {
                 <ul class="gimme-nav-desktop">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">About</a></li>
+                    <li><a href="index.php#products">Products</a></li>
                     <li><a href="index.php#inquiry">Inquiry</a></li>
                 </ul>
             </nav>
