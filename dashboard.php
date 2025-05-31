@@ -789,20 +789,21 @@ require_once 'auth-check.php';
     <Section id="product" class="hidden">
        <div class="insert-product">
             <h2>Insert New Product</h2>
-            <form class="product-form" id="productForm" enctype="multipart/form-data">
+            <form class="product-form" id="productForm" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="name">Product Name:</label>
+                    <input type="text" id="name" name="name" required minlength="2" maxlength="100" pattern="[A-Za-z0-9\s\-]+" title="Only letters, numbers, spaces and hyphens allowed">
                 </div>
 
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea id="description" name="description" rows="4"></textarea>
+                    <textarea id="description" name="description" rows="4" maxlength="50"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="variety">Variety:</label>
                     <select id="variety" name="variety" required>
+                        <option value="">Select a variety</option>
                         <option value="Candy">Candy</option>
                         <option value="Coated Candy">Coated Candy</option>
                         <option value="Jelly">Jelly</option>
@@ -811,28 +812,31 @@ require_once 'auth-check.php';
 
                 <div class="form-group">
                     <label for="price">Price:</label>
-                    <input type="number" id="price" name="price" step="0.01" required>
+                    <input type="number" id="price" name="price" step="0.01" min="0.01" required>
                 </div>
 
                 <div class="form-group">
                     <label for="price_per_gram">Price per Gram:</label>
-                    <input type="number" id="price_per_gram" name="price_per_gram" step="0.01" required>
+                    <input type="number" id="price_per_gram" name="price_per_gram" step="0.01" min="0.01" required>
                 </div>
 
                 <div class="form-group">
                     <label for="veg_status">Vegetarian Status:</label>
                     <select id="veg_status" name="veg_status" required>
+                        <option value="">Select status</option>
                         <option value="Veg">Veg</option>
                         <option value="Non-Veg">Non-Veg</option>
                     </select>
                 </div>
 
-                <div class="form-group full-width image-upload-group">
-                    <input type="file" id="imageUpload" name="imageUpload" accept="image/*" required>
-                    <div class="image-preview"></div>
+                <div class="form-group" style="grid-column: 1 / -1; margin-top: 20px;">
+                    <label for="imageUpload" style="display: block; margin-bottom: 10px; font-weight: 500;">Product Image:</label>
+                    <div style="border: 2px dashed #ccc; padding: 20px; border-radius: 8px; text-align: center;">
+                        <input type="file" id="imageUpload" name="imageUpload" accept="image/jpeg,image/png,image/jpg" required style="width: 100%;">
+                    </div>
                 </div>
 
-                <button type="submit" class="submit-btn">Insert Product</button>
+                <button type="submit" class="submit-btn" style="grid-column: 1 / -1; margin-top: 20px;">Insert Product</button>
             </form>
         </div>
 
@@ -1072,8 +1076,6 @@ require_once 'auth-check.php';
                     showMessage('Product uploaded successfully');
                     // Clear the form
                     this.reset();
-                    // Clear the image preview
-                    document.querySelector('.image-preview').innerHTML = '';
                 } else {
                     showMessage('Error uploading product: ' + data, false);
                 }
@@ -1209,6 +1211,46 @@ require_once 'auth-check.php';
             updateAllCounters();
             setupSSE();
         });
+    </script>
+
+    <script>
+    function validateForm() {
+        // Get form elements
+        const name = document.getElementById('name').value.trim();
+        const price = parseFloat(document.getElementById('price').value);
+        const pricePerGram = parseFloat(document.getElementById('price_per_gram').value);
+        const imageFile = document.getElementById('imageUpload').files[0];
+        
+        // Validate name
+        if (name.length < 2 || name.length > 100) {
+            showMessage('Name must be between 2 and 100 characters', false);
+            return false;
+        }
+        
+        // Validate prices
+        if (price <= 0 || pricePerGram <= 0) {
+            showMessage('Prices must be greater than 0', false);
+            return false;
+        }
+        
+        // Validate image
+        if (imageFile) {
+            // Check file size (max 5MB)
+            if (imageFile.size > 5 * 1024 * 1024) {
+                showMessage('Image size must be less than 5MB', false);
+                return false;
+            }
+            
+            // Check file type
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            if (!validTypes.includes(imageFile.type)) {
+                showMessage('Only JPG, JPEG and PNG images are allowed', false);
+                return false;
+            }
+        }
+        
+        return true;
+    }
     </script>
 
 </body>

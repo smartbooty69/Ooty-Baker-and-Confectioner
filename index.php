@@ -304,23 +304,38 @@ foreach ($categories as $category) {
                             <div class="fields">
                                 <div class="input-field">
                                     <label>Business Name</label>
-                                    <input type="text" name="business_name" placeholder="e.g. CandyCo Pvt. Ltd" required>
+                                    <input type="text" name="business_name" placeholder="e.g. CandyCo Pvt. Ltd" 
+                                           pattern="[A-Za-z0-9\s\.&]+" 
+                                           title="Please enter a valid business name (letters, numbers, spaces, dots, and & only)"
+                                           minlength="2" maxlength="100" required>
                                 </div>
                                 <div class="input-field">
                                     <label>Contact Person</label>
-                                    <input type="text" name="contact_person_name" placeholder="Full name" required>
+                                    <input type="text" name="contact_person_name" placeholder="Full name" 
+                                           pattern="[A-Za-z\s]+" 
+                                           title="Please enter a valid name (letters and spaces only)"
+                                           minlength="2" maxlength="50" required>
                                 </div>
                                 <div class="input-field">
                                     <label>Email</label>
-                                    <input type="email" name="email" placeholder="example@mail.com" required>
+                                    <input type="email" name="email" placeholder="example@mail.com" 
+                                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                           title="Please enter a valid email address"
+                                           maxlength="100" required>
                                 </div>
                                 <div class="input-field">
                                     <label>Phone</label>
-                                    <input type="text" name="phone" placeholder="Mobile number" required>
+                                    <input type="tel" name="phone" placeholder="Mobile number" 
+                                           pattern="[0-9]{10}" 
+                                           title="Please enter a valid 10-digit phone number"
+                                           maxlength="10" required>
                                 </div>
                                 <div class="input-field">
                                     <label>Estimated Quantity</label>
-                                    <input type="text" name="estimated_quantity" placeholder="e.g. 100kg / 500 units" required>
+                                    <input type="text" name="estimated_quantity" placeholder="e.g. 100kg / 500 units" 
+                                           pattern="[0-9]+(kg|units|pieces|boxes|packs|dozens|g|ml|L)"
+                                           title="Please enter quantity with unit (e.g. 100kg, 500 units)"
+                                           maxlength="50" required>
                                 </div>
                                 <div class="input-field">
                                     <label>Delivery Frequency</label>
@@ -381,11 +396,13 @@ foreach ($categories as $category) {
                             <div class="fields">
                                 <div class="input-field field-full-width">
                                     <label>Full Address</label>
-                                    <input type="text" name="address" placeholder="Enter address" required>
+                                    <input type="text" name="address" placeholder="Enter address" 
+                                           minlength="10" maxlength="200" required>
                                 </div>
                                 <div class="input-field field-full-width">
                                     <label>Additional Notes</label>
-                                    <input type="text" name="additional_notes" placeholder="Anything else to add?">
+                                    <input type="text" name="additional_notes" placeholder="Anything else to add?"
+                                           maxlength="500">
                                 </div>
                                 <div class="input-field field-full-width">
                                     <label>Nature of Business</label>

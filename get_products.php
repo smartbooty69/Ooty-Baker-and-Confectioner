@@ -2,7 +2,7 @@
 require_once 'connection.php';
 
 // Fetch products
-$sql = "SELECT * FROM products";
+$sql = "SELECT * FROM products ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
 if (!$result) {
