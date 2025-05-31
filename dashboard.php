@@ -34,7 +34,7 @@ require_once 'auth-check.php';
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Ensure modal takes up full viewport height */
+            min-height: 100vh;
         }
 
         /* Status badge styles */
@@ -181,6 +181,103 @@ require_once 'auth-check.php';
     .box-body table td {
         vertical-align: middle;
         padding: 20px 0;
+    }
+
+    /* Product card styles */
+    .card__article {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin: 0.75rem;
+        min-width: 280px;
+        max-width: 320px;
+    }
+
+    .card__img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 0.75rem 0.75rem 0 0;
+    }
+
+    .card__data {
+        padding: 1rem;
+    }
+
+    .card-header {
+        margin-bottom: 0.75rem;
+    }
+
+    .card__title {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    .card-description {
+        font-size: 0.8rem;
+        margin: 0.5rem 0;
+    }
+
+    .price-row {
+        margin-bottom: 0.25rem;
+    }
+
+    .label {
+        font-size: 0.8rem;
+    }
+
+    .value {
+        font-size: 0.9rem;
+    }
+
+    .veg-badge {
+        width: 28px;
+        height: 28px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .veg-badge.veg::after,
+    .veg-badge.non-veg::after {
+        width: 14px;
+        height: 14px;
+    }
+
+    .delete-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+        top: 8px;
+        right: 8px;
+    }
+
+    /* Product view grid */
+    .product-view {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        .product-view {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .product-view {
+            grid-template-columns: 1fr;
+        }
+        
+        .card__article {
+            min-width: 100%;
+            max-width: 100%;
+        }
     }
     </style>
     

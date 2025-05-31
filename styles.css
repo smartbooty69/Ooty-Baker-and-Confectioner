@@ -10,9 +10,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 /* ==================== */
-/* Modern Header Styles */
-/* ==================== */
 /* Base Styles & Global Resets */
+/* ==================== */
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -421,6 +420,97 @@ ul {
         font-size: 1em;
         padding: 12px 20px;
     }
+}
+
+/* ==================== */
+/* Section Styles */
+/* ==================== */
+.section__data {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 0;S
+  color: #000;
+}
+
+.section__title, 
+.section__title-border {
+  font-size: 4.5rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.section__subtitle {
+  font-size: 2rem;
+  font-family: var(--second-font);
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: black;
+  transform: rotate(-2deg);
+}
+
+.section__titles {
+  display: flex;
+  column-gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  color: whitesmoke;
+}
+
+.section__title-border {
+  -webkit-text-stroke: 2px whitesmoke;
+  color: transparent;
+}
+
+/* === HEADING STYLE #2 === */
+.two h1 {
+  text-transform: capitalize;
+  position: relative;
+  padding-bottom: 15px;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2em;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 10px;
+  margin-top: 0;
+  padding-top: 0;
+  color: #000;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.two h1:before {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 2px;
+  content: "";
+  background-color: #c50000;
+}
+
+.two h1 span {
+  font-size: 23px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  line-height: 3em;
+  padding-left: 0.25em;
+  color: rgba(0, 0, 0, 0.4);
+  padding-bottom: 10px;
+  display: block;
+}
+
+.alt-two h1 {
+  text-align: center;
+}
+
+.alt-two h1:before {
+  left: 50%;
+  margin-left: -30px;
 }
 
 /* ==================== */
@@ -944,6 +1034,18 @@ section {
   border-radius: 5px; /* Slight rounded corners */
   text-align: center;
   max-width: 900px; /* Maximum width for the content box on large screens */
+  width: 100%; /* Ensures it takes full width within its container up to max-width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  color: var(--gimme-dark-text); /* Use a text color from your variables */
+}
+
+.about-content-box2 {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+  padding: 40px;
+  border-radius: 5px; /* Slight rounded corners */
+  text-align: center;
+  max-width: 1200px; /* Increased from 900px to 1200px */
   width: 100%; /* Ensures it takes full width within its container up to max-width */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
@@ -2236,6 +2338,7 @@ form .fields .input-field {
     height: 60px;
   }
   
+  
   .about-content-box {
     padding: 15px;
     width: 100%;
@@ -2313,27 +2416,35 @@ html {
   display: flex;
   justify-content: center; /* Center content horizontally */
   align-items: center;     /* Center content vertically */
+  margin-bottom: 30px;     /* Add some space below the logos */
 }
 
 /* Flex container to hold logos side-by-side */
 .gimme-logo-image {
   display: flex;
-  gap: 20px;               /* Space between the two logos */
+  align-items: center;     /* Center logos vertically */
+  gap: 30px;              /* Space between the two logos */
 }
 
 /* Individual logo styling */
 .brand-logo,
 .gimmie-logo {
-  width: 100px;            /* Adjust as needed */
-  height: auto;
-  object-fit: contain;
+  width: 80px;            /* Reduced from 100px to 80px */
+  height: 80px;           /* Fixed height to maintain aspect ratio */
+  object-fit: contain;    /* Maintain aspect ratio */
 }
 
-/* Responsive tweak (optional) */
+/* Responsive tweak */
 @media (max-width: 600px) {
   .gimme-logo-image {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;  /* Keep logos side by side even on mobile */
+    gap: 20px;           /* Slightly reduced gap on mobile */
+  }
+  
+  .brand-logo,
+  .gimmie-logo {
+    width: 60px;         /* Even smaller on mobile */
+    height: 60px;
   }
 }
 
@@ -2469,5 +2580,282 @@ button.gimme-button-57:hover span:last-child {
   margin: 2rem 0;
   padding: 0 7%;
   margin-bottom: 2rem;
+}
+
+/* About page specific logo styles */
+.about-section-wrapper2 .gimme-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.about-section-wrapper2 .gimme-logo-image {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.about-section-wrapper2 .brand-logo,
+.about-section-wrapper2 .gimmie-logo {
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: contain;
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .about-section-wrapper2 .gimme-logo-image {
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .about-section-wrapper2 .brand-logo,
+  .about-section-wrapper2 .gimmie-logo {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+/* About page specific logo styles */
+.about-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.about-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;  /* Reduced gap between logos */
+}
+
+.about-brand-logo,
+.about-gimmie-logo {
+  width: 50px !important;  /* Reduced from 80px to 50px */
+  height: 50px !important; /* Reduced from 80px to 50px */
+  object-fit: contain;
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .about-logo-wrapper {
+    flex-direction: row;
+    gap: 15px;  /* Reduced gap for mobile */
+  }
+  
+  .about-brand-logo,
+  .about-gimmie-logo {
+    width: 40px !important;  /* Reduced from 60px to 40px */
+    height: 40px !important; /* Reduced from 60px to 40px */
+  }
+}
+
+/* About page specific logo styles */
+.about-section-wrapper2 .about-content-box2 .about-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.about-section-wrapper2 .about-content-box2 .about-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.about-section-wrapper2 .about-content-box2 .about-brand-logo,
+.about-section-wrapper2 .about-content-box2 .about-gimmie-logo {
+  max-width: 30px !important;
+  max-height: 30px !important;
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain;
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .about-section-wrapper2 .about-content-box2 .about-logo-wrapper {
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .about-section-wrapper2 .about-content-box2 .about-brand-logo,
+  .about-section-wrapper2 .about-content-box2 .about-gimmie-logo {
+    max-width: 25px !important;
+    max-height: 25px !important;
+    width: 25px !important;
+    height: 25px !important;
+  }
+}
+
+/* About page specific logo styles - using new class names */
+.about-page-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.about-page-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.about-page-logo {
+  width: 30px !important;
+  height: 30px !important;
+  max-width: 30px !important;
+  max-height: 30px !important;
+  object-fit: contain;
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .about-page-logo-wrapper {
+    gap: 10px;
+  }
+  
+  .about-page-logo {
+    width: 25px !important;
+    height: 25px !important;
+    max-width: 25px !important;
+    max-height: 25px !important;
+  }
+}
+
+/* Mobile Responsive Styles for Products Section */
+@media (max-width: 768px) {
+    .section__data {
+        padding: 0 15px;
+        margin-top: 2rem;
+    }
+
+    .section__titles {
+        text-align: center;
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+    }
+
+    .section__title {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        letter-spacing: 4px;
+    }
+
+    .section__title-border {
+        font-size: 2.5rem;
+        -webkit-text-stroke: 1.5px whitesmoke;
+        letter-spacing: 3px;
+    }
+
+    .product-section {
+        padding: 30px 15px;
+    }
+
+    .product-section:first-of-type {
+        padding-top: 50px;
+    }
+
+    .section-header.two.alt-two h1 {
+        font-size: 4.2rem;
+        padding: 0 15px;
+        letter-spacing: 10px;
+        margin-bottom: 25px;
+    }
+
+    .section-header.two.alt-two h1 span {
+        font-size: 1.4rem;
+        margin-top: 15px;
+        letter-spacing: 4px;
+        line-height: 1.6;
+    }
+
+    .wrapper {
+        padding: 0 15px;
+    }
+
+    .carousel {
+        gap: 20px;
+    }
+
+    .card__article {
+        min-width: 300px;
+    }
+
+    .card__title {
+        font-size: 1.3rem;
+    }
+
+    .card__description {
+        font-size: 1rem;
+    }
+
+    .price-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .card__price_pergram, .card__price {
+        font-size: 1.1rem;
+    }
+
+    .view-more-container {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section__title {
+        font-size: 2.8rem;
+        letter-spacing: 3px;
+    }
+
+    .section__title-border {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+
+    .product-section {
+        padding: 25px 10px;
+    }
+
+    .product-section:first-of-type {
+        padding-top: 40px;
+    }
+
+    .section-header.two.alt-two h1 {
+        font-size: 3.5rem;
+        padding: 0 10px;
+        letter-spacing: 8px;
+        margin-bottom: 20px;
+    }
+
+    .section-header.two.alt-two h1 span {
+        font-size: 1.2rem;
+        margin-top: 12px;
+        letter-spacing: 3px;
+        line-height: 1.5;
+    }
+
+    .card__article {
+        min-width: 280px;
+    }
+
+    .card__title {
+        font-size: 1.2rem;
+    }
+
+    .card__description {
+        font-size: 0.9rem;
+    }
+
+    .card__price_pergram, .card__price {
+        font-size: 1rem;
+    }
 }
 

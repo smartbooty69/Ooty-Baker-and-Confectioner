@@ -63,6 +63,57 @@ if ($result) {
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    
+    <!-- Custom styles for about page logos and heading -->
+    <style>
+      .about-page-logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+      
+      .about-page-logo-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+      
+      .about-page-logo {
+        width: 180px !important;
+        height: 180px !important;
+        max-width: 180px !important;
+        max-height: 180px !important;
+        object-fit: contain;
+      }
+
+      .about-content-box2 h1 {
+        font-size: 3.5em !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.1em !important;
+        margin-bottom: 30px !important;
+        color: #333 !important;
+        text-transform: uppercase !important;
+      }
+      
+      @media (max-width: 600px) {
+        .about-page-logo-wrapper {
+          gap: 30px;
+        }
+        
+        .about-page-logo {
+          width: 120px !important;
+          height: 120px !important;
+          max-width: 120px !important;
+          max-height: 120px !important;
+        }
+
+        .about-content-box2 h1 {
+          font-size: 2.5em !important;
+          margin-bottom: 20px !important;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- =============================================
@@ -133,13 +184,13 @@ if ($result) {
          END: Header Section
          ============================================= -->
 
-    <section class="about-section-wrapper">
-      <div class="about-content-box">
+    <section class="about-section-wrapper2">
+      <div class="about-content-box2">
         <!-- Centered Logo Container -->
-        <div class="gimme-logo-container">
-          <div class="gimme-logo-image">
-            <img src="images/brand-logo.png" alt="Brand Logo" class="brand-logo">
-            <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="gimmie-logo">
+        <div class="about-page-logos">
+          <div class="about-page-logo-wrapper">
+            <img src="images/brand-logo.png" alt="Brand Logo" class="about-page-logo">
+            <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="about-page-logo">
           </div>
         </div>
 

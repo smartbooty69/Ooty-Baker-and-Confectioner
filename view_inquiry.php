@@ -660,7 +660,7 @@ if ($products_stmt === false) {
                             <button type="submit" form="statusUpdateForm" name="update_status" class="btn btn-primary action-btn flex-fill">
                                 <i class="fas fa-save me-1"></i> Update Status
                             </button>
-                            <a href="mailto:<?= htmlspecialchars($inquiry['email']) ?>" class="btn btn-info action-btn flex-fill">
+                            <a href="mailto:<?= htmlspecialchars($inquiry['email']) ?>" class="btn btn-dark action-btn flex-fill">
                                 <i class="fas fa-envelope me-1"></i> Email Contact
                             </a>
                             <a href="tel:<?= htmlspecialchars($inquiry['phone']) ?>" class="btn btn-success action-btn flex-fill">

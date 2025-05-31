@@ -182,20 +182,18 @@ foreach ($categories as $category) {
          START: Products Section
          Category-wise product display
          ============================================= -->
+        <div class="section__data">
+            <div class="section__titles">
+                <h1 class="section__title">PRODUCTS</h1>
+                <h1 class="section__title-border">collection</h1>
+            </div>
+        </div>
     <?php foreach ($products_by_category as $category => $products): ?>
       <div class="product-section" data-aos="fade-up">
-          <div class="section-header">
-              <div class="section-title-wrapper">
-                  <span class="section-icon">
-                      <i class="fas fa-star"></i>
-                  </span>
-                  <h2 class="section-title"><?= strtoupper($category) ?></h2>
-                  <span class="section-icon">
-                      <i class="fas fa-star"></i>
-                  </span>
-              </div>
-              <div class="section-divider"></div>
-              <p class="section-description">Discover our premium collection of handcrafted <?= strtolower($category) ?> made with love and finest ingredients!</p>
+          <div class="section-header two alt-two">
+              <h1><?= strtoupper($category) ?>
+                <span>Discover our premium collection of handcrafted <?= strtolower($category) ?> made with love and finest ingredients!</span>
+              </h1>
           </div>
 
           <div class="wrapper">
