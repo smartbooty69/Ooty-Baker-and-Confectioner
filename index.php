@@ -4,7 +4,16 @@
 // =============================================
 require_once 'connection.php';
 
-$categories = ['Jelly', 'Candy', 'Coated Candy'];
+// Fetch unique categories from products table
+$cat_query = "SELECT DISTINCT variety FROM products ORDER BY variety";
+$cat_result = $conn->query($cat_query);
+$categories = [];
+if ($cat_result) {
+    while ($row = $cat_result->fetch_assoc()) {
+        $categories[] = $row['variety'];
+    }
+}
+
 $products_by_category = [];
 
 foreach ($categories as $category) {
