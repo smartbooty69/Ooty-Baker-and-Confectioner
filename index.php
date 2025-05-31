@@ -195,6 +195,7 @@ foreach ($categories as $category) {
                 <span>Discover our premium collection of handcrafted <?= strtolower($category) ?> made with love and finest ingredients!</span>
               </h1>
           </div>
+      </div>
 
           <div class="wrapper">
               <i class="fas fa-angle-left arrow-btn" data-direction="left" aria-label="Previous items"></i>
@@ -294,18 +295,42 @@ foreach ($categories as $category) {
                         <!-- Product Interest -->
                         <div class="details ID">
                             <span class="title">Product Interest</span>
-                            <div class="product-grid">
-                                <?php
-                                $conn = new mysqli("localhost", "root", "", "ooty_baker");
-                                $res = $conn->query("SELECT id, name FROM products ORDER BY name ASC");
-                                while($row = $res->fetch_assoc()):
-                                ?>
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="product_interest[]" value="<?= htmlspecialchars($row['id'], ENT_QUOTES) ?>"> 
-                                        <?= htmlspecialchars($row['name']) ?>
-                                    </label>
-                                <?php endwhile; $conn->close(); ?>
-                            </div>
+                            <?php
+                            $conn = new mysqli("localhost", "root", "", "ooty_baker");
+                            
+                            // Get all categories
+                            $cat_query = "SELECT DISTINCT variety FROM products ORDER BY variety";
+                            $cat_result = $conn->query($cat_query);
+                            
+                            while($category = $cat_result->fetch_assoc()):
+                                $category_name = $category['variety'];
+                            ?>
+                                <div class="category-section">
+                                    <h3 class="category-title" style="color: #555; font-size: 1.1rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.8rem; padding-bottom: 0; border-bottom: none;"><?= htmlspecialchars($category_name) ?></h3>
+                                    <div class="product-grid">
+                                        <?php
+                                        $prod_query = "SELECT id, name FROM products WHERE variety = ?";
+                                        $prod_stmt = $conn->prepare($prod_query);
+                                        $prod_stmt->bind_param("s", $category_name);
+                                        $prod_stmt->execute();
+                                        $prod_result = $prod_stmt->get_result();
+                                        
+                                        while($row = $prod_result->fetch_assoc()):
+                                        ?>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="product_interest[]" value="<?= htmlspecialchars($row['id'], ENT_QUOTES) ?>"> 
+                                                <?= htmlspecialchars($row['name']) ?>
+                                            </label>
+                                        <?php 
+                                        endwhile;
+                                        $prod_stmt->close();
+                                        ?>
+                                    </div>
+                                </div>
+                            <?php 
+                            endwhile;
+                            $conn->close();
+                            ?>
                         </div>
 
                         <!-- Address and Notes -->

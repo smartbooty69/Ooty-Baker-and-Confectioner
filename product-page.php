@@ -263,6 +263,16 @@ if ($result) {
             min-width: 100%;
         }
         }
+
+        .section__data{
+            padding-bottom: 0;
+            margin-bottom: -2.5rem;
+        }
+
+        .product-section {
+            padding-top: 0;
+            margin-top: -2.5rem;
+        }
     </style>
   </head>
   <body>
@@ -343,18 +353,18 @@ if ($result) {
         }
     ?>
 
-    <div class="section-header">
-        <div class="section-title-wrapper">
-            <span class="section-icon">
-                <i class="fas fa-star"></i>
-            </span>
-            <h2 class="section-title"><?= strtoupper($category) ?></h2>
-            <span class="section-icon">
-                <i class="fas fa-star"></i>
-            </span>
+    <div class="section__data">
+        <div class="section__titles">
+            <h1 class="section__title"><?= strtoupper($category) ?></h1>
+            <h1 class="section__title-border">collection</h1>
         </div>
-        <div class="section-divider"></div>
-        <p class="section-description">Discover our premium collection of handcrafted <?= strtolower($category) ?> made with love and finest ingredients!</p>
+    </div>
+    <div class="product-section" data-aos="fade-up">
+        <div class="section-header two alt-two">
+          <h1>
+            <span>Discover our premium collection of handcrafted <?= strtolower($category) ?> made with love and finest ingredients!</span>
+          </h1>
+        </div>
     </div>
 
     <div class="product-view">
