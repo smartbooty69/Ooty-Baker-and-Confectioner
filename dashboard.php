@@ -9,10 +9,32 @@ require_once 'auth-check.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
-    <title>
-        Gimme
-    </title>
-    <link rel="shortcut icon" href="../img/login/logo-mb.png" type="image/png">
+    
+    <!-- Primary Meta Tags -->
+    <title>Ooty Baker & Confectioner - Admin Dashboard</title>
+    <meta name="title" content="Ooty Baker & Confectioner - Admin Dashboard">
+    <meta name="description" content="Manage your bakery business with our comprehensive admin dashboard. Track inquiries, manage products, and monitor business performance.">
+    <meta name="keywords" content="Ooty Baker, Confectioner, Admin Dashboard, Business Management, Product Management, Business Inquiries">
+    <meta name="author" content="Ooty Baker & Confectioner">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ootybaker.com/dashboard">
+    <meta property="og:title" content="Ooty Baker & Confectioner - Admin Dashboard">
+    <meta property="og:description" content="Manage your bakery business with our comprehensive admin dashboard. Track inquiries, manage products, and monitor business performance.">
+    <meta property="og:image" content="images/brand-logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ootybaker.com/dashboard">
+    <meta property="twitter:title" content="Ooty Baker & Confectioner - Admin Dashboard">
+    <meta property="twitter:description" content="Manage your bakery business with our comprehensive admin dashboard. Track inquiries, manage products, and monitor business performance.">
+    <meta property="twitter:image" content="images/brand-logo.png">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/brand-logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/brand-logo.png">
     <!-- GOOGLE FONT -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -898,13 +920,13 @@ require_once 'auth-check.php';
 
                 <div class="price-row">
                     <span class="label">Price:</span>
-                    <span class="value">$<?php echo number_format($row['price'], 2); ?></span>
+                    <span class="value">₹<?php echo number_format($row['price'], 2); ?></span>
                 </div>
 
                 <?php if (!is_null($row['price_per_gram'])): ?>
                     <div class="price-row">
                         <span class="label">Price per gram:</span>
-                        <span class="value">$<?php echo number_format($row['price_per_gram'], 2); ?>/g</span>
+                        <span class="value">₹<?php echo number_format($row['price_per_gram'], 2); ?>/g</span>
                     </div>
                 <?php endif; ?>
             </div>
