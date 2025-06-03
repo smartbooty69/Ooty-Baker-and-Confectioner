@@ -15,9 +15,13 @@ if ($result->num_rows === 0) {
 }
 
 while($row = $result->fetch_assoc()): ?>
-    <article class="card__article">
+    <article class="card__article" data-product-id="<?php echo $row['id']; ?>">
         <!-- Delete button -->
         <a href="javascript:void(0)" class="delete-btn" onclick="deleteProduct(<?php echo $row['id']; ?>)">×</a>
+        <!-- Edit button -->
+        <a href="javascript:void(0)" class="edit-btn" onclick="editProduct(<?php echo $row['id']; ?>)">
+            <i class='bx bx-edit'></i>
+        </a>
         
         <img src="<?php echo str_replace('\\', '/', htmlspecialchars($row['image_path'])); ?>" alt="image" class="card__img">
         
@@ -39,13 +43,13 @@ while($row = $result->fetch_assoc()): ?>
 
             <div class="price-row">
                 <span class="label">Price:</span>
-                <span class="value">$<?php echo number_format($row['price'], 2); ?></span>
+                <span class="value">₹<?php echo number_format($row['price'], 2); ?></span>
             </div>
 
             <?php if (!is_null($row['price_per_gram'])): ?>
                 <div class="price-row">
                     <span class="label">Price per gram:</span>
-                    <span class="value">$<?php echo number_format($row['price_per_gram'], 2); ?>/g</span>
+                    <span class="value">₹<?php echo number_format($row['price_per_gram'], 2); ?>/g</span>
                 </div>
             <?php endif; ?>
         </div>

@@ -50,6 +50,10 @@ require_once 'auth-check.php';
     <!-- APP CSS -->
     <link rel="stylesheet" href="assets/css/dashboard/grid.css">
     <link rel="stylesheet" href="assets/css/dashboard/app.css">
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <style>
         /* Center the success modal */
         #successModal .modal-dialog {
@@ -353,6 +357,94 @@ require_once 'auth-check.php';
         font-size: 0.75em;
         margin-top: 2px;
         color: #666;
+    }
+
+    /* Modal Styles */
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 60px);
+        margin: 30px auto;
+    }
+
+    .modal-content {
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .modal-backdrop {
+        z-index: 1040;
+    }
+
+    .modal {
+        z-index: 1050;
+    }
+
+    .modal-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .modal-title {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #2c3e50;
+    }
+
+    .form-control, .form-select {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 8px 12px;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #40aad1;
+        box-shadow: 0 0 0 0.2rem rgba(64, 170, 209, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #40aad1;
+        border-color: #40aad1;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #3498db;
+        border-color: #3498db;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+        color: white;
+    }
+
+    /* Ensure modal is centered on mobile */
+    @media (max-width: 768px) {
+        .modal-dialog {
+            margin: 10px;
+            min-height: calc(100vh - 20px);
+        }
     }
     </style>
     
@@ -967,7 +1059,7 @@ require_once 'auth-check.php';
         }
 
         // Fetch products
-        $sql = "SELECT * FROM products";
+        $sql = "SELECT * FROM products ORDER BY created_at DESC";
         $result = $conn->query($sql);
 
         if (!$result) {
@@ -1175,8 +1267,33 @@ require_once 'auth-check.php';
         }
 
         function editProduct(id) {
-            // Redirect to edit product page with the product ID
-            window.location.href = 'edit_product.php?id=' + id;
+            // Fetch product data
+            fetch('get_product.php?id=' + id)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const product = data.product;
+                        
+                        // Populate form fields
+                        document.getElementById('edit_product_id').value = product.id;
+                        document.getElementById('edit_name').value = product.name;
+                        document.getElementById('edit_description').value = product.description;
+                        document.getElementById('edit_variety').value = product.variety;
+                        document.getElementById('edit_price').value = product.price;
+                        document.getElementById('edit_price_per_gram').value = product.price_per_gram;
+                        document.getElementById('edit_veg_status').value = product.veg_status;
+                        
+                        // Show modal using Bootstrap 5 syntax
+                        const editModal = new bootstrap.Modal(document.getElementById('editProductModal'));
+                        editModal.show();
+                    } else {
+                        showMessage('Error fetching product data: ' + data.message, false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showMessage('Error fetching product data', false);
+                });
         }
     </script>
 
@@ -1372,6 +1489,195 @@ require_once 'auth-check.php';
         
         return true;
     }
+    </script>
+
+    <!-- Edit Product Modal -->
+    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductForm" action="update_product.php" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="edit_product_id" name="product_id">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="edit_name" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" id="edit_name" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="edit_description" name="description" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_variety" class="form-label">Variety</label>
+                                    <select class="form-select" id="edit_variety" name="variety" required>
+                                        <option value="Candy">Candy</option>
+                                        <option value="Coated Candy">Coated Candy</option>
+                                        <option value="Jelly">Jelly</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="edit_price" class="form-label">Price</label>
+                                    <input type="number" class="form-control" id="edit_price" name="price" step="0.01" min="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_price_per_gram" class="form-label">Price per Gram</label>
+                                    <input type="number" class="form-control" id="edit_price_per_gram" name="price_per_gram" step="0.01" min="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_veg_status" class="form-label">Vegetarian Status</label>
+                                    <select class="form-select" id="edit_veg_status" name="veg_status" required>
+                                        <option value="Veg">Veg</option>
+                                        <option value="Non-Veg">Non-Veg</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_image" class="form-label">Product Image</label>
+                            <input type="file" class="form-control" id="edit_image" name="image" accept="image/jpeg,image/png,image/jpg">
+                            <small class="text-muted">Leave empty to keep the current image</small>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" name="update_product" class="btn btn-primary px-4">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-title {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 8px 12px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #40aad1;
+            box-shadow: 0 0 0 0.2rem rgba(64, 170, 209, 0.25);
+        }
+
+        .btn-primary {
+            background-color: #40aad1;
+            border-color: #40aad1;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+            color: white;
+        }
+    </style>
+
+    <script>
+        // Handle form submission
+        document.getElementById('editProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            // Add the update_product flag
+            formData.append('update_product', '1');
+            
+            fetch('update_product.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage('Product updated successfully');
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
+                    if (modal) {
+                        modal.hide();
+                    }
+                    // Refresh only the product list
+                    fetch('get_products.php')
+                        .then(response => response.text())
+                        .then(html => {
+                            document.querySelector('.product-view').innerHTML = html;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching products:', error);
+                            showMessage('Error refreshing product list', false);
+                        });
+                } else {
+                    showMessage('Error updating product: ' + data.message, false);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('Error updating product', false);
+            });
+        });
+    </script>
+
+    <!-- Add error handling for modal -->
+    <script>
+        document.getElementById('editProductModal').addEventListener('show.bs.modal', function (event) {
+            console.log('Modal is about to show');
+        });
+
+        document.getElementById('editProductModal').addEventListener('shown.bs.modal', function (event) {
+            console.log('Modal is now shown');
+        });
+
+        document.getElementById('editProductModal').addEventListener('hide.bs.modal', function (event) {
+            console.log('Modal is about to hide');
+        });
+
+        document.getElementById('editProductModal').addEventListener('hidden.bs.modal', function (event) {
+            console.log('Modal is now hidden');
+        });
     </script>
 
 </body>
