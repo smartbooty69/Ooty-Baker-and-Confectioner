@@ -301,6 +301,21 @@ require_once 'auth-check.php';
             max-width: 100%;
         }
     }
+
+    .cancelled-inquiry {
+        transition: opacity 0.3s ease;
+    }
+
+    .cancelled-inquiry:hover {
+        opacity: 0.8 !important;
+    }
+
+    .status-cancelled small {
+        display: block;
+        font-size: 0.75em;
+        margin-top: 2px;
+        color: #666;
+    }
     </style>
     
 
@@ -763,7 +778,8 @@ require_once 'auth-check.php';
                                     <tbody>
                                     <?php
                                         $con = new mysqli("localhost", "root", "", "ooty_baker");
-                                        $query = "SELECT * FROM business_inquiries ORDER BY created_at DESC";
+                                        // First get non-cancelled inquiries
+                                        $query = "SELECT * FROM business_inquiries WHERE status != 'cancelled' ORDER BY created_at DESC";
                                         $result = $con->query($query);
                                         while ($row = $result->fetch_assoc()) {
                                     ?>
@@ -783,8 +799,38 @@ require_once 'auth-check.php';
                                                     <button class="blue-button btn btn-outline">
                                                         <a href="view_inquiry.php?id=<?= $row['id'] ?>"><i class='bx bx-show'></i></a>
                                                     </button>
-                                                    <button class="red-button btn btn-outline">
-                                                        <a href="javascript:void(0)" onclick="deleteInquiry(<?= $row['id'] ?>)"><i class='bx bxs-trash'></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } 
+                                    
+                                    // Then get cancelled inquiries
+                                    $query = "SELECT * FROM business_inquiries WHERE status = 'cancelled' ORDER BY updated_at DESC";
+                                    $result = $con->query($query);
+                                    while ($row = $result->fetch_assoc()) {
+                                        $updated_date = new DateTime($row['updated_at']);
+                                        $current_date = new DateTime();
+                                        $days_diff = $current_date->diff($updated_date)->days;
+                                        $days_remaining = 15 - $days_diff;
+                                    ?>
+                                        <tr data-inquiry-id="<?= $row['id'] ?>" class="cancelled-inquiry" style="opacity: 0.6;">
+                                            <td><?= htmlspecialchars($row['business_name']) ?></td>
+                                            <td><?= htmlspecialchars($row['contact_person_name']) ?></td>
+                                            <td><?= $row['phone'] ?></td>
+                                            <td><?= $row['estimated_quantity'] ?></td>
+                                            <td><?= $row['delivery_frequency'] ?></td>
+                                            <td>
+                                                <span class="status-badge status-cancelled">
+                                                    <?= ucfirst(htmlspecialchars($row['status'])) ?>
+                                                    <?php if ($days_remaining > 0): ?>
+                                                        <small>(<?= $days_remaining ?> days left)</small>
+                                                    <?php endif; ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="table-button">
+                                                    <button class="blue-button btn btn-outline">
+                                                        <a href="view_inquiry.php?id=<?= $row['id'] ?>"><i class='bx bx-show'></i></a>
                                                     </button>
                                                 </div>
                                             </td>
