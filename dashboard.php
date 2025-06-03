@@ -270,11 +270,49 @@ require_once 'auth-check.php';
     }
 
     .delete-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 16px;
-        top: 8px;
-        right: 8px;
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(220, 53, 69, 0.6);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover {
+        background-color: rgba(200, 35, 51, 0.8);
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .edit-btn {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+        top: 50px;
+        right: 10px;
+        background-color: rgba(64, 170, 209, 0.6);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .edit-btn:hover {
+        background-color: rgba(41, 128, 185, 0.8);
+        color: white;
+        transform: scale(1.1);
     }
 
     /* Product view grid */
@@ -363,9 +401,9 @@ require_once 'auth-check.php';
                             <i class='bx bx-category'></i>
                             <span>Add Products</span>
                         </a>
-                        <a href="#product-delete">
+                        <a href="#product-edit">
                             <i class='bx bx-category'></i>
-                            <span>Delete Products</span>
+                            <span>Edit Products</span>
                         </a>
                     </li>
                 </ul>
@@ -913,7 +951,7 @@ require_once 'auth-check.php';
 
 
 
-    <section id="product-delete" class="hidden">
+    <section id="product-edit" class="hidden">
     <div class="product-view">
         <?php
         require_once 'connection.php';
@@ -942,9 +980,13 @@ require_once 'auth-check.php';
         ?>
 
         <?php while($row = $result->fetch_assoc()): ?>
-        <article class="card__article">
+        <article class="card__article" data-product-id="<?php echo $row['id']; ?>">
             <!-- Delete button -->
             <a href="javascript:void(0)" class="delete-btn" onclick="deleteProduct(<?php echo $row['id']; ?>)">×</a>
+            <!-- Edit button -->
+            <a href="javascript:void(0)" class="edit-btn" onclick="editProduct(<?php echo $row['id']; ?>)">
+                <i class='bx bx-edit'></i>
+            </a>
             
             <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="image" class="card__img">
             
@@ -1106,15 +1148,21 @@ require_once 'auth-check.php';
                 .then(data => {
                     if (data.success) {
                         showMessage('Product deleted successfully');
-                        // Fetch updated product list
-                        fetch('get_products.php')
-                            .then(response => response.text())
-                            .then(html => {
-                                document.querySelector('.product-view').innerHTML = html;
-                            })
-                            .catch(error => {
-                                console.error('Error fetching products:', error);
-                            });
+                        // Remove the entire product card
+                        const productCard = document.querySelector(`.card__article[data-product-id="${id}"]`);
+                        if (productCard) {
+                            productCard.remove();
+                        } else {
+                            // If the card isn't found, refresh the product list
+                            fetch('get_products.php')
+                                .then(response => response.text())
+                                .then(html => {
+                                    document.querySelector('.product-view').innerHTML = html;
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching products:', error);
+                                });
+                        }
                     } else {
                         showMessage('Error deleting product: ' + data.message, false);
                     }
@@ -1124,6 +1172,11 @@ require_once 'auth-check.php';
                     showMessage('Error deleting product', false);
                 });
             }
+        }
+
+        function editProduct(id) {
+            // Redirect to edit product page with the product ID
+            window.location.href = 'edit_product.php?id=' + id;
         }
     </script>
 
