@@ -190,7 +190,6 @@ if ($result) {
         <div class="about-page-logos">
           <div class="about-page-logo-wrapper">
             <img src="images/brand-logo.png" alt="Brand Logo" class="about-page-logo">
-            <img src="images/gimmie-logo.jpg" alt="Gimmie Logo" class="about-page-logo">
           </div>
         </div>
 

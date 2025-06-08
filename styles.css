@@ -727,11 +727,14 @@ section {
   background-color: var(--surface-color);
   transform: translateY(100%);
   transition: .2s ease-in-out;
+  opacity: 0;
+  transition: 0.5s;
 }
 
 .card:hover .card__overlay {
   transform: translateY(0);
   border-radius: calc(var(--curve) * 1px) 0 0 0;
+  opacity: 1;
 }
 
 /* Card Header */
@@ -743,7 +746,7 @@ section {
   padding: 2em;
   border-radius: calc(var(--curve) * 1px) 0 0 0;
   background-color: var(--surface-color);
-  transform: translateY(-100%);
+  transform: translateY(0%);
   transition: .2s ease-in-out;
 }
 
@@ -2704,53 +2707,53 @@ html {
     }
 }
 
-@media (max-width: 480px) {
-    .section__title {
-        font-size: 2.8rem;
-        letter-spacing: 3px;
-    }
+  @media (max-width: 480px) {
+      .section__title {
+          font-size: 2.8rem;
+          letter-spacing: 3px;
+      }
 
-    .section__title-border {
-        font-size: 2.2rem;
-        letter-spacing: 2px;
-    }
+      .section__title-border {
+          font-size: 2.2rem;
+          letter-spacing: 2px;
+      }
 
-    .product-section {
-        padding: 25px 10px;
-    }
+      .product-section {
+          padding: 25px 10px;
+      }
 
-    .product-section:first-of-type {
-        padding-top: 40px;
-    }
+      .product-section:first-of-type {
+          padding-top: 40px;
+      }
 
-    .section-header.two.alt-two h1 {
-        font-size: 2.8rem; /* Reduced size */
-        padding: 0 10px;
-        letter-spacing: 8px;
-        margin-bottom: 20px;
-    }
+      .section-header.two.alt-two h1 {
+          font-size: 2.8rem; /* Reduced size */
+          padding: 0 10px;
+          letter-spacing: 8px;
+          margin-bottom: 20px;
+      }
 
-    .section-header.two.alt-two h1 span {
-        font-size: 1rem; /* Reduced size */
-        margin-top: 12px;
-        letter-spacing: 3px;
-        line-height: 1.5;
-    }
+      .section-header.two.alt-two h1 span {
+          font-size: 1rem; /* Reduced size */
+          margin-top: 12px;
+          letter-spacing: 3px;
+          line-height: 1.5;
+      }
 
-    .card__article {
-        min-width: 280px;
-    }
+      .card__article {
+          min-width: 280px;
+      }
 
-    .card__title {
-        font-size: 1.2rem;
-    }
+      .card__title {
+          font-size: 1.2rem;
+      }
 
-    .card__description {
-        font-size: 0.9rem;
-    }
+      .card__description {
+          font-size: 0.9rem;
+      }
 
-    .card__price_pergram, .card__price {
-        font-size: 1rem;
-    }
+      .card__price_pergram, .card__price {
+          font-size: 1rem;
+      }
+  }
 }
-

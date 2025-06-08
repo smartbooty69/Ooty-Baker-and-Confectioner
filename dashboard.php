@@ -1314,6 +1314,8 @@ require_once 'auth-check.php';
                     showMessage('Product uploaded successfully');
                     // Clear the form
                     this.reset();
+                    // Redirect to edit product page
+                    window.location.href = '#product-edit';
                 } else {
                     showMessage('Error uploading product: ' + data, false);
                 }
