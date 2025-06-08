@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2025 at 07:36 AM
+-- Generation Time: Jun 08, 2025 at 07:18 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,15 +41,38 @@ CREATE TABLE `business_inquiries` (
   `status` enum('new','in-progress','completed','cancelled') NOT NULL DEFAULT 'new',
   `staff_note` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` datetime DEFAULT NULL,
+  `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `business_inquiries`
 --
 
-INSERT INTO `business_inquiries` (`id`, `business_name`, `contact_person_name`, `email`, `phone`, `estimated_quantity`, `delivery_frequency`, `address`, `additional_notes`, `business_nature`, `status`, `staff_note`, `created_at`, `updated_at`) VALUES
-(21, 'St Joseph University', 'CLANCY MENDONCA', 'clancy.mendonca@student.sju.edu.in', '7625025705', '20kg', 'Weekly', '36, Langford Rd', 'ajay lauda', 'Consumer', 'new', NULL, '2025-06-01 18:48:17', '2025-06-01 18:48:17');
+INSERT INTO `business_inquiries` (`id`, `business_name`, `contact_person_name`, `email`, `phone`, `estimated_quantity`, `delivery_frequency`, `address`, `additional_notes`, `business_nature`, `status`, `staff_note`, `created_at`, `updated_at`, `deleted_at`, `is_deleted`) VALUES
+(23, 'St Josephs University', 'CLANCY MENDONCA', 'clancy.mendonca@student.sju.edu.in', '7625025705', '20kg', 'Weekly', '36, Langford Rd', 'nopw', 'Consumer', 'in-progress', '', '2025-06-03 04:53:17', '2025-06-08 05:07:26', '2025-06-03 11:35:55', 1),
+(24, 'St Joseph University', 'CLANCY MENDONCA', 'clancy.mendonca@student.sju.edu.in', '7625025705', '20kg', 'Weekly', '36, Langford Rd', 'nopw', 'Consumer', 'cancelled', '', '2025-06-03 06:15:18', '2025-06-03 06:15:59', NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `business_inquiry_history`
+--
+
+CREATE TABLE `business_inquiry_history` (
+  `id` int(11) NOT NULL,
+  `inquiry_id` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `business_inquiry_history`
+--
+
+INSERT INTO `business_inquiry_history` (`id`, `inquiry_id`, `status`, `created_at`) VALUES
+(1, 23, 'cancelled', '2025-06-03 06:10:09');
 
 -- --------------------------------------------------------
 
@@ -68,11 +91,12 @@ CREATE TABLE `business_inquiry_products` (
 --
 
 INSERT INTO `business_inquiry_products` (`id`, `inquiry_id`, `product_id`) VALUES
-(169, 21, 12),
-(170, 21, 13),
-(171, 21, 10),
-(172, 21, 14),
-(173, 21, 22);
+(180, 23, 8),
+(181, 23, 13),
+(183, 23, 14),
+(184, 23, 19),
+(185, 23, 23),
+(187, 24, 8);
 
 -- --------------------------------------------------------
 
@@ -98,19 +122,16 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `name`, `description`, `image_path`, `price`, `variety`, `price_per_gram`, `veg_status`, `created_at`) VALUES
 (1, 'Almond Delight', 'Delicious almond-based candy in container packaging', 'uploads/images/candy1.jpg', 80.00, 'Coated Candy', 0.80, 'Veg', '2025-04-30 23:00:00'),
-(3, 'Ginger Candy', 'Spicy ginger flavored candy available in multiple pack sizes', 'uploads/images/candy1.jpg', 20.00, 'Candy', 0.40, 'Veg', '2025-04-30 23:06:00'),
+(3, 'Ginger Candy', 'Spicy ginger flavored candy', 'uploads/images/candy1.jpg', 20.00, 'Candy', 0.40, 'Veg', '2025-04-30 23:06:00'),
 (5, 'Jeera Sweet', 'Cumin flavored traditional sweet', 'uploads/images/candy1.jpg', 28.00, 'Candy', 0.28, 'Veg', '2025-04-30 23:11:00'),
 (6, 'Lemon Candy', 'Tangy lemon flavored candy', 'uploads/images/candy1.jpg', 35.00, 'Candy', 0.35, 'Veg', '2025-04-30 23:15:00'),
-(7, 'Lemon Candy', 'Tangy lemon flavored candy', 'uploads/images/candy1.jpg', 25.00, 'Candy', 0.25, 'Veg', '2025-04-30 23:16:00'),
-(8, 'Orange Candy', 'Sweet orange flavored candy', 'uploads/images/candy1.jpg', 35.00, 'Candy', 0.35, 'Veg', '2025-04-30 23:20:00'),
+(8, 'Orange Candy', 'Sweet orange flavored candy', 'uploads/images/candy1.jpg', 35.00, 'Candy', 0.35, 'Non-Veg', '2025-04-30 23:20:00'),
 (9, 'Orange Candy', 'Sweet orange flavored candy', 'uploads/images/candy1.jpg', 25.00, 'Candy', 0.25, 'Veg', '2025-04-30 23:21:00'),
-(10, 'Sweet Pearl', 'Classic pearl-shaped candies', 'uploads/images/candy1.jpg', 35.00, 'Coated Candy', 0.35, 'Veg', '2025-04-30 23:25:00'),
 (11, 'Sweet Pearl', 'Classic pearl-shaped candies', 'uploads/images/candy1.jpg', 25.00, 'Coated Candy', 0.25, 'Veg', '2025-04-30 23:26:00'),
 (12, 'Melon Dews', 'Refreshing melon flavored candy', 'uploads/images/candy1.jpg', 15.00, 'Candy', 0.30, 'Veg', '2025-04-30 23:30:00'),
 (13, 'Rainbow Sticks', 'Colorful stick candies in a box', 'uploads/images/candy1.jpg', 30.00, 'Candy', 0.30, 'Veg', '2025-04-30 23:35:00'),
-(14, 'Peanut Sweet', 'Sweet peanut-based confectionery', 'uploads/images/candy1.jpg', 28.00, 'Coated Candy', 0.28, 'Veg', '2025-04-30 23:40:00'),
+(14, 'Peanut Sweet', 'Sweet peanut-based confectionery', 'uploads/images/candy1.jpg', 28.00, 'Coated Candy', 0.28, 'Non-Veg', '2025-04-30 23:40:00'),
 (15, 'Sugar Dots', 'Colorful sugar dot candies', 'uploads/images/candy1.jpg', 175.00, 'Coated Candy', 0.88, 'Veg', '2025-04-30 23:45:00'),
-(16, 'Jelly Jems', 'Assorted jelly candies', 'uploads/images/candy1.jpg', 70.00, 'Jelly', 0.35, 'Veg', '2025-05-01 00:00:00'),
 (17, 'Jelly Jems', 'Assorted jelly candies', 'uploads/images/candy1.jpg', 30.00, 'Jelly', 0.30, 'Veg', '2025-05-01 00:01:00'),
 (18, 'Jelly Cubes', 'Cube-shaped jelly candies', 'uploads/images/candy1.jpg', 15.00, 'Jelly', 0.30, 'Veg', '2025-05-01 00:05:00'),
 (19, 'Jelly Curles', 'Curly shaped jelly candies', 'uploads/images/candy1.jpg', 15.00, 'Jelly', 0.30, 'Veg', '2025-05-01 00:10:00'),
@@ -120,8 +141,8 @@ INSERT INTO `products` (`id`, `name`, `description`, `image_path`, `price`, `var
 (23, 'Jelly Orange Delight', 'Orange flavored jelly delight', 'uploads/images/candy1.jpg', 42.00, 'Jelly', 0.42, 'Veg', '2025-05-01 00:25:00'),
 (24, 'Jelly Rounds', 'Round jelly candies', 'uploads/images/candy1.jpg', 35.00, 'Jelly', 0.35, 'Veg', '2025-05-01 00:30:00'),
 (25, 'Jelly Rounds with ring', 'Round jelly candies with rings', 'uploads/images/candy1.jpg', 35.00, 'Jelly', 0.35, 'Veg', '2025-05-01 00:35:00'),
-(26, 'Jelly Sweet Hearts', 'Heart-shaped jelly candies', 'uploads/images/candy1.jpg', 42.00, 'Jelly', 0.42, 'Veg', '2025-05-01 00:40:00'),
-(30, 'Clancy Mendonca', 'dcc', 'uploads/images/683ca3877221b_candy1.jpg', 56.00, 'Candy', 3.00, 'Non-Veg', '2025-06-01 19:01:27');
+(26, 'Jelly Sweet Hearts', 'Heart-shaped jelly candies', 'uploads/images/candy1.jpg', 42.00, 'Coated Candy', 0.40, 'Non-Veg', '2025-05-01 00:40:00'),
+(32, 'Dino Candy', 'fa', 'uploads/images/68450e5f34339_brand-logo-removebg-preview.png', 42.00, 'Jelly', 42.00, 'Non-Veg', '2025-06-08 04:15:27');
 
 -- --------------------------------------------------------
 
@@ -157,6 +178,13 @@ ALTER TABLE `business_inquiries`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `business_inquiry_history`
+--
+ALTER TABLE `business_inquiry_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inquiry_id` (`inquiry_id`);
+
+--
 -- Indexes for table `business_inquiry_products`
 --
 ALTER TABLE `business_inquiry_products`
@@ -185,19 +213,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `business_inquiries`
 --
 ALTER TABLE `business_inquiries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `business_inquiry_history`
+--
+ALTER TABLE `business_inquiry_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `business_inquiry_products`
 --
 ALTER TABLE `business_inquiry_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -208,6 +242,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `business_inquiry_history`
+--
+ALTER TABLE `business_inquiry_history`
+  ADD CONSTRAINT `business_inquiry_history_ibfk_1` FOREIGN KEY (`inquiry_id`) REFERENCES `business_inquiries` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `business_inquiry_products`
