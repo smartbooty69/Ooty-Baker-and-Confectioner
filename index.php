@@ -141,7 +141,7 @@ foreach ($categories as $category) {
                 </div>
             </div>
             <a href="#about">About Us</a>
-            <a href="#inquiry">Inquiry</a>
+            <a href="#contact">Inquiry</a>
             <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
                 <span>Login</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -174,7 +174,7 @@ foreach ($categories as $category) {
                 <span class="icon">&nearrow;</span>
             </div>
             <div class="gimme-sidebar-nav-item">
-                <a href="#inquiry">INQUIRY</a>
+                <a href="#contact">INQUIRY</a>
                 <span class="icon">&nearrow;</span>
             </div>
         </nav>

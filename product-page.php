@@ -301,7 +301,7 @@ if ($result) {
                 </div>
             </div>
             <a href="about.php">About Us</a>
-            <a href="index.php#inquiry">Inquiry</a>
+            <a href="index.php#contact">Inquiry</a>
             <button class="gimme-get-started-btn-desktop" onclick="window.location.href='auth.php'">
                 <span>Login</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -334,7 +334,7 @@ if ($result) {
                 <span class="icon">&nearrow;</span>
             </div>
             <div class="gimme-sidebar-nav-item">
-                <a href="index.php#inquiry">INQUIRY</a>
+                <a href="index.php#contact">INQUIRY</a>
                 <span class="icon">&nearrow;</span>
             </div>
         </nav>
