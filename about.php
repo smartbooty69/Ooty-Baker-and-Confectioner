@@ -80,10 +80,10 @@ if ($result) {
       }
       
       .about-page-logo {
-        width: 180px !important;
-        height: 180px !important;
-        max-width: 180px !important;
-        max-height: 180px !important;
+        width: 240px !important;
+        height: 240px !important;
+        max-width: 240px !important;
+        max-height: 240px !important;
         object-fit: contain;
       }
 
@@ -189,7 +189,7 @@ if ($result) {
         <!-- Centered Logo Container -->
         <div class="about-page-logos">
           <div class="about-page-logo-wrapper">
-            <img src="images/brand-logo.png" alt="Brand Logo" class="about-page-logo">
+            <img src="images/gimmie2logo.png" alt="Brand Logo" class="about-page-logo">
           </div>
         </div>
 
@@ -238,17 +238,19 @@ if ($result) {
             <div class="gimme-contact-info-section">
                 <h3 class="gimme-section-title">Contact Us</h3>
                 <div class="gimme-contact-details">
-                    <div class="gimme-contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Bommanahalli, Bengaluru<br>Karnataka, India</p>
-                    </div>
+                    <a href="https://maps.app.goo.gl/xD9Kz6y9CXBGqBQC9" target="_blank" style="color: inherit; text-decoration: none;">
+                        <div class="gimme-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Bommanahalli, Bengaluru<br>Karnataka, India</p>
+                        </div>
+                    </a>
                     <div class="gimme-contact-item">
                         <i class="fas fa-envelope"></i>
                         <p>info@ootybaker.com</p>
                     </div>
                     <div class="gimme-contact-item">
                         <i class="fas fa-phone"></i>
-                        <p>+91 1234567890</p>
+                        <p>08025731234</p>
                     </div>
                 </div>
             </div>
