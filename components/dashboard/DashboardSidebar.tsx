@@ -1,0 +1,181 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+type DashboardSection = "overview" | "business-inquiries" | "product" | "product-edit" | "banners" | "analytics";
+
+interface DashboardSidebarProps {
+  currentSection: DashboardSection;
+  setCurrentSection: (section: DashboardSection) => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
+
+export default function DashboardSidebar({
+  currentSection,
+  setCurrentSection,
+  isOpen,
+  setIsOpen,
+}: DashboardSidebarProps) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      router.push("/auth");
+    } catch (error) {
+      console.error("Logout error:", error);
+      router.push("/auth");
+    }
+  };
+
+  return (
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
+        <div className="h-full flex flex-col overflow-y-auto">
+          {/* Logo */}
+          <div className="p-6 border-b border-primary-200">
+            <Link href="/" className="flex items-center space-x-3">
+              <Image
+                src="/images/gimmie-logo.jpg"
+                alt="Gimmie Logo"
+                width={40}
+                height={40}
+                className="rounded"
+              />
+              <div>
+                <h1 className="text-xl font-bold text-primary-800">Gimmie</h1>
+                <span className="text-sm text-primary-600">Ooty Bakery & Confectionery</span>
+              </div>
+            </Link>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="lg:hidden absolute top-6 right-6 text-primary-700"
+            >
+              <i className="bx bx-left-arrow-alt text-2xl"></i>
+            </button>
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex-1 p-4 space-y-2">
+            {/* Priority 1: Dashboard Overview - Default landing */}
+            <button
+              onClick={() => {
+                setCurrentSection("overview");
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                currentSection === "overview"
+                  ? "bg-accent text-white"
+                  : "text-primary-700 hover:bg-primary-50"
+              }`}
+            >
+              <i className="bx bx-home text-xl"></i>
+              <span className="font-medium">Dashboard</span>
+            </button>
+
+            {/* Divider for core business sections */}
+            <div className="pt-2 pb-1">
+              <p className="text-xs font-semibold text-primary-500 uppercase px-4 mb-2">Core Business</p>
+            </div>
+
+            {/* Priority 2: Business Inquiries - Most important */}
+            <button
+              onClick={() => {
+                setCurrentSection("business-inquiries");
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                currentSection === "business-inquiries"
+                  ? "bg-accent text-white"
+                  : "text-primary-700 hover:bg-primary-50"
+              }`}
+            >
+              <i className="bx bx-message-dots text-xl"></i>
+              <span className="font-medium">Business Inquiries</span>
+            </button>
+
+            {/* Priority 3: Products */}
+            <button
+              onClick={() => {
+                setCurrentSection("product-edit");
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                currentSection === "product-edit" || currentSection === "product"
+                  ? "bg-accent text-white"
+                  : "text-primary-700 hover:bg-primary-50"
+              }`}
+            >
+              <i className="bx bx-package text-xl"></i>
+              <span className="font-medium">Products</span>
+            </button>
+
+            {/* Divider for insights and settings */}
+            <div className="pt-2 pb-1">
+              <p className="text-xs font-semibold text-primary-500 uppercase px-4 mb-2">Insights & Settings</p>
+            </div>
+
+            {/* Priority 4: Analytics */}
+            <button
+              onClick={() => {
+                setCurrentSection("analytics");
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                currentSection === "analytics"
+                  ? "bg-accent text-white"
+                  : "text-primary-700 hover:bg-primary-50"
+              }`}
+            >
+              <i className="bx bx-line-chart text-xl"></i>
+              <span className="font-medium">Analytics</span>
+            </button>
+
+            {/* Priority 5: Banners - Least frequently accessed */}
+            <button
+              onClick={() => {
+                setCurrentSection("banners");
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                currentSection === "banners"
+                  ? "bg-accent text-white"
+                  : "text-primary-700 hover:bg-primary-50"
+              }`}
+            >
+              <i className="bx bx-image text-xl"></i>
+              <span className="font-medium">Banners</span>
+            </button>
+          </nav>
+
+          {/* Logout */}
+          <div className="p-4 border-t border-primary-200">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-700 hover:bg-primary-50 transition-colors"
+            >
+              <i className="bx bx-log-out bx-flip-horizontal text-xl"></i>
+              <span className="font-medium">Logout</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </>
+  );
+}
