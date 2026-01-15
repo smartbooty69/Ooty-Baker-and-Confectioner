@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://unpkg.com/boxicons@latest/css/boxicons.min.css');
+@import url('https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+@import url('https://unpkg.com/aos@next/dist/aos.css');
+
+@layer base {
+  body {
+    background: linear-gradient(to right, #1b6e49, #34C759);
+    color: #3b3a37;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-primary-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-500;
+}
+
+/* Product Category Page Styles - Using Tailwind utilities where possible */
+.product-view {
+  @apply grid gap-6 px-4 sm:px-6 lg:px-8 pb-16 max-w-[1400px] mx-auto;
+}
+
+@media screen and (max-width: 640px) {
+  .product-view {
+    @apply gap-4 px-3;
+  }
+}
+
+.card__article {
+  @apply list-none rounded-[40px] overflow-hidden block bg-white shadow-md;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.card:hover .card__overlay {
+  @apply translate-y-0 rounded-tl-[20px];
+}
+
+.card:hover .card__header {
+  @apply translate-y-0;
+}
+
+.section__data {
+  @apply pb-0 -mb-10;
+}
+
+.product-section {
+  @apply pt-0 -mt-10;
+}
+
+/* About Page Styles */
+.about-section-wrapper2 {
+  @apply py-8;
+}
+
+.about-content-box2 {
+  @apply p-8;
+}
+
+.about-page-logos {
+  @apply flex justify-center items-center mb-10;
+}
+
+.about-page-logo-wrapper {
+  @apply flex items-center gap-10;
+}
+
+.about-page-logo {
+  @apply object-contain;
+  width: 240px !important;
+  height: 240px !important;
+  max-width: 240px !important;
+  max-height: 240px !important;
+}
+
+@media (max-width: 600px) {
+  .about-page-logo-wrapper {
+    @apply gap-8;
+  }
+  .about-page-logo {
+    width: 120px !important;
+    height: 120px !important;
+    max-width: 120px !important;
+    max-height: 120px !important;
+  }
+}
+
+/* Analytics Animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Product Page Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,63 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import BusinessInquiries from "@/components/dashboard/BusinessInquiries";
+import ProductManagement from "@/components/dashboard/ProductManagement";
+import BannerManagement from "@/components/dashboard/BannerManagement";
+import DashboardOverview from "@/components/dashboard/DashboardOverview";
+import Analytics from "@/components/dashboard/Analytics";
+
+type DashboardSection = "overview" | "business-inquiries" | "product" | "product-edit" | "banners" | "analytics";
+
+export default function DashboardPage() {
+  const [currentSection, setCurrentSection] = useState<DashboardSection>("overview");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check authentication
+    checkAuth();
+  }, [router]);
+
+  const checkAuth = async () => {
+    try {
+      const response = await fetch("/api/auth/session");
+      const data = await response.json();
+      
+      if (!data.success || !data.user) {
+        router.push("/auth");
+      }
+    } catch (error) {
+      console.error("Auth check error:", error);
+      router.push("/auth");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-primary-50 flex">
+      <DashboardSidebar
+        currentSection={currentSection}
+        setCurrentSection={setCurrentSection}
+        isOpen={isSidebarOpen}
+        setIsOpen={setIsSidebarOpen}
+      />
+      <div className="flex-1 flex flex-col lg:ml-64">
+        <DashboardHeader setIsSidebarOpen={setIsSidebarOpen} currentSection={currentSection} />
+        <main className="flex-1 p-6 overflow-y-auto">
+          {currentSection === "overview" && (
+            <DashboardOverview onNavigate={setCurrentSection} />
+          )}
+          {currentSection === "business-inquiries" && <BusinessInquiries />}
+          {(currentSection === "product" || currentSection === "product-edit") && (
+            <ProductManagement />
+          )}
+          {currentSection === "banners" && <BannerManagement />}
+          {currentSection === "analytics" && <Analytics />}
+        </main>
+      </div>
+    </div>
+  );
+}
