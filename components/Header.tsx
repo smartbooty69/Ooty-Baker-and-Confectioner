@@ -90,69 +90,88 @@ export default function Header({ categories }: HeaderProps) {
         </div>
       </header>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile Sidebar - Old UI Style */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-surface shadow-2xl transform transition-transform duration-300 z-50 lg:hidden ${
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className="fixed top-0 h-full w-[85%] max-w-[380px] bg-background shadow-[-8px_0_20px_rgba(0,0,0,0.2)] z-50 lg:hidden flex flex-col p-[30px_25px] box-border"
+        style={{
+          right: isMobileMenuOpen ? "0" : "-100%",
+          transition: "right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+        }}
       >
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xl font-bold text-text-dark">Menu</h2>
+        {/* Sidebar Header */}
+        <div className="text-right mb-10">
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-base text-body uppercase font-medium px-[10px] py-[10px]"
+          >
+            CLOSE
+          </button>
+        </div>
+
+        {/* Sidebar Navigation */}
+        <nav className="flex-grow">
+          {/* Products Dropdown */}
+          <div className="border-b border-gray-300">
             <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-text-medium font-bold uppercase"
+              onClick={() => setIsProductsMenuOpen(!isProductsMenuOpen)}
+              className="flex justify-between items-center w-full py-5 cursor-pointer text-xl text-body font-medium uppercase"
             >
-              CLOSE
+              <span>PRODUCTS</span>
+              <span className="text-base text-body/70">{isProductsMenuOpen ? "−" : "+"}</span>
             </button>
+            <ul
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                isProductsMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+              }`}
+              style={{
+                maxHeight: isProductsMenuOpen ? `${categories.length * 60 + 20}px` : "0px",
+                transition: "max-height 0.3s ease-in-out, opacity 0.3s ease-in-out"
+              }}
+            >
+              {categories.map((category) => (
+                <li key={category} className="border-b border-gray-200 last:border-b-0">
+                  <Link
+                    href={`/products/${encodeURIComponent(category)}`}
+                    className="block text-lg text-body font-medium uppercase py-4 px-0 hover:text-heading transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {category} <span className="text-body/70">↗</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <nav className="space-y-4">
-            <div>
-              <button
-                onClick={() => setIsProductsMenuOpen(!isProductsMenuOpen)}
-                className="flex items-center justify-between w-full text-text-medium font-semibold uppercase py-2"
-              >
-                <span>PRODUCTS</span>
-                <span>{isProductsMenuOpen ? "−" : "+"}</span>
-              </button>
-              {isProductsMenuOpen && (
-                <ul className="mt-2 space-y-2 pl-4">
-                  {categories.map((category) => (
-                    <li key={category}>
-                      <Link
-                        href={`/products/${encodeURIComponent(category)}`}
-                        className="block text-text-medium hover:text-text-dark py-1"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {category} ↗
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+
+          {/* About Us */}
+          <div className="flex justify-between items-center py-5 border-b border-gray-300">
             <Link
               href="/about"
-              className="block text-text-medium font-semibold uppercase py-2"
+              className="text-xl text-body font-medium uppercase w-full"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              ABOUT US ↗
+              ABOUT US
             </Link>
+            <span className="text-xl text-body/70 ml-4">↗</span>
+          </div>
+
+          {/* Inquiry */}
+          <div className="flex justify-between items-center py-5 border-b border-gray-300">
             <Link
               href="#contact"
-              className="block text-text-medium font-semibold uppercase py-2"
+              className="text-xl text-body font-medium uppercase w-full"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              INQUIRY ↗
+              INQUIRY
             </Link>
-          </nav>
-        </div>
+            <span className="text-xl text-body/70 ml-4">↗</span>
+          </div>
+        </nav>
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay - Old Style */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-40 lg:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden transition-opacity duration-300"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}

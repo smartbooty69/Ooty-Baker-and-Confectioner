@@ -52,24 +52,24 @@ export default function QuickActions({
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-xl font-bold text-primary-800">Quick Actions</h2>
-          <p className="text-sm text-primary-600 mt-1">Access frequently used features</p>
+          <h2 className="text-xl font-bold text-heading">Quick Actions</h2>
+          <p className="text-sm text-body/70 mt-1">Access frequently used features</p>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {actions.map((action) => (
           <button
             key={action.id}
             onClick={action.action}
-            className={`${action.color} text-white p-5 rounded-xl transition-all transform hover:scale-105 hover:shadow-xl flex flex-col items-center justify-center space-y-2 group`}
+            className="bg-heading hover:bg-heading/90 text-white p-3 sm:p-5 rounded-lg sm:rounded-xl transition-all transform hover:scale-105 hover:shadow-xl flex flex-col items-center justify-center space-y-1 sm:space-y-2 group"
           >
             <div className="group-hover:scale-110 transition-transform">
               {action.icon}
             </div>
-            <span className="font-medium text-sm">{action.label}</span>
+            <span className="font-medium text-xs sm:text-sm text-center leading-tight">{action.label}</span>
           </button>
         ))}
       </div>

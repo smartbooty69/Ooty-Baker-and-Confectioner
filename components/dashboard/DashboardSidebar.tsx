@@ -43,13 +43,16 @@ export default function DashboardSidebar({
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 shadow-lg transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
+        style={{
+          background: "#007A4D" // Ooty Forest Green
+        }}
       >
         <div className="h-full flex flex-col overflow-y-auto">
           {/* Logo */}
-          <div className="p-6 border-b border-primary-200">
+          <div className="p-6 border-b border-white/10">
             <Link href="/" className="flex items-center space-x-3">
               <Image
                 src="/images/gimmie-logo.jpg"
@@ -59,13 +62,13 @@ export default function DashboardSidebar({
                 className="rounded"
               />
               <div>
-                <h1 className="text-xl font-bold text-primary-800">Gimmie</h1>
-                <span className="text-sm text-primary-600">Ooty Bakery & Confectionery</span>
+                <h1 className="text-xl font-bold text-white">Gimmie</h1>
+                <span className="text-sm text-white/80">Ooty Bakery & Confectionery</span>
               </div>
             </Link>
             <button
               onClick={() => setIsOpen(false)}
-              className="lg:hidden absolute top-6 right-6 text-primary-700"
+              className="lg:hidden absolute top-6 right-6 text-white"
             >
               <i className="bx bx-left-arrow-alt text-2xl"></i>
             </button>
@@ -81,8 +84,8 @@ export default function DashboardSidebar({
               }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                 currentSection === "overview"
-                  ? "bg-accent text-white"
-                  : "text-primary-700 hover:bg-primary-50"
+                  ? "bg-primary text-white"
+                  : "text-white/90 hover:bg-white/10"
               }`}
             >
               <i className="bx bx-home text-xl"></i>
@@ -91,7 +94,7 @@ export default function DashboardSidebar({
 
             {/* Divider for core business sections */}
             <div className="pt-2 pb-1">
-              <p className="text-xs font-semibold text-primary-500 uppercase px-4 mb-2">Core Business</p>
+              <p className="text-xs font-semibold text-white/60 uppercase px-4 mb-2">Core Business</p>
             </div>
 
             {/* Priority 2: Business Inquiries - Most important */}
@@ -102,8 +105,8 @@ export default function DashboardSidebar({
               }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                 currentSection === "business-inquiries"
-                  ? "bg-accent text-white"
-                  : "text-primary-700 hover:bg-primary-50"
+                  ? "bg-primary text-white"
+                  : "text-white/90 hover:bg-white/10"
               }`}
             >
               <i className="bx bx-message-dots text-xl"></i>
@@ -118,8 +121,8 @@ export default function DashboardSidebar({
               }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                 currentSection === "product-edit" || currentSection === "product"
-                  ? "bg-accent text-white"
-                  : "text-primary-700 hover:bg-primary-50"
+                  ? "bg-primary text-white"
+                  : "text-white/90 hover:bg-white/10"
               }`}
             >
               <i className="bx bx-package text-xl"></i>
@@ -128,7 +131,7 @@ export default function DashboardSidebar({
 
             {/* Divider for insights and settings */}
             <div className="pt-2 pb-1">
-              <p className="text-xs font-semibold text-primary-500 uppercase px-4 mb-2">Insights & Settings</p>
+              <p className="text-xs font-semibold text-white/60 uppercase px-4 mb-2">Insights & Settings</p>
             </div>
 
             {/* Priority 4: Analytics */}
@@ -139,8 +142,8 @@ export default function DashboardSidebar({
               }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                 currentSection === "analytics"
-                  ? "bg-accent text-white"
-                  : "text-primary-700 hover:bg-primary-50"
+                  ? "bg-primary text-white"
+                  : "text-white/90 hover:bg-white/10"
               }`}
             >
               <i className="bx bx-line-chart text-xl"></i>
@@ -155,8 +158,8 @@ export default function DashboardSidebar({
               }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                 currentSection === "banners"
-                  ? "bg-accent text-white"
-                  : "text-primary-700 hover:bg-primary-50"
+                  ? "bg-primary text-white"
+                  : "text-white/90 hover:bg-white/10"
               }`}
             >
               <i className="bx bx-image text-xl"></i>
@@ -165,10 +168,10 @@ export default function DashboardSidebar({
           </nav>
 
           {/* Logout */}
-          <div className="p-4 border-t border-primary-200">
+          <div className="p-4 border-t border-white/10">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-700 hover:bg-primary-50 transition-colors"
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-white/90 hover:bg-white/10 transition-colors"
             >
               <i className="bx bx-log-out bx-flip-horizontal text-xl"></i>
               <span className="font-medium">Logout</span>

@@ -14,11 +14,11 @@ export default function DashboardOverview({ onNavigate }: DashboardOverviewProps
   return (
     <div className="space-y-6">
       {/* Header Section with Welcome */}
-      <div className="bg-gradient-to-r from-accent to-accent-dark rounded-xl shadow-lg p-6 md:p-8 text-white">
+      <div className="bg-white rounded-xl shadow-sm p-6 md:p-8 border border-gray-100">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">Welcome Back!</h1>
-            <p className="text-accent-50 text-base md:text-lg">
+            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-heading">Welcome Back!</h1>
+            <p className="text-body/70 text-base md:text-lg">
               Here's what's happening with your business today
             </p>
           </div>
@@ -27,7 +27,7 @@ export default function DashboardOverview({ onNavigate }: DashboardOverviewProps
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all flex items-center space-x-2 backdrop-blur-sm"
+              className="px-4 py-2 bg-heading hover:bg-heading/90 text-white rounded-lg transition-all flex items-center space-x-2"
             >
               <i className="bx bx-link-external text-lg"></i>
               <span className="font-medium">View Site</span>

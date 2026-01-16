@@ -189,24 +189,24 @@ export default function BusinessInquiries() {
   };
 
   const getStatusBadgeClass = (status: string) => {
-    const baseClass = "px-3 py-1 rounded-full text-sm font-medium";
+    const baseClass = "px-3 py-1 rounded-full text-xs font-semibold";
     switch (status) {
       case "new":
-        return `${baseClass} bg-blue-100 text-blue-800`;
+        return `${baseClass} bg-[#E5F2EC] text-heading`; // Neutral - Deep Charcoal on light green
       case "inProgress":
-        return `${baseClass} bg-yellow-100 text-yellow-800`;
+        return `${baseClass} bg-[#FFF8E1] text-secondary`; // Warning - Golden Crust
       case "completed":
-        return `${baseClass} bg-green-100 text-green-800`;
+        return `${baseClass} bg-[#E6F5ED] text-primary`; // Success - Gimmie Vibrant Green
       case "cancelled":
-        return `${baseClass} bg-red-100 text-red-800`;
+        return `${baseClass} bg-red-100 text-danger`; // Danger - Berry Red
       default:
-        return `${baseClass} bg-gray-100 text-gray-800`;
+        return `${baseClass} bg-gray-100 text-body/50`; // Neutral - Deep Charcoal at 50%
     }
   };
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div className="h-8 bg-gray-200 rounded w-48 animate-pulse"></div>
           <div className="flex gap-2">
@@ -221,18 +221,18 @@ export default function BusinessInquiries() {
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-primary-100">
+            <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Business</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Contact</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Phone</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Quantity</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Frequency</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Status</th>
-                <th className="px-4 py-3 text-right text-sm font-semibold text-primary-800">Actions</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-heading">Business</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-heading">Contact</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-heading">Phone</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-heading">Quantity</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-heading">Frequency</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-heading">Status</th>
+                <th className="px-4 py-3 text-right text-sm font-semibold text-heading">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-primary-200">
+            <tbody className="divide-y divide-gray-100">
               {[...Array(5)].map((_, i) => (
                 <TableRowSkeleton key={i} />
               ))}
@@ -248,19 +248,19 @@ export default function BusinessInquiries() {
   const cancelledInquiries = filteredInquiries.filter((inq) => inq.status === "cancelled");
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h2 className="text-2xl font-bold text-primary-800">Business Inquiries</h2>
+        <h2 className="text-2xl font-bold text-heading">Business Inquiries</h2>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={handleDeleteAll}
-            className="px-4 py-2 border border-primary-300 text-primary-800 rounded-lg hover:bg-primary-50 transition-colors"
+            className="px-4 py-2 border border-heading/20 text-body rounded-lg hover:bg-gray-50 transition-colors"
           >
             Delete All
           </button>
           <button
             onClick={handleExport}
-            className="px-4 py-2 border border-primary-300 text-primary-800 rounded-lg hover:bg-primary-50 transition-colors"
+            className="px-4 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-colors"
           >
             Export
           </button>
@@ -268,20 +268,20 @@ export default function BusinessInquiries() {
       </div>
 
       {/* Search and Filters */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="relative">
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+        <div className="relative sm:col-span-2 md:col-span-1">
           <input
             type="text"
             placeholder="Search inquiries..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-4 pr-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+            className="w-full pl-4 pr-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white text-sm sm:text-base"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+          className="px-3 sm:px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white text-sm sm:text-base"
         >
           <option value="all">All Statuses</option>
           <option value="new">New</option>
@@ -292,7 +292,7 @@ export default function BusinessInquiries() {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as "newest" | "oldest" | "name")}
-          className="px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+          className="px-3 sm:px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white text-sm sm:text-base"
         >
           <option value="newest">Newest First</option>
           <option value="oldest">Oldest First</option>
@@ -301,32 +301,37 @@ export default function BusinessInquiries() {
       </div>
 
       {filteredInquiries.length === 0 && inquiries.length > 0 && (
-        <div className="text-center py-8 text-primary-600">
+        <div className="text-center py-8 text-body/70">
           No inquiries match your search criteria
         </div>
       )}
 
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-primary-100">
+          <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Business</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Contact</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Phone</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Quantity</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Frequency</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-primary-800">Status</th>
-              <th className="px-4 py-3 text-right text-sm font-semibold text-primary-800 min-w-[100px]">Actions</th>
+              <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-heading">Business</th>
+              <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-heading hidden sm:table-cell">Contact</th>
+              <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-heading hidden md:table-cell">Phone</th>
+              <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-heading hidden lg:table-cell">Quantity</th>
+              <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-heading hidden lg:table-cell">Frequency</th>
+              <th className="px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-heading">Status</th>
+              <th className="px-2 sm:px-4 py-3 text-right text-xs sm:text-sm font-semibold text-heading min-w-[80px] sm:min-w-[100px]">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-primary-200">
+          <tbody className="divide-y divide-gray-100">
             {activeInquiries.map((inquiry) => (
-              <tr key={inquiry.id} className="hover:bg-primary-50">
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.businessName}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.contactPersonName}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.phone}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.estimatedQuantity}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.deliveryFrequency}</td>
+              <tr key={inquiry.id} className="hover:bg-gray-50">
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body">
+                  <div className="font-medium">{inquiry.businessName}</div>
+                  <div className="text-body/70 sm:hidden mt-1">
+                    {inquiry.contactPersonName} • {inquiry.phone}
+                  </div>
+                </td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden sm:table-cell">{inquiry.contactPersonName}</td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden md:table-cell">{inquiry.phone}</td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden lg:table-cell">{inquiry.estimatedQuantity}</td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden lg:table-cell">{inquiry.deliveryFrequency}</td>
                 <td className="px-4 py-3">
                   <div className="flex items-center space-x-2">
                     <select
@@ -341,7 +346,7 @@ export default function BusinessInquiries() {
                       <option value="cancelled">Cancelled</option>
                     </select>
                     {updatingStatus === inquiry.id && (
-                      <span className="inline-block animate-spin text-primary-500">⟳</span>
+                      <span className="inline-block animate-spin text-heading">⟳</span>
                     )}
                   </div>
                 </td>
@@ -352,7 +357,7 @@ export default function BusinessInquiries() {
                         setSelectedInquiryId(inquiry.id);
                         setIsModalOpen(true);
                       }}
-                      className="bg-[#0652dd] text-white border-none px-2.5 py-1.5 rounded-[5px] hover:opacity-90 transition-opacity inline-flex items-center justify-center"
+                      className="bg-heading text-white border-none px-2.5 py-1.5 rounded-[5px] hover:bg-heading/90 transition-opacity inline-flex items-center justify-center"
                       title="View Details"
                     >
                       <BiShow className="text-lg" />
@@ -362,13 +367,18 @@ export default function BusinessInquiries() {
               </tr>
             ))}
             {cancelledInquiries.map((inquiry) => (
-              <tr key={inquiry.id} className="hover:bg-primary-50 opacity-60">
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.businessName}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.contactPersonName}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.phone}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.estimatedQuantity}</td>
-                <td className="px-4 py-3 text-sm text-primary-700">{inquiry.deliveryFrequency}</td>
-                <td className="px-4 py-3">
+              <tr key={inquiry.id} className="hover:bg-gray-50 opacity-60">
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body">
+                  <div className="font-medium">{inquiry.businessName}</div>
+                  <div className="text-body/70 sm:hidden mt-1">
+                    {inquiry.contactPersonName} • {inquiry.phone}
+                  </div>
+                </td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden sm:table-cell">{inquiry.contactPersonName}</td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden md:table-cell">{inquiry.phone}</td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden lg:table-cell">{inquiry.estimatedQuantity}</td>
+                <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm text-body hidden lg:table-cell">{inquiry.deliveryFrequency}</td>
+                <td className="px-2 sm:px-4 py-3">
                   <span className={getStatusBadgeClass(inquiry.status)}>
                     {inquiry.status.charAt(0).toUpperCase() + inquiry.status.slice(1).replace(/([A-Z])/g, " $1")}
                     {inquiry.status === "cancelled" && (() => {
@@ -379,17 +389,17 @@ export default function BusinessInquiries() {
                     })()}
                   </span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-2 sm:px-4 py-3">
                   <div className="flex items-center justify-end">
                     <button 
                       onClick={() => {
                         setSelectedInquiryId(inquiry.id);
                         setIsModalOpen(true);
                       }}
-                      className="bg-[#0652dd] text-white border-none px-2.5 py-1.5 rounded-[5px] hover:opacity-90 transition-opacity inline-flex items-center justify-center"
+                      className="bg-heading text-white border-none px-2 sm:px-2.5 py-1.5 rounded-[5px] hover:bg-heading/90 transition-opacity inline-flex items-center justify-center"
                       title="View Details"
                     >
-                      <BiShow className="text-lg" />
+                      <BiShow className="text-base sm:text-lg" />
                     </button>
                   </div>
                 </td>
@@ -401,9 +411,9 @@ export default function BusinessInquiries() {
 
       {inquiries.length === 0 && (
         <div className="text-center py-12">
-          <div className="text-6xl text-primary-300 mb-4">📥</div>
-          <p className="text-primary-600 text-lg">No inquiries found</p>
-          <p className="text-primary-500 text-sm mt-2">New business inquiries will appear here</p>
+          <div className="text-6xl text-body/30 mb-4">📥</div>
+          <p className="text-body/80 text-lg">No inquiries found</p>
+          <p className="text-body/60 text-sm mt-2">New business inquiries will appear here</p>
         </div>
       )}
 

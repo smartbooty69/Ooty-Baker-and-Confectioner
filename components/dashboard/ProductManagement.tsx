@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image from "next/image";
-import { BiEdit, BiTrash, BiX, BiPlus } from "react-icons/bi";
+import { BiEdit, BiTrash, BiX, BiPlus, BiDownload, BiFilter, BiCheckSquare, BiSquare } from "react-icons/bi";
 import { CardSkeleton } from "./SkeletonLoader";
 
 const productSchema = z.object({
@@ -28,10 +28,14 @@ const ProductCard = memo(
     product,
     onEdit,
     onDelete,
+    isSelected,
+    onSelect,
   }: {
     product: Product;
     onEdit: (product: Product) => void;
     onDelete: (id: number) => void;
+    isSelected: boolean;
+    onSelect: (id: number) => void;
   }) => {
     const price = useMemo(() => Number(product.price).toFixed(2), [product.price]);
     const pricePerGram = useMemo(
@@ -40,41 +44,64 @@ const ProductCard = memo(
     );
 
     return (
-      <div className="bg-white rounded-xl shadow-md overflow-hidden relative hover:shadow-lg transition-shadow">
-        {/* Action Buttons */}
-        <button
-          onClick={() => onDelete(product.id)}
-          className="absolute top-3 right-3 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-all z-10 opacity-90 hover:opacity-100 hover:scale-110"
-          title="Delete Product"
-          aria-label="Delete product"
-        >
-          <BiTrash className="text-lg" />
-        </button>
-        <button
-          onClick={() => onEdit(product)}
-          className="absolute top-14 right-3 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-all z-10 opacity-90 hover:opacity-100 hover:scale-110"
-          title="Edit Product"
-          aria-label="Edit product"
-        >
-          <BiEdit className="text-lg" />
-        </button>
+      <div
+        className={`bg-white rounded-xl shadow-sm overflow-hidden relative hover:shadow-md transition-shadow border-2 ${
+          isSelected ? "border-primary" : "border-gray-100"
+        }`}
+      >
+        {/* Action Buttons - Right Side */}
+        <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
+          {/* Selection Checkbox */}
+          <button
+            onClick={() => onSelect(product.id)}
+            className="w-8 h-8 bg-white rounded border-2 border-gray-300 flex items-center justify-center hover:border-primary transition-all opacity-90 hover:opacity-100 hover:scale-110"
+            title={isSelected ? "Deselect" : "Select"}
+            aria-label={isSelected ? "Deselect product" : "Select product"}
+          >
+            {isSelected ? (
+              <BiCheckSquare className="text-xl text-primary" />
+            ) : (
+              <BiSquare className="text-xl text-gray-400" />
+            )}
+          </button>
+          
+          {/* Edit Button */}
+          <button
+            onClick={() => onEdit(product)}
+            className="w-8 h-8 bg-heading text-white rounded-full flex items-center justify-center hover:bg-heading/90 transition-all opacity-90 hover:opacity-100 hover:scale-110"
+            title="Edit Product"
+            aria-label="Edit product"
+          >
+            <BiEdit className="text-lg" />
+          </button>
+          
+          {/* Delete Button */}
+          <button
+            onClick={() => onDelete(product.id)}
+            className="w-8 h-8 bg-danger text-white rounded-full flex items-center justify-center hover:bg-danger/90 transition-all opacity-90 hover:opacity-100 hover:scale-110"
+            title="Delete Product"
+            aria-label="Delete product"
+          >
+            <BiTrash className="text-lg" />
+          </button>
+        </div>
 
         {/* Veg Badge */}
         <div
           className={`absolute top-3 left-3 w-9 h-9 bg-white rounded border-2 flex items-center justify-center z-10 ${
-            product.vegStatus === "Veg" ? "border-green-500" : "border-red-500"
+            product.vegStatus === "Veg" ? "border-primary" : "border-danger"
           }`}
           title={product.vegStatus === "Veg" ? "Vegetarian" : "Non-Vegetarian"}
         >
           <div
             className={`w-5 h-5 rounded-full ${
-              product.vegStatus === "Veg" ? "bg-green-500" : "bg-red-500"
+              product.vegStatus === "Veg" ? "bg-primary" : "bg-danger"
             }`}
           />
         </div>
 
         {/* Product Image */}
-        <div className="relative w-full h-64 bg-primary-200">
+        <div className="relative w-full h-64 bg-gray-100">
           {product.imagePath ? (
             <Image
               src={product.imagePath}
@@ -86,7 +113,7 @@ const ProductCard = memo(
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <span className="text-primary-500">No Image</span>
+              <span className="text-body/60">No Image</span>
             </div>
           )}
         </div>
@@ -94,28 +121,28 @@ const ProductCard = memo(
         {/* Product Info */}
         <div className="p-5">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-bold text-primary-800 flex-1">{product.name}</h3>
+            <h3 className="text-lg font-bold text-heading flex-1">{product.name}</h3>
           </div>
 
           {product.variety && (
-            <p className="text-sm text-primary-600 mb-2">
+            <p className="text-sm text-body/70 mb-2">
               <span className="font-medium">Variety:</span> {product.variety}
             </p>
           )}
 
           {product.description && (
-            <p className="text-sm text-primary-600 mb-3 line-clamp-2">{product.description}</p>
+            <p className="text-sm text-body/70 mb-3 line-clamp-2">{product.description}</p>
           )}
 
-          <div className="space-y-1 pt-2 border-t border-primary-200">
+          <div className="space-y-1 pt-2 border-t border-gray-100">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-primary-600">Price:</span>
-              <span className="font-bold text-primary-800">₹{price}</span>
+              <span className="text-sm text-body/70">Price:</span>
+              <span className="font-bold text-body">₹{price}</span>
             </div>
             {pricePerGram && (
               <div className="flex justify-between items-center">
-                <span className="text-sm text-primary-600">Price/g:</span>
-                <span className="font-semibold text-primary-700">₹{pricePerGram}/g</span>
+                <span className="text-sm text-body/70">Price/g:</span>
+                <span className="font-semibold text-body">₹{pricePerGram}/g</span>
               </div>
             )}
           </div>
@@ -139,7 +166,7 @@ const NotificationToast = memo(
     <div className="fixed top-4 right-4 z-[60] animate-in slide-in-from-top-2">
       <div
         className={`p-4 rounded-lg shadow-lg min-w-[300px] max-w-md ${
-          message.type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
+          message.type === "success" ? "bg-primary text-white" : "bg-danger text-white"
         }`}
       >
         <div className="flex items-center justify-between">
@@ -186,6 +213,15 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [varietyFilter, setVarietyFilter] = useState<string>("all");
+  const [vegStatusFilter, setVegStatusFilter] = useState<string>("all");
+  const [priceRangeFilter, setPriceRangeFilter] = useState<{ min: string; max: string }>({
+    min: "",
+    max: "",
+  });
+  const [isExporting, setIsExporting] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
+  const [isBulkDeleting, setIsBulkDeleting] = useState(false);
+  const [categories, setCategories] = useState<Array<{ id: number; name: string }>>([]);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(
     null
   );
@@ -223,8 +259,23 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
       filtered = filtered.filter((product) => product.variety === varietyFilter);
     }
 
+    // Apply veg status filter
+    if (vegStatusFilter !== "all") {
+      filtered = filtered.filter((product) => product.vegStatus === vegStatusFilter);
+    }
+
+    // Apply price range filter
+    if (priceRangeFilter.min || priceRangeFilter.max) {
+      filtered = filtered.filter((product) => {
+        const price = Number(product.price);
+        const min = priceRangeFilter.min ? parseFloat(priceRangeFilter.min) : 0;
+        const max = priceRangeFilter.max ? parseFloat(priceRangeFilter.max) : Infinity;
+        return price >= min && price <= max;
+      });
+    }
+
     return filtered;
-  }, [products, debouncedSearchQuery, varietyFilter]);
+  }, [products, debouncedSearchQuery, varietyFilter, vegStatusFilter, priceRangeFilter]);
 
   // Auto-dismiss notification after 3 seconds
   useEffect(() => {
@@ -260,7 +311,20 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, [fetchProducts]);
+
+  const fetchCategories = useCallback(async () => {
+    try {
+      const response = await fetch("/api/categories");
+      if (response.ok) {
+        const data = await response.json();
+        setCategories(data);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  }, []);
 
   const onSubmit = useCallback(
     async (data: ProductFormData) => {
@@ -409,6 +473,99 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
     reset();
   }, [reset]);
 
+  const handleExportProducts = useCallback(async () => {
+    setIsExporting(true);
+    try {
+      const response = await fetch("/api/products/export");
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `products_${new Date().toISOString().slice(0, 10)}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        showMessage("Products exported successfully", "success");
+      } else {
+        showMessage("Failed to export products", "error");
+      }
+    } catch (error) {
+      console.error("Error exporting products:", error);
+      showMessage("An error occurred while exporting", "error");
+    } finally {
+      setIsExporting(false);
+    }
+  }, [showMessage]);
+
+  const clearFilters = useCallback(() => {
+    setSearchQuery("");
+    setVarietyFilter("all");
+    setVegStatusFilter("all");
+    setPriceRangeFilter({ min: "", max: "" });
+  }, []);
+
+  const handleSelectProduct = useCallback((productId: number) => {
+    setSelectedProducts((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(productId)) {
+        newSet.delete(productId);
+      } else {
+        newSet.add(productId);
+      }
+      return newSet;
+    });
+  }, []);
+
+  const handleSelectAll = useCallback(() => {
+    if (selectedProducts.size === filteredProducts.length) {
+      setSelectedProducts(new Set());
+    } else {
+      setSelectedProducts(new Set(filteredProducts.map((p) => p.id)));
+    }
+  }, [selectedProducts.size, filteredProducts]);
+
+  const handleBulkDelete = useCallback(async () => {
+    if (selectedProducts.size === 0) {
+      showMessage("Please select products to delete", "error");
+      return;
+    }
+
+    if (!confirm(`Are you sure you want to delete ${selectedProducts.size} product(s)?`)) {
+      return;
+    }
+
+    setIsBulkDeleting(true);
+    try {
+      const deletePromises = Array.from(selectedProducts).map((id) =>
+        fetch(`/api/products/${id}`, { method: "DELETE" })
+      );
+
+      const results = await Promise.allSettled(deletePromises);
+      const successCount = results.filter(
+        (r) => r.status === "fulfilled" && r.value.ok
+      ).length;
+      const failCount = results.length - successCount;
+
+      if (successCount > 0) {
+        showMessage(
+          `Successfully deleted ${successCount} product(s)${failCount > 0 ? `, ${failCount} failed` : ""}`,
+          successCount === results.length ? "success" : "error"
+        );
+        setSelectedProducts(new Set());
+        fetchProducts();
+      } else {
+        showMessage("Failed to delete products", "error");
+      }
+    } catch (error) {
+      console.error("Error bulk deleting products:", error);
+      showMessage("An error occurred while deleting", "error");
+    } finally {
+      setIsBulkDeleting(false);
+    }
+  }, [selectedProducts, showMessage, fetchProducts]);
+
   const isModalOpen = editingProduct !== null || isAddingProduct;
 
   return (
@@ -417,48 +574,133 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
 
       <div>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <h2 className="text-2xl font-bold text-primary-800">Edit Products</h2>
-          <div className="flex gap-3">
-            <button
-              onClick={handleAddProduct}
-              className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors flex items-center space-x-2"
-              title="Add New Product"
-            >
-              <BiPlus className="text-xl" />
-              <span>Add Product</span>
-            </button>
-            <button
-              onClick={fetchProducts}
-              disabled={isLoading}
-              className="px-4 py-2 border border-primary-300 text-primary-800 rounded-lg hover:bg-primary-50 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              title="Refresh Products"
-            >
-              <span>{isLoading ? "Refreshing..." : "Refresh"}</span>
-            </button>
+          <h2 className="text-2xl font-bold text-heading">Edit Products</h2>
+          <div className="flex gap-3 flex-wrap items-center">
+            {selectedProducts.size === 0 && (
+              <button
+                onClick={handleAddProduct}
+                className="px-4 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-colors flex items-center space-x-2"
+                title="Add New Product"
+              >
+                <BiPlus className="text-xl" />
+                <span>Add Product</span>
+              </button>
+            )}
+            {selectedProducts.size > 0 && (
+              <button
+                onClick={handleBulkDelete}
+                disabled={isBulkDeleting}
+                className="px-4 py-2 bg-danger text-white rounded-lg hover:bg-danger/90 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Delete Selected"
+              >
+                <BiTrash className="text-xl" />
+                <span>
+                  {isBulkDeleting
+                    ? "Deleting..."
+                    : `Delete (${selectedProducts.size})`}
+                </span>
+              </button>
+            )}
+            {selectedProducts.size > 0 && (
+              <div className="flex items-center gap-2 ml-auto">
+                <button
+                  onClick={handleSelectAll}
+                  className="px-4 py-2 border border-heading/20 text-body rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                  title={selectedProducts.size === filteredProducts.length ? "Deselect All" : "Select All"}
+                >
+                  {selectedProducts.size === filteredProducts.length && filteredProducts.length > 0 ? (
+                    <BiCheckSquare className="text-xl text-primary" />
+                  ) : (
+                    <BiSquare className="text-xl" />
+                  )}
+                  <span>
+                    {selectedProducts.size === filteredProducts.length && filteredProducts.length > 0
+                      ? "Deselect All"
+                      : "Select All"}
+                  </span>
+                </button>
+                <span className="text-sm text-body/70">
+                  {selectedProducts.size} selected
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Search and Filter */}
-        <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-            />
+        <div className="mb-6 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-4 pr-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+              />
+            </div>
+            <select
+              value={varietyFilter}
+              onChange={(e) => setVarietyFilter(e.target.value)}
+              className="px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+            >
+              <option value="all">All Varieties</option>
+              <option value="Candy">Candy</option>
+              <option value="Coated Candy">Coated Candy</option>
+              <option value="Jelly">Jelly</option>
+            </select>
+            <select
+              value={vegStatusFilter}
+              onChange={(e) => setVegStatusFilter(e.target.value)}
+              className="px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+            >
+              <option value="all">All Types</option>
+              <option value="Veg">Vegetarian</option>
+              <option value="Non-Veg">Non-Vegetarian</option>
+            </select>
+            <button
+              onClick={clearFilters}
+              className="px-4 py-2 border border-heading/20 text-body rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
+              title="Clear Filters"
+            >
+              <BiFilter className="text-lg" />
+              <span>Clear</span>
+            </button>
           </div>
-          <select
-            value={varietyFilter}
-            onChange={(e) => setVarietyFilter(e.target.value)}
-            className="px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-          >
-            <option value="all">All Varieties</option>
-            <option value="Candy">Candy</option>
-            <option value="Coated Candy">Coated Candy</option>
-            <option value="Jelly">Jelly</option>
-          </select>
+          {/* Price Range Filter */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+            <div>
+              <label className="block text-sm font-medium text-body mb-2">Min Price (₹)</label>
+              <input
+                type="number"
+                placeholder="0"
+                value={priceRangeFilter.min}
+                onChange={(e) =>
+                  setPriceRangeFilter({ ...priceRangeFilter, min: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                min="0"
+                step="0.01"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-body mb-2">Max Price (₹)</label>
+              <input
+                type="number"
+                placeholder="No limit"
+                value={priceRangeFilter.max}
+                onChange={(e) =>
+                  setPriceRangeFilter({ ...priceRangeFilter, max: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                min="0"
+                step="0.01"
+              />
+            </div>
+            <div className="text-sm text-body/70">
+              Showing {filteredProducts.length} of {products.length} products
+            </div>
+          </div>
         </div>
 
         {isLoading && products.length === 0 ? (
@@ -468,22 +710,22 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
             ))}
           </div>
         ) : filteredProducts.length === 0 && products.length > 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="text-center py-8 text-primary-600">
+          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+            <div className="text-center py-8 text-body/70">
               No products match your search criteria
             </div>
           </div>
         ) : products.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
             <div className="text-center py-12">
-              <div className="text-6xl text-primary-300 mb-4">📦</div>
-              <p className="text-primary-600 text-lg">No products found</p>
-              <p className="text-primary-500 text-sm mt-2 mb-4">
+              <div className="text-6xl text-body/30 mb-4">📦</div>
+              <p className="text-body/80 text-lg">No products found</p>
+              <p className="text-body/60 text-sm mt-2 mb-4">
                 Add your first product to get started
               </p>
               <button
                 onClick={handleAddProduct}
-                className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors flex items-center space-x-2 mx-auto"
+                className="px-6 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-colors flex items-center space-x-2 mx-auto"
               >
                 <BiPlus className="text-xl" />
                 <span>Add Product</span>
@@ -498,6 +740,8 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                 product={product}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                isSelected={selectedProducts.has(product.id)}
+                onSelect={handleSelectProduct}
               />
             ))}
           </div>
@@ -505,20 +749,16 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
 
         {/* Add/Edit Product Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl max-w-3xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden flex flex-col m-2 sm:m-0">
               {/* Header */}
-              <div
-                className={`px-6 py-4 flex justify-between items-center ${
-                  isAddingProduct ? "bg-blue-500" : "bg-green-500"
-                } text-white`}
-              >
+              <div className="px-6 py-4 flex justify-between items-center bg-heading text-white">
                 <h3 className="text-xl font-bold mb-0">
                   {isAddingProduct ? "Add New Product" : "Edit Product"}
                 </h3>
                 <button
                   onClick={handleCloseModal}
-                  className="text-white hover:opacity-80 rounded-full p-2 transition-colors"
+                  className="text-white hover:bg-heading/90 rounded-full p-2 transition-colors"
                   aria-label="Close modal"
                 >
                   <BiX className="text-2xl" />
@@ -530,7 +770,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                         Product Name
                       </label>
                       <input
@@ -544,7 +784,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                         Variety
                       </label>
                       <select
@@ -561,7 +801,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                         Description
                       </label>
                       <textarea
@@ -572,7 +812,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-primary-700 mb-2">Price</label>
+                      <label className="block text-sm font-medium text-body mb-2">Price</label>
                       <input
                         {...register("price", { valueAsNumber: true })}
                         type="number"
@@ -586,7 +826,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                         Price per Gram
                       </label>
                       <input
@@ -602,7 +842,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                         Vegetarian Status
                       </label>
                       <select
@@ -615,7 +855,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                         Product Image{" "}
                         {editingProduct && !isAddingProduct && "(leave empty to keep current)"}
                       </label>
@@ -624,7 +864,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                           type="file"
                           accept="image/jpeg,image/jpg,image/png,image/gif"
                           onChange={handleImageChange}
-                          className="w-full text-sm text-primary-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-accent file:text-white hover:file:bg-accent-dark"
+                          className="w-full text-sm text-body/70 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-heading file:text-white hover:file:bg-heading/90"
                         />
                         {imagePreview && (
                           <div className="mt-4">
@@ -651,7 +891,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="px-6 py-2 bg-primary-200 text-primary-800 rounded-lg hover:bg-primary-300 transition-colors"
+                  className="px-6 py-2 border border-heading/20 text-body rounded-lg hover:bg-gray-100 transition-colors"
                 >
                   Cancel
                 </button>
@@ -659,7 +899,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                   type="button"
                   onClick={handleSubmit(onSubmit)}
                   disabled={isSubmitting}
-                  className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting
                     ? "Saving..."

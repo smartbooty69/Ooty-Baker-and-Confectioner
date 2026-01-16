@@ -26,26 +26,20 @@ export default function ProductsSection({ productsByCategory }: ProductsSectionP
   return (
     <section 
       id="products" 
-      className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden text-white"
+      className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       style={{
-        background: "linear-gradient(to right, #1b6e49, #34C759)"
+        background: "#F9F7F2" // Warm Cream
       }}
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-20">
-          {/* Decorative background glow */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-          </div>
-          
           {/* Main Header Container */}
           <div className="relative">
             {/* Main Title */}
             <h1 
-              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-4 tracking-tight relative"
+              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-heading mb-4 tracking-tight relative"
               style={{
                 animation: "fadeInUp 0.6s ease-out both",
-                textShadow: "0 4px 20px rgba(0,0,0,0.2)",
               }}
             >
               PRODUCTS
@@ -58,16 +52,16 @@ export default function ProductsSection({ productsByCategory }: ProductsSectionP
                 animation: "fadeInUp 0.6s ease-out 0.2s both",
               }}
             >
-              <div className="w-16 h-1 bg-white/60 rounded-full"></div>
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-              <div className="w-32 h-1.5 bg-white/90 rounded-full"></div>
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-              <div className="w-16 h-1 bg-white/60 rounded-full"></div>
+              <div className="w-16 h-1 bg-heading/40 rounded-full"></div>
+              <div className="w-2 h-2 bg-heading rounded-full"></div>
+              <div className="w-32 h-1.5 bg-heading/60 rounded-full"></div>
+              <div className="w-2 h-2 bg-heading rounded-full"></div>
+              <div className="w-16 h-1 bg-heading/40 rounded-full"></div>
             </div>
 
             {/* Subtitle */}
             <h2 
-              className="text-2xl md:text-3xl lg:text-4xl text-white/95 font-semibold mb-2 relative"
+              className="text-2xl md:text-3xl lg:text-4xl text-heading font-semibold mb-2 relative"
               style={{
                 animation: "fadeInUp 0.6s ease-out 0.4s both",
               }}
@@ -77,7 +71,7 @@ export default function ProductsSection({ productsByCategory }: ProductsSectionP
             
             {/* Description */}
             <p 
-              className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mt-4 relative"
+              className="text-lg md:text-xl text-body/70 max-w-2xl mx-auto mt-4 relative"
               style={{
                 animation: "fadeInUp 0.6s ease-out 0.6s both",
               }}
@@ -87,8 +81,22 @@ export default function ProductsSection({ productsByCategory }: ProductsSectionP
           </div>
         </div>
 
-        {Object.entries(productsByCategory).map(([category, products]) => (
-          <CategorySection key={category} category={category} products={products} />
+        {Object.entries(productsByCategory).map(([category, products], index) => (
+          <div key={category}>
+            <CategorySection category={category} products={products} />
+            {index < Object.entries(productsByCategory).length - 1 && (
+              <div className="relative w-full h-16 my-12 overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-heading/20 to-transparent"></div>
+                </div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+                  <div className="w-1 h-1 bg-heading/30 rounded-full"></div>
+                  <div className="w-8 h-0.5 bg-heading/20 rounded-full"></div>
+                  <div className="w-1 h-1 bg-heading/30 rounded-full"></div>
+                </div>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </section>
@@ -205,8 +213,8 @@ function CategorySection({ category, products }: { category: string; products: S
   return (
     <div className="mb-20" data-aos="fade-up">
       <div className="text-center mb-8">
-        <div className="inline-block bg-white/15 backdrop-blur-sm px-6 py-2 rounded-full mb-3 border border-white/20">
-          <span className="text-white font-bold text-sm uppercase tracking-wider">{category}</span>
+        <div className="inline-block bg-white px-6 py-2 rounded-full mb-3 border-2 border-heading/20 shadow-md">
+          <span className="text-heading font-bold text-sm uppercase tracking-wider">{category}</span>
         </div>
       </div>
 
@@ -219,12 +227,12 @@ function CategorySection({ category, products }: { category: string; products: S
         <button
           onClick={() => scroll("left")}
           disabled={!canScrollLeft}
-          className={`absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-xl hover:bg-white transition-all duration-300 ${
+          className={`absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg hover:bg-primary hover:text-white transition-all duration-300 ${
             canScrollLeft && isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
-          } disabled:opacity-0 disabled:cursor-not-allowed hover:scale-110`}
+          } disabled:opacity-0 disabled:cursor-not-allowed hover:scale-110 border-2 border-heading/20`}
           aria-label="Previous items"
         >
-          <BiChevronLeft className="text-2xl text-primary-700" />
+          <BiChevronLeft className="text-2xl text-body" />
         </button>
 
         {/* Carousel Container */}
@@ -243,19 +251,19 @@ function CategorySection({ category, products }: { category: string; products: S
         <button
           onClick={() => scroll("right")}
           disabled={!canScrollRight}
-          className={`absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-xl hover:bg-white transition-all duration-300 ${
+          className={`absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg hover:bg-primary hover:text-white transition-all duration-300 ${
             canScrollRight && isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
-          } disabled:opacity-0 disabled:cursor-not-allowed hover:scale-110`}
+          } disabled:opacity-0 disabled:cursor-not-allowed hover:scale-110 border-2 border-heading/20`}
           aria-label="Next items"
         >
-          <BiChevronRight className="text-2xl text-primary-700" />
+          <BiChevronRight className="text-2xl text-body" />
         </button>
 
         {/* Gradient Overlays */}
-        <div className={`absolute left-0 top-0 bottom-4 w-20 bg-gradient-to-r from-[#1b6e49] to-transparent pointer-events-none transition-opacity duration-300 ${
+        <div className={`absolute left-0 top-0 bottom-4 w-20 bg-gradient-to-r from-background to-transparent pointer-events-none transition-opacity duration-300 ${
           canScrollLeft ? "opacity-100" : "opacity-0"
         }`} />
-        <div className={`absolute right-0 top-0 bottom-4 w-20 bg-gradient-to-l from-[#34C759] to-transparent pointer-events-none transition-opacity duration-300 ${
+        <div className={`absolute right-0 top-0 bottom-4 w-20 bg-gradient-to-l from-background to-transparent pointer-events-none transition-opacity duration-300 ${
           canScrollRight ? "opacity-100" : "opacity-0"
         }`} />
       </div>
@@ -263,14 +271,14 @@ function CategorySection({ category, products }: { category: string; products: S
       <div className="text-center mt-8">
         <Link
           href={`/products/${encodeURIComponent(category)}`}
-          className="inline-flex items-center gap-2 bg-accent text-white px-8 py-3 rounded-lg hover:bg-accent-dark transition-all duration-300 font-semibold hover:scale-105 shadow-md hover:shadow-lg"
+          className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-lg hover:bg-[#007f4d] transition-all duration-300 font-semibold hover:scale-105 shadow-md hover:shadow-lg"
         >
           <span>View More {category}</span>
           <BiChevronRight className="text-xl" />
         </Link>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-16"></div>
+      <div className="h-px bg-gradient-to-r from-transparent via-heading/20 to-transparent my-16"></div>
     </div>
   );
 }
@@ -317,26 +325,26 @@ function ProductCard({ product, index }: { product: SerializedProduct; index: nu
           {/* Product Info Overlay - Appears on Hover */}
           <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out pointer-events-none">
             <div className="bg-white/95 backdrop-blur-sm rounded-lg p-4">
-              <h3 className="text-lg font-bold text-[#6A515E] mb-1 line-clamp-1">
+              <h3 className="text-lg font-bold text-heading mb-1 line-clamp-1">
                 {product.name}
               </h3>
               {product.description && (
-                <p className="text-sm text-[#D7BDCA] mb-3 line-clamp-2">
+                <p className="text-sm text-body/70 mb-3 line-clamp-2">
                   {product.description}
                 </p>
               )}
                     {product.pricePerGram ? (
                       <div className="flex items-center gap-2 text-xs font-medium">
-                        <span className="px-3 py-1.5 text-white bg-accent rounded-lg whitespace-nowrap font-semibold shadow-md">
+                        <span className="px-3 py-1.5 text-white bg-primary rounded-lg whitespace-nowrap font-semibold shadow-md">
                           ₹{Number(product.pricePerGram).toFixed(2)}/g
                         </span>
-                        <span className="px-3 py-1.5 text-white bg-accent rounded-lg whitespace-nowrap font-semibold shadow-md">
+                        <span className="px-3 py-1.5 text-white bg-primary rounded-lg whitespace-nowrap font-semibold shadow-md">
                           ₹{Number(product.price).toFixed(2)}
                         </span>
                       </div>
                     ) : (
                       <div className="text-sm font-medium">
-                        <span className="px-4 py-2 text-white bg-accent rounded-lg font-semibold shadow-md">
+                        <span className="px-4 py-2 text-white bg-primary rounded-lg font-semibold shadow-md">
                           ₹{Number(product.price).toFixed(2)}
                         </span>
                       </div>

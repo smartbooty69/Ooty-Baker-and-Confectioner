@@ -26,7 +26,7 @@ const NotificationToast = memo(
     <div className="fixed top-4 right-4 z-[60] animate-in slide-in-from-top-2">
       <div
         className={`p-4 rounded-lg shadow-lg min-w-[300px] max-w-md ${
-          message.type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
+          message.type === "success" ? "bg-primary text-white" : "bg-danger text-white"
         }`}
       >
         <div className="flex items-center justify-between">
@@ -260,11 +260,11 @@ export default function BannerManagement() {
 
       <div>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <h2 className="text-2xl font-bold text-primary-800">Manage Banners</h2>
+          <h2 className="text-2xl font-bold text-heading">Manage Banners</h2>
           <div className="flex gap-3">
             <button
               onClick={handleAddBanner}
-              className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors flex items-center space-x-2"
+              className="px-4 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-colors flex items-center space-x-2"
             >
               <BiPlus className="text-xl" />
               <span>Add Banner</span>
@@ -272,7 +272,7 @@ export default function BannerManagement() {
             <button
               onClick={fetchBanners}
               disabled={isLoading}
-              className="px-4 py-2 border border-primary-300 text-primary-800 rounded-lg hover:bg-primary-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 border border-heading/20 text-body rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Refreshing..." : "Refresh"}
             </button>
@@ -280,21 +280,21 @@ export default function BannerManagement() {
         </div>
 
         {isLoading && banners.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
             <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
-              <p className="mt-4 text-primary-600">Loading banners...</p>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-heading"></div>
+              <p className="mt-4 text-body/70">Loading banners...</p>
             </div>
           </div>
         ) : banners.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
             <div className="text-center py-12">
-              <div className="text-6xl text-primary-300 mb-4">🖼️</div>
-              <p className="text-primary-600 text-lg">No banners found</p>
-              <p className="text-primary-500 text-sm mt-2 mb-4">Add your first banner to get started</p>
+              <div className="text-6xl text-body/30 mb-4">🖼️</div>
+              <p className="text-body/80 text-lg">No banners found</p>
+              <p className="text-body/60 text-sm mt-2 mb-4">Add your first banner to get started</p>
               <button
                 onClick={handleAddBanner}
-                className="px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors flex items-center space-x-2 mx-auto"
+                className="px-6 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-colors flex items-center space-x-2 mx-auto"
               >
                 <BiPlus className="text-xl" />
                 <span>Add Banner</span>
@@ -332,7 +332,7 @@ export default function BannerManagement() {
                       className="w-8 h-8 bg-white bg-opacity-90 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-all"
                       title="Move Up"
                     >
-                      <BiChevronUp className="text-lg text-primary-800" />
+                      <BiChevronUp className="text-lg text-heading" />
                     </button>
                   )}
                   {index < banners.length - 1 && (
@@ -341,13 +341,13 @@ export default function BannerManagement() {
                       className="w-8 h-8 bg-white bg-opacity-90 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-all"
                       title="Move Down"
                     >
-                      <BiChevronDown className="text-lg text-primary-800" />
+                      <BiChevronDown className="text-lg text-heading" />
                     </button>
                   )}
                 </div>
 
                 {/* Banner Image */}
-                <div className="relative w-full h-64 bg-primary-200">
+                <div className="relative w-full h-64 bg-gray-100">
                   <Image
                     src={banner.imagePath}
                     alt={banner.altText || "Banner"}
@@ -360,19 +360,19 @@ export default function BannerManagement() {
                 {/* Banner Info */}
                 <div className="p-5">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-primary-600">Order: {banner.order}</span>
+                    <span className="text-sm font-medium text-body/70">Order: {banner.order}</span>
                     <span
                       className={`text-xs px-2 py-1 rounded ${
                         banner.isActive
-                          ? "bg-green-100 text-green-800"
-                          : "bg-gray-100 text-gray-800"
+                          ? "bg-[#E6F5ED] text-primary"
+                          : "bg-gray-100 text-body/70"
                       }`}
                     >
                       {banner.isActive ? "Active" : "Inactive"}
                     </span>
                   </div>
                   {banner.altText && (
-                    <p className="text-sm text-primary-600 line-clamp-2">{banner.altText}</p>
+                    <p className="text-sm text-body/70 line-clamp-2">{banner.altText}</p>
                   )}
                 </div>
               </div>
@@ -382,20 +382,16 @@ export default function BannerManagement() {
 
         {/* Add/Edit Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden flex flex-col m-2 sm:m-0">
               {/* Header */}
-              <div
-                className={`px-6 py-4 flex justify-between items-center ${
-                  isAddingBanner ? "bg-blue-500" : "bg-green-500"
-                } text-white`}
-              >
+              <div className="px-6 py-4 flex justify-between items-center bg-heading text-white">
                 <h3 className="text-xl font-bold mb-0">
                   {isAddingBanner ? "Add New Banner" : "Edit Banner"}
                 </h3>
                 <button
                   onClick={handleCloseModal}
-                  className="text-white hover:opacity-80 rounded-full p-2 transition-colors"
+                  className="text-white hover:bg-heading/90 rounded-full p-2 transition-colors"
                 >
                   <BiX className="text-2xl" />
                 </button>
@@ -405,15 +401,15 @@ export default function BannerManagement() {
               <div className="overflow-y-auto flex-1 p-6">
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-primary-700 mb-2">
+                    <label className="block text-sm font-medium text-body mb-2">
                       Banner Image {!isAddingBanner && "(leave empty to keep current)"}
                     </label>
-                    <div className="border-2 border-dashed border-primary-300 rounded-lg p-4">
+                    <div className="border-2 border-dashed border-heading/20 rounded-lg p-4">
                       <input
                         type="file"
                         accept="image/jpeg,image/jpg,image/png,image/gif"
                         onChange={handleImageChange}
-                        className="w-full text-sm text-primary-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-accent file:text-white hover:file:bg-accent-dark"
+                        className="w-full text-sm text-body/70 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-heading file:text-white hover:file:bg-heading/90"
                       />
                       {imagePreview && (
                         <div className="mt-4">
@@ -426,14 +422,14 @@ export default function BannerManagement() {
                           />
                         </div>
                       )}
-                      <p className="text-xs text-primary-500 mt-2">
+                      <p className="text-xs text-body/60 mt-2">
                         Max file size: 5MB. Allowed formats: JPG, JPEG, PNG, GIF
                       </p>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                       Alt Text (for accessibility)
                     </label>
                     <input
@@ -441,12 +437,12 @@ export default function BannerManagement() {
                       value={altText}
                       onChange={(e) => setAltText(e.target.value)}
                       placeholder="Describe the banner image"
-                      className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                      className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-primary-700 mb-2">
+                      <label className="block text-sm font-medium text-body mb-2">
                       Display Order
                     </label>
                     <input
@@ -454,7 +450,7 @@ export default function BannerManagement() {
                       value={order}
                       onChange={(e) => setOrder(parseInt(e.target.value) || 0)}
                       min="0"
-                      className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                      className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
                     />
                     <p className="text-xs text-primary-500 mt-1">
                       Lower numbers appear first in the slider
@@ -468,7 +464,7 @@ export default function BannerManagement() {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="px-6 py-2 bg-primary-200 text-primary-800 rounded-lg hover:bg-primary-300 transition-colors"
+                  className="px-6 py-2 border border-heading/20 text-body rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>

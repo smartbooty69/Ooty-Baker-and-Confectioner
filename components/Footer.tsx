@@ -11,10 +11,10 @@ export default function Footer() {
     <footer 
       className="text-white relative overflow-hidden"
       style={{
-        background: "linear-gradient(to right, #1b6e49, #34C759)"
+        background: "#007A4D" // Ooty Forest Green
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 py-12">
           {/* Company Info */}

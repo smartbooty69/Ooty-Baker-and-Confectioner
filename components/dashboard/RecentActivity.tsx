@@ -51,15 +51,15 @@ export default function RecentActivity() {
   const getActivityIcon = (action: string) => {
     switch (action) {
       case "created":
-        return <BiPlus className="text-green-500" />;
+        return <BiPlus className="text-primary" />; // Success - Gimmie Vibrant Green
       case "updated":
-        return <BiEdit className="text-blue-500" />;
+        return <BiEdit className="text-heading" />; // Primary Action - Ooty Forest Green
       case "deleted":
-        return <BiTrash className="text-red-500" />;
+        return <BiTrash className="text-danger" />; // Danger - Berry Red
       case "status_changed":
-        return <BiCheckCircle className="text-orange-500" />;
+        return <BiCheckCircle className="text-secondary" />; // Warning - Golden Crust
       default:
-        return <BiCheckCircle className="text-gray-500" />;
+        return <BiCheckCircle className="text-body/50" />; // Neutral - Deep Charcoal at 50%
     }
   };
 
@@ -78,7 +78,7 @@ export default function RecentActivity() {
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-200 rounded w-32"></div>
           {[...Array(3)].map((_, i) => (
@@ -97,23 +97,23 @@ export default function RecentActivity() {
 
   if (activities.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-bold text-primary-800 mb-4">Recent Activity</h2>
-        <p className="text-primary-600 text-center py-8">No recent activity</p>
+      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+        <h2 className="text-xl font-bold text-heading mb-4">Recent Activity</h2>
+        <p className="text-body/70 text-center py-8">No recent activity</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-bold text-primary-800 mb-4">Recent Activity</h2>
+    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+      <h2 className="text-xl font-bold text-heading mb-4">Recent Activity</h2>
       <div className="space-y-4">
         {activities.map((activity) => (
-          <div key={activity.id} className="flex items-start space-x-3 p-3 hover:bg-primary-50 rounded-lg transition-colors">
+          <div key={activity.id} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="mt-1">{getActivityIcon(activity.action)}</div>
             <div className="flex-1">
-              <p className="text-sm text-primary-800">{activity.description}</p>
-              <p className="text-xs text-primary-500 mt-1">{formatTime(activity.timestamp)}</p>
+              <p className="text-sm text-body">{activity.description}</p>
+              <p className="text-xs text-body/60 mt-1">{formatTime(activity.timestamp)}</p>
             </div>
           </div>
         ))}

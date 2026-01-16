@@ -113,8 +113,8 @@ export default function Analytics() {
       <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:shadow-lg">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-primary-800">Analytics Dashboard</h2>
-            <p className="text-sm text-primary-600 mt-1">
+            <h2 className="text-2xl font-bold text-heading">Analytics Dashboard</h2>
+            <p className="text-sm text-body/70 mt-1">
               Comprehensive insights and performance metrics
             </p>
           </div>
@@ -122,7 +122,7 @@ export default function Analytics() {
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
-              className="px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 hover:border-accent cursor-pointer"
+              className="px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary cursor-pointer bg-white"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
@@ -131,7 +131,7 @@ export default function Analytics() {
             </select>
             <button
               onClick={fetchAnalytics}
-              className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
+              className="px-4 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
             >
               Refresh
             </button>
@@ -143,29 +143,29 @@ export default function Analytics() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer group border-2 border-transparent hover:border-blue-200">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-primary-600 uppercase">Total Inquiries</h3>
-            <BiBarChart className="text-2xl text-blue-500 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3" />
+            <h3 className="text-sm font-semibold text-body/70 uppercase">Total Inquiries</h3>
+            <BiBarChart className="text-2xl text-heading transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3" />
           </div>
-          <div className="text-3xl font-bold text-primary-800 transition-colors duration-300 group-hover:text-blue-600">
+          <div className="text-3xl font-bold text-body transition-colors duration-300 group-hover:text-heading">
             {analytics.totalInquiries}
           </div>
-          <p className="text-sm text-primary-600 mt-1">In the selected period</p>
+          <p className="text-sm text-body/70 mt-1">In the selected period</p>
         </div>
 
         <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer group border-2 border-transparent hover:border-green-200">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-primary-600 uppercase">Total Revenue</h3>
-            <BiTrendingUp className="text-2xl text-green-500 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3" />
+            <h3 className="text-sm font-semibold text-body/70 uppercase">Total Revenue</h3>
+            <BiTrendingUp className="text-2xl text-primary transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3" />
           </div>
-          <div className="text-3xl font-bold text-primary-800 transition-colors duration-300 group-hover:text-green-600">
+          <div className="text-3xl font-bold text-body transition-colors duration-300 group-hover:text-primary">
             ₹{analytics.totalRevenue.toLocaleString()}
           </div>
-          <p className="text-sm text-primary-600 mt-1">Estimated value</p>
+          <p className="text-sm text-body/70 mt-1">Estimated value</p>
         </div>
 
         <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer group border-2 border-transparent hover:border-purple-200">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-primary-600 uppercase">Completion Rate</h3>
+            <h3 className="text-sm font-semibold text-body/70 uppercase">Completion Rate</h3>
             <BiPieChart className="text-2xl text-purple-500 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3" />
           </div>
           <div className="text-3xl font-bold text-primary-800 transition-colors duration-300 group-hover:text-purple-600">
@@ -181,7 +181,7 @@ export default function Analytics() {
 
         <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer group border-2 border-transparent hover:border-orange-200">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-primary-600 uppercase">Avg Response Time</h3>
+            <h3 className="text-sm font-semibold text-body/70 uppercase">Avg Response Time</h3>
             <BiTrendingDown className="text-2xl text-orange-500 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3" />
           </div>
           <div className="text-3xl font-bold text-primary-800 transition-colors duration-300 group-hover:text-orange-600">
@@ -201,7 +201,7 @@ export default function Analytics() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Daily Inquiries Chart */}
         <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:shadow-xl">
-          <h3 className="text-lg font-bold text-primary-800 mb-4">Inquiries Over Time</h3>
+          <h3 className="text-lg font-bold text-heading mb-4">Inquiries Over Time</h3>
           {chartData && chartData.inquiryData.length > 0 ? (
             <div className="space-y-2">
               {chartData.inquiryData.map((item, index) => {
@@ -223,9 +223,9 @@ export default function Analytics() {
                         day: "numeric",
                       })}
                     </div>
-                    <div className="flex-1 bg-primary-100 rounded-full h-6 relative overflow-hidden group-hover/bar:bg-blue-100 transition-colors duration-200">
+                    <div className="flex-1 bg-gray-100 rounded-full h-6 relative overflow-hidden group-hover/bar:bg-gray-200 transition-colors duration-200">
                       <div
-                        className="bg-blue-500 h-full rounded-full transition-all duration-500 ease-out group-hover/bar:bg-blue-600 group-hover/bar:shadow-lg"
+                        className="bg-heading h-full rounded-full transition-all duration-500 ease-out group-hover/bar:bg-heading/90 group-hover/bar:shadow-lg"
                         style={{
                           width: isAnimating ? `${percentage}%` : "0%",
                         }}
@@ -240,13 +240,13 @@ export default function Analytics() {
               })}
             </div>
           ) : (
-            <p className="text-center text-primary-600 py-8">No data available</p>
+            <p className="text-center text-body/70 py-8">No data available</p>
           )}
         </div>
 
         {/* Revenue Chart */}
         <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:shadow-xl">
-          <h3 className="text-lg font-bold text-primary-800 mb-4">Revenue Over Time</h3>
+          <h3 className="text-lg font-bold text-heading mb-4">Revenue Over Time</h3>
           {chartData && chartData.revenueData.length > 0 ? (
             <div className="space-y-2">
               {chartData.revenueData.map((item, index) => {
@@ -285,7 +285,7 @@ export default function Analytics() {
               })}
             </div>
           ) : (
-            <p className="text-center text-primary-600 py-8">No data available</p>
+            <p className="text-center text-body/70 py-8">No data available</p>
           )}
         </div>
       </div>
@@ -294,14 +294,14 @@ export default function Analytics() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Status Distribution */}
         <div className="bg-white rounded-lg shadow-md p-6 transform transition-all duration-300 hover:shadow-xl">
-          <h3 className="text-lg font-bold text-primary-800 mb-4">Status Distribution</h3>
+          <h3 className="text-lg font-bold text-heading mb-4">Status Distribution</h3>
           {statusPercentages && (
             <div className="space-y-4">
               {[
-                { label: "New", value: analytics.statusDistribution.new, percentage: statusPercentages.new, color: "bg-blue-500", hoverColor: "hover:bg-blue-600" },
-                { label: "In Progress", value: analytics.statusDistribution.inProgress, percentage: statusPercentages.inProgress, color: "bg-yellow-500", hoverColor: "hover:bg-yellow-600" },
-                { label: "Completed", value: analytics.statusDistribution.completed, percentage: statusPercentages.completed, color: "bg-green-500", hoverColor: "hover:bg-green-600" },
-                { label: "Cancelled", value: analytics.statusDistribution.cancelled, percentage: statusPercentages.cancelled, color: "bg-red-500", hoverColor: "hover:bg-red-600" },
+                { label: "New", value: analytics.statusDistribution.new, percentage: statusPercentages.new, color: "bg-[#E5F2EC]", hoverColor: "hover:bg-[#E5F2EC]/80" }, // Neutral
+                { label: "In Progress", value: analytics.statusDistribution.inProgress, percentage: statusPercentages.inProgress, color: "bg-[#FFF8E1]", hoverColor: "hover:bg-[#FFF8E1]/80" }, // Warning - Golden Crust
+                { label: "Completed", value: analytics.statusDistribution.completed, percentage: statusPercentages.completed, color: "bg-[#E6F5ED]", hoverColor: "hover:bg-[#E6F5ED]/80" }, // Success - Gimmie Vibrant Green
+                { label: "Cancelled", value: analytics.statusDistribution.cancelled, percentage: statusPercentages.cancelled, color: "bg-red-100", hoverColor: "hover:bg-red-200" }, // Danger - Berry Red
               ].map((status, index) => (
                 <div
                   key={index}
@@ -313,14 +313,14 @@ export default function Analytics() {
                   }}
                 >
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-primary-700 group-hover/status:font-semibold transition-all">
+                    <span className="text-sm font-medium text-body group-hover/status:font-semibold transition-all">
                       {status.label}
                     </span>
-                    <span className="text-sm text-primary-600 group-hover/status:text-primary-800 transition-colors">
+                    <span className="text-sm text-body/70 group-hover/status:text-body transition-colors">
                       {status.value} ({status.percentage.toFixed(1)}%)
                     </span>
                   </div>
-                  <div className="w-full bg-primary-100 rounded-full h-3 overflow-hidden group-hover/status:bg-gray-200 transition-colors">
+                  <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden group-hover/status:bg-gray-200 transition-colors">
                     <div
                       className={`${status.color} h-3 rounded-full transition-all duration-700 ease-out ${status.hoverColor} group-hover/status:shadow-md`}
                       style={{
@@ -493,7 +493,7 @@ export default function Analytics() {
                 })}
             </div>
           ) : (
-            <p className="text-center text-primary-600 py-8">No data available</p>
+            <p className="text-center text-body/70 py-8">No data available</p>
           )}
         </div>
 
@@ -539,7 +539,7 @@ export default function Analytics() {
                 })}
             </div>
           ) : (
-            <p className="text-center text-primary-600 py-8">No data available</p>
+            <p className="text-center text-body/70 py-8">No data available</p>
           )}
         </div>
       </div>

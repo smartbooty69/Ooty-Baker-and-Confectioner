@@ -90,16 +90,16 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
   return (
     <section 
       id="contact" 
-      className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden text-white"
+      className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       style={{
-        background: "linear-gradient(to right, #1b6e49, #34C759)"
+        background: "#F9F7F2" // Warm Cream
       }}
     >
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">Inquiry Details</h2>
-          <div className="w-32 h-1 bg-white/80 mx-auto rounded-full"></div>
-          <p className="text-white/90 mt-4 text-lg">Fill out the form below and we'll get back to you soon!</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-heading mb-3">Inquiry Details</h2>
+          <div className="w-32 h-1 bg-heading/60 mx-auto rounded-full"></div>
+          <p className="text-body/80 mt-4 text-lg">Fill out the form below and we'll get back to you soon!</p>
         </div>
 
         {submitStatus && (
@@ -114,18 +114,18 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Business Details */}
-          <div className="bg-white rounded-xl p-6 shadow-md border border-primary-100">
-            <h3 className="text-xl font-semibold text-primary-800 mb-4">Business Details</h3>
+            <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-heading/10">
+            <h3 className="text-xl font-semibold text-heading mb-4">Business Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">
+                <label className="block text-sm font-medium text-body mb-1">
                   Business Name
                 </label>
                 <input
                   {...register("businessName")}
                   type="text"
                   placeholder="e.g. CandyCo Pvt. Ltd"
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 {errors.businessName && (
                   <p className="text-red-600 text-sm mt-1">{errors.businessName.message}</p>
@@ -133,14 +133,14 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">
+                <label className="block text-sm font-medium text-body mb-1">
                   Contact Person
                 </label>
                 <input
                   {...register("contactPersonName")}
                   type="text"
                   placeholder="Full name"
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 {errors.contactPersonName && (
                   <p className="text-red-600 text-sm mt-1">{errors.contactPersonName.message}</p>
@@ -148,12 +148,12 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-body mb-1">Email</label>
                 <input
                   {...register("email")}
                   type="email"
                   placeholder="example@mail.com"
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
@@ -161,13 +161,13 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">Phone</label>
+                <label className="block text-sm font-medium text-body mb-1">Phone</label>
                 <input
                   {...register("phone")}
                   type="tel"
                   placeholder="Mobile number"
                   maxLength={10}
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 {errors.phone && (
                   <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>
@@ -175,14 +175,14 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">
+                <label className="block text-sm font-medium text-body mb-1">
                   Estimated Quantity
                 </label>
                 <input
                   {...register("estimatedQuantity")}
                   type="text"
                   placeholder="e.g. 100kg / 500 units"
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 {errors.estimatedQuantity && (
                   <p className="text-red-600 text-sm mt-1">{errors.estimatedQuantity.message}</p>
@@ -190,12 +190,12 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">
+                <label className="block text-sm font-medium text-body mb-1">
                   Delivery Frequency
                 </label>
                 <select
                   {...register("deliveryFrequency")}
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 >
                   <option value="">Select</option>
                   <option value="One-time">One-time</option>
@@ -210,24 +210,24 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
           </div>
 
           {/* Product Interest */}
-          <div className="bg-white rounded-xl p-6 shadow-md border border-primary-100">
-            <h3 className="text-xl font-semibold text-primary-800 mb-4">Product Interest</h3>
+            <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-heading/10">
+            <h3 className="text-xl font-semibold text-heading mb-4">Product Interest</h3>
             {Object.entries(productsByCategory).map(([category, categoryProducts]) => (
               <div key={category} className="mb-6">
-                <h4 className="text-lg font-semibold text-primary-700 mb-3">{category}</h4>
+                <h4 className="text-lg font-semibold text-heading mb-3">{category}</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {categoryProducts.map((product) => (
                     <label
                       key={product.id}
-                      className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-primary-100 rounded"
+                      className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-primary/5 rounded"
                     >
                       <input
                         type="checkbox"
                         value={product.id}
                         {...register("productInterest")}
-                        className="w-4 h-4 text-accent focus:ring-accent border-primary-300 rounded"
+                        className="w-4 h-4 text-primary focus:ring-primary border-heading/30 rounded"
                       />
-                      <span className="text-primary-700">{product.name}</span>
+                      <span className="text-body">{product.name}</span>
                     </label>
                   ))}
                 </div>
@@ -239,18 +239,18 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
           </div>
 
           {/* Address and Notes */}
-          <div className="bg-white rounded-xl p-6 shadow-md border border-primary-100">
-            <h3 className="text-xl font-semibold text-primary-800 mb-4">Address & Notes</h3>
+          <div className="bg-white rounded-xl p-6 shadow-md border-2 border-heading/10">
+            <h3 className="text-xl font-semibold text-heading mb-4">Address & Notes</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">
+                <label className="block text-sm font-medium text-body mb-1">
                   Full Address
                 </label>
                 <input
                   {...register("address")}
                   type="text"
                   placeholder="Enter address"
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 {errors.address && (
                   <p className="text-red-600 text-sm mt-1">{errors.address.message}</p>
@@ -258,24 +258,24 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">
+                <label className="block text-sm font-medium text-body mb-1">
                   Additional Notes
                 </label>
                 <input
                   {...register("additionalNotes")}
                   type="text"
                   placeholder="Anything else to add?"
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-primary-700 mb-1">
+                <label className="block text-sm font-medium text-body mb-1">
                   Nature of Business
                 </label>
                 <select
                   {...register("businessNature")}
-                  className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 >
                   <option value="">Select</option>
                   <option value="Customer">Customer</option>
@@ -294,7 +294,7 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-accent text-white px-8 py-3 rounded-lg hover:bg-accent-dark transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-primary text-white px-8 py-3 rounded-lg hover:bg-[#007f4d] transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </button>

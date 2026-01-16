@@ -119,11 +119,11 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
 
   const getStatusClass = (status: string) => {
     const statusLower = status.toLowerCase();
-    if (statusLower === "new") return "bg-yellow-400 text-black";
-    if (statusLower === "inprogress" || statusLower === "in-progress") return "bg-blue-500 text-white";
-    if (statusLower === "completed") return "bg-green-500 text-white";
-    if (statusLower === "cancelled") return "bg-red-500 text-white";
-    return "bg-gray-400 text-white";
+    if (statusLower === "new") return "bg-[#E5F2EC] text-heading"; // Neutral
+    if (statusLower === "inprogress" || statusLower === "in-progress") return "bg-[#FFF8E1] text-secondary"; // Warning - Golden Crust
+    if (statusLower === "completed") return "bg-[#E6F5ED] text-primary"; // Success - Gimmie Vibrant Green
+    if (statusLower === "cancelled") return "bg-red-100 text-danger"; // Danger - Berry Red
+    return "bg-gray-100 text-body/50"; // Neutral
   };
 
   if (!isOpen) {
@@ -134,8 +134,8 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
             <div
               className={`p-4 rounded-lg shadow-lg min-w-[300px] max-w-md ${
                 message.type === "success"
-                  ? "bg-green-500 text-white"
-                  : "bg-red-500 text-white"
+                  ? "bg-primary text-white"
+                  : "bg-danger text-white"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -200,29 +200,29 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
         ></div>
 
         {/* Modal Content */}
-        <div className="flex min-h-full items-center justify-center p-4">
-          <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="flex min-h-full items-center justify-center p-2 sm:p-4">
+          <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden flex flex-col m-2 sm:m-0">
             {/* Header */}
-            <div className="bg-green-500 text-white px-6 py-4 flex justify-between items-center">
-              <h4 className="text-xl font-bold mb-0">Business Inquiry Details</h4>
+            <div className="bg-heading text-white px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+              <h4 className="text-lg sm:text-xl font-bold mb-0 truncate pr-2">Business Inquiry Details</h4>
               <button
                 onClick={onClose}
-                className="text-white hover:bg-green-600 rounded-full p-2 transition-colors"
+                className="text-white hover:bg-heading/90 rounded-full p-1 sm:p-2 transition-colors flex-shrink-0"
               >
-                <BiX className="text-2xl" />
+                <BiX className="text-xl sm:text-2xl" />
               </button>
             </div>
 
             {/* Content */}
-            <div className="overflow-y-auto flex-1 p-6">
+            <div className="overflow-y-auto flex-1 p-4 sm:p-6">
               {loading ? (
                 <div className="text-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-                  <p className="mt-4 text-primary-700">Loading inquiry...</p>
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-heading mx-auto"></div>
+                  <p className="mt-4 text-body">Loading inquiry...</p>
                 </div>
               ) : !inquiry ? (
                 <div className="text-center py-12">
-                  <p className="text-primary-700">Inquiry not found</p>
+                  <p className="text-body">Inquiry not found</p>
                 </div>
               ) : (
                 <>
@@ -237,35 +237,35 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                         {inquiry.status.charAt(0).toUpperCase() + inquiry.status.slice(1)}
                       </span>
                     </h5>
-                    <div className="text-gray-600">
+                    <div className="text-body/70">
                       Inquiry ID: #{String(inquiry.id).padStart(6, "0")}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
                     <div className="space-y-4">
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Business Name
                         </div>
-                        <div className="text-lg text-gray-800">{inquiry.businessName}</div>
+                        <div className="text-lg text-body">{inquiry.businessName}</div>
                       </div>
 
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Contact Person
                         </div>
                         <div className="text-lg text-gray-800">{inquiry.contactPersonName}</div>
                       </div>
 
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Email
                         </div>
                         <div className="text-lg text-gray-800">
                           <a
                             href={`mailto:${inquiry.email}`}
-                            className="text-blue-600 hover:underline"
+                            className="text-heading hover:underline"
                           >
                             {inquiry.email}
                           </a>
@@ -273,13 +273,13 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       </div>
 
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Phone
                         </div>
                         <div className="text-lg text-gray-800">
                           <a
                             href={`tel:${inquiry.phone}`}
-                            className="text-blue-600 hover:underline"
+                            className="text-heading hover:underline"
                           >
                             {inquiry.phone}
                           </a>
@@ -289,7 +289,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
 
                     <div className="space-y-4">
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Estimated Quantity
                         </div>
                         <div className="text-lg text-gray-800">
@@ -298,7 +298,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       </div>
 
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Delivery Frequency
                         </div>
                         <div className="text-lg text-gray-800">
@@ -307,7 +307,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       </div>
 
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Nature of Business
                         </div>
                         <div className="text-lg text-gray-800">
@@ -316,7 +316,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       </div>
 
                       <div className="pb-4 border-b border-gray-200">
-                        <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
+                        <div className="text-xs font-semibold text-body/70 uppercase tracking-wide mb-1">
                           Inquiry Date
                         </div>
                         <div className="text-lg text-gray-800">
@@ -337,7 +337,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
                         Address
                       </div>
-                      <div className="text-lg text-gray-800 whitespace-pre-line">
+                        <div className="text-lg text-body whitespace-pre-line">
                         {inquiry.address}
                       </div>
                     </div>
@@ -348,7 +348,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
                         Additional Notes
                       </div>
-                      <div className="text-lg text-gray-800 whitespace-pre-line">
+                        <div className="text-lg text-body whitespace-pre-line">
                         {inquiry.additionalNotes}
                       </div>
                     </div>
@@ -359,7 +359,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">
                         Staff Notes (Internal)
                       </div>
-                      <div className="text-lg text-gray-800 whitespace-pre-line">
+                        <div className="text-lg text-body whitespace-pre-line">
                         {inquiry.staffNote}
                       </div>
                     </div>
@@ -376,7 +376,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                             {interestedProducts.map((item) => (
                               <span
                                 key={item.id}
-                                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm hover:bg-green-500 hover:text-white transition-colors"
+                                className="bg-gray-100 text-body px-4 py-2 rounded-full text-sm hover:bg-primary hover:text-white transition-colors"
                               >
                                 {item.product.name}
                                 <small className="ml-2">
@@ -393,7 +393,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                           )}
                         </>
                       ) : (
-                        <span className="text-gray-500">No products selected</span>
+                        <span className="text-body/60">No products selected</span>
                       )}
                     </div>
                   </div>
@@ -407,13 +407,13 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                 <form onSubmit={handleStatusUpdate} className="mb-4">
                   <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
                     <div className="flex items-center gap-2 flex-grow">
-                      <label className="text-sm text-gray-600 whitespace-nowrap">
+                      <label className="text-sm text-body whitespace-nowrap">
                         Status:
                       </label>
                       <select
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        className="px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
                       >
                         {ALLOWED_STATUSES.map((s) => (
                           <option key={s} value={s}>
@@ -423,7 +423,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                       </select>
                     </div>
                     <div className="flex-grow w-full md:w-auto">
-                      <label className="text-sm text-gray-600 block md:hidden mb-1">
+                      <label className="text-sm text-body block md:hidden mb-1">
                         Internal Notes:
                       </label>
                       <textarea
@@ -431,7 +431,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                         onChange={(e) => setStaffNote(e.target.value)}
                         placeholder="Add internal staff note..."
                         rows={1}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-y min-h-[40px]"
+                        className="w-full px-4 py-2 border border-heading/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary resize-y min-h-[40px] bg-white"
                         style={{ height: "auto" }}
                         onInput={(e) => {
                           const target = e.target as HTMLTextAreaElement;
@@ -443,24 +443,24 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
                   </div>
                 </form>
 
-                <div className="flex flex-col md:flex-row gap-2 justify-end">
+                <div className="flex flex-col sm:flex-row gap-2 justify-end">
                   <button
                     type="button"
                     onClick={handleStatusUpdate}
                     disabled={updating}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50"
+                    className="bg-heading text-white px-4 sm:px-6 py-2 rounded-full hover:bg-heading/90 transition-colors disabled:opacity-50 text-sm sm:text-base"
                   >
                     {updating ? "Updating..." : "Update Status"}
                   </button>
                   <a
                     href={`mailto:${inquiry.email}`}
-                    className="bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-900 transition-colors text-center"
+                    className="bg-body text-white px-4 sm:px-6 py-2 rounded-full hover:bg-body/90 transition-colors text-center text-sm sm:text-base"
                   >
                     Email Contact
                   </a>
                   <a
                     href={`tel:${inquiry.phone}`}
-                    className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition-colors text-center"
+                    className="bg-primary text-white px-4 sm:px-6 py-2 rounded-full hover:bg-primary/90 transition-colors text-center text-sm sm:text-base"
                   >
                     Call Contact
                   </a>

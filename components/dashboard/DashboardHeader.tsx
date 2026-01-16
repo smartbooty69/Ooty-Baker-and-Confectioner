@@ -47,19 +47,19 @@ export default function DashboardHeader({ setIsSidebarOpen, currentSection }: Da
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-primary-200 sticky top-0 z-30">
+    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-30">
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center space-x-4 flex-1">
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="lg:hidden text-primary-700 hover:text-primary-900 transition-colors"
+            className="lg:hidden text-heading hover:text-heading/80 transition-colors"
             aria-label="Open menu"
           >
             <i className="bx bx-menu-alt-right text-3xl"></i>
           </button>
-          <div>
-            <h1 className="text-2xl font-bold text-primary-800">{getSectionTitle()}</h1>
-            <p className="text-sm text-primary-600 hidden md:block">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-xl sm:text-2xl font-bold text-heading truncate">{getSectionTitle()}</h1>
+            <p className="text-xs sm:text-sm text-body/70 hidden md:block">
               {currentSection === "overview" && "Overview of your business performance and quick actions"}
               {currentSection === "business-inquiries" && "Manage and track business inquiries"}
               {currentSection === "product" && "Manage your product catalog"}
@@ -69,16 +69,16 @@ export default function DashboardHeader({ setIsSidebarOpen, currentSection }: Da
             </p>
           </div>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           {user && (
-            <div className="hidden md:flex items-center space-x-2 px-3 py-2 bg-primary-50 rounded-lg">
-              <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+            <div className="hidden sm:flex items-center space-x-2 px-2 sm:px-3 py-2 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="w-8 h-8 bg-heading rounded-full flex items-center justify-center">
                 <span className="text-white text-sm font-semibold">
                   {user.email.charAt(0).toUpperCase()}
                 </span>
               </div>
               <div className="hidden lg:block">
-                <p className="text-sm font-medium text-primary-800">{user.email}</p>
+                <p className="text-sm font-medium text-body">{user.email}</p>
               </div>
             </div>
           )}
@@ -86,11 +86,11 @@ export default function DashboardHeader({ setIsSidebarOpen, currentSection }: Da
             href="/"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 bg-primary-100 text-primary-800 rounded-lg hover:bg-primary-200 transition-colors flex items-center space-x-2"
+            className="px-3 sm:px-4 py-2 bg-heading text-white rounded-lg hover:bg-heading/90 transition-colors flex items-center space-x-2"
             title="View Website"
           >
             <i className="bx bx-link-external text-lg"></i>
-            <span className="hidden md:inline">View Site</span>
+            <span className="hidden sm:inline">View Site</span>
           </a>
         </div>
       </div>
