@@ -10,28 +10,55 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          50: "#f0f2ed",
-          100: "#f7f5ee",
-          200: "#e8e5df",
-          300: "#d4d0c7",
-          400: "#b8b3a8",
-          500: "#9a9588",
-          600: "#7a7569",
-          700: "#5a574f",
-          800: "#3b3a37",
-          900: "#2c2b28",
+          DEFAULT: "#009E60", // Gimmie Vibrant Green - Primary Buttons
+          hover: "#007f4d", // 10% darker for hover states
+          50: "#e6f7f0",
+          100: "#b3e8d1",
+          200: "#80d9b2",
+          300: "#4dca93",
+          400: "#1abb74",
+          500: "#009E60",
+          600: "#007f4d", // Hover state
+          700: "#005e3a",
+          800: "#003e27",
+          900: "#001e14",
+        },
+        secondary: {
+          DEFAULT: "#D4A056", // Golden Crust - Secondary Buttons
+          50: "#faf6f0",
+          100: "#f5e8d1",
+          200: "#f0dab2",
+          300: "#ebcc93",
+          400: "#e6be74",
+          500: "#D4A056",
+          600: "#b88845",
+          700: "#9c7034",
+          800: "#805823",
+          900: "#644012",
+        },
+        heading: {
+          DEFAULT: "#007A4D", // Ooty Forest Green - Headings
+        },
+        body: {
+          DEFAULT: "#2D2D2D", // Deep Charcoal - Body Text
+        },
+        background: {
+          DEFAULT: "#F9F7F2", // Warm Cream - Section Backgrounds
+        },
+        danger: {
+          DEFAULT: "#D32F2F", // Berry Red - Dashboard Error/Danger
         },
         accent: {
-          DEFAULT: "#4CAF50",
-          dark: "#43A047",
-          light: "#66BB6A",
+          DEFAULT: "#009E60",
+          dark: "#007A4D",
+          light: "#00B870",
         },
         surface: {
-          DEFAULT: "#f7f5ee",
-          cream: "#f7f5ee",
+          DEFAULT: "#F9F7F2",
+          cream: "#F9F7F2",
         },
         text: {
-          dark: "#3b3a37",
+          dark: "#2D2D2D",
           medium: "#5a574f",
           light: "#9a9588",
         },
