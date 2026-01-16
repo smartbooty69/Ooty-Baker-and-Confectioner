@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
+import { sendInquiryStatusEmail } from "@/lib/email-notifications";
 
 export async function GET(
   request: NextRequest,
@@ -65,6 +66,18 @@ export async function PUT(
     const body = await request.json();
     const { status, staffNote } = body;
 
+    // Get existing inquiry to check if status changed
+    const existingInquiry = await prisma.businessInquiry.findUnique({
+      where: { id: parseInt(params.id) },
+    });
+
+    if (!existingInquiry) {
+      return NextResponse.json(
+        { error: "Inquiry not found" },
+        { status: 404 }
+      );
+    }
+
     const inquiry = await prisma.businessInquiry.update({
       where: { id: parseInt(params.id) },
       data: {
@@ -80,6 +93,20 @@ export async function PUT(
         status,
       },
     });
+
+    // Send email notification if status changed
+    if (existingInquiry.status !== status) {
+      sendInquiryStatusEmail({
+        email: inquiry.email,
+        businessName: inquiry.businessName,
+        contactPersonName: inquiry.contactPersonName,
+        status: inquiry.status,
+        staffNote: inquiry.staffNote,
+      }).catch((error) => {
+        console.error("Failed to send status email notification:", error);
+        // Don't fail the request if email fails
+      });
+    }
 
     // Fetch updated inquiry with relations for response
     const updatedInquiry = await prisma.businessInquiry.findUnique({
