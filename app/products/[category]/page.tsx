@@ -47,17 +47,12 @@ export default async function ProductsPage({
       <Header categories={[category]} />
       {/* Hero Section */}
       <div 
-        className="relative pt-32 pb-16 overflow-hidden text-white"
+        className="relative pt-32 pb-16 overflow-hidden"
         style={{
-          background: "linear-gradient(to right, #1b6e49, #34C759)"
+          background: "#F9F7F2" // Warm Cream
         }}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Decorative background glow */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl"></div>
-          </div>
-
           <div className="relative">
             {/* Category Badge */}
             <div 
@@ -67,19 +62,18 @@ export default async function ProductsPage({
               }}
             >
               <div className="relative">
-                <div className="absolute inset-0 bg-white/20 blur-xl rounded-full"></div>
-                <div className="relative bg-white/15 backdrop-blur-sm px-8 py-3 rounded-full border-2 border-white/30 shadow-lg">
-                  <span className="text-white font-bold text-sm md:text-base uppercase tracking-widest">{category}</span>
+                <div className="absolute inset-0 bg-heading/10 blur-xl rounded-full"></div>
+                <div className="relative bg-white px-8 py-3 rounded-full border-2 border-heading/20 shadow-md">
+                  <span className="text-heading font-bold text-sm md:text-base uppercase tracking-widest">{category}</span>
                 </div>
               </div>
             </div>
 
             {/* Main Title */}
             <h1 
-              className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white mb-5 tracking-tight relative"
+              className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-heading mb-5 tracking-tight relative"
               style={{
                 animation: "fadeInUp 0.6s ease-out 0.2s both",
-                textShadow: "0 4px 30px rgba(0,0,0,0.3)",
               }}
             >
               {category.toUpperCase()}
@@ -92,16 +86,16 @@ export default async function ProductsPage({
                 animation: "fadeInUp 0.6s ease-out 0.4s both",
               }}
             >
-              <div className="w-20 h-1 bg-white/60 rounded-full"></div>
-              <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-              <div className="w-40 h-2 bg-white/90 rounded-full"></div>
-              <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-              <div className="w-20 h-1 bg-white/60 rounded-full"></div>
+              <div className="w-20 h-1 bg-heading/40 rounded-full"></div>
+              <div className="w-2.5 h-2.5 bg-heading rounded-full"></div>
+              <div className="w-40 h-2 bg-heading/60 rounded-full"></div>
+              <div className="w-2.5 h-2.5 bg-heading rounded-full"></div>
+              <div className="w-20 h-1 bg-heading/40 rounded-full"></div>
             </div>
 
             {/* Subtitle */}
             <h2 
-              className="text-3xl md:text-4xl lg:text-5xl text-white/95 font-bold mb-4 relative tracking-wide"
+              className="text-3xl md:text-4xl lg:text-5xl text-heading font-bold mb-4 relative tracking-wide"
               style={{
                 animation: "fadeInUp 0.6s ease-out 0.6s both",
               }}
@@ -111,7 +105,7 @@ export default async function ProductsPage({
 
             {/* Description */}
             <p 
-              className="text-lg md:text-xl lg:text-2xl text-white/85 max-w-3xl mx-auto leading-relaxed mb-8 relative"
+              className="text-lg md:text-xl lg:text-2xl text-body/70 max-w-3xl mx-auto leading-relaxed mb-8 relative"
               style={{
                 animation: "fadeInUp 0.6s ease-out 0.8s both",
               }}
@@ -121,15 +115,15 @@ export default async function ProductsPage({
 
             {/* Product Count Badge */}
             <div 
-              className="inline-flex items-center justify-center space-x-3 bg-white/15 backdrop-blur-sm px-8 py-4 rounded-full border-2 border-white/30 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 relative"
+              className="inline-flex items-center justify-center space-x-3 bg-white px-8 py-4 rounded-full border-2 border-heading/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 relative"
               style={{
                 animation: "fadeInUp 0.6s ease-out 1s both",
               }}
             >
-              <div className="bg-white/20 rounded-full p-2">
-                <i className="bx bx-package text-2xl md:text-3xl text-white"></i>
+              <div className="bg-primary/10 rounded-full p-2">
+                <i className="bx bx-package text-2xl md:text-3xl text-primary"></i>
               </div>
-              <span className="text-white font-bold text-base md:text-lg">{products.length} Products Available</span>
+              <span className="text-heading font-bold text-base md:text-lg">{products.length} Products Available</span>
             </div>
           </div>
         </div>
@@ -138,7 +132,7 @@ export default async function ProductsPage({
       <div 
         className="product-view grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 px-4 sm:px-6 lg:px-8 py-16 max-w-[1400px] mx-auto"
         style={{
-          background: "linear-gradient(to right, #1b6e49, #34C759)"
+          background: "#F9F7F2" // Warm Cream
         }}
       >
         {products.map((product, index) => (
@@ -176,27 +170,27 @@ export default async function ProductsPage({
                 
                 {/* Product Info Overlay - Appears on Hover */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out pointer-events-none">
-                  <div className="bg-white/95 backdrop-blur-sm rounded-lg p-4">
-                    <h3 className="text-lg font-bold text-[#6A515E] mb-1 line-clamp-1">
+                  <div className="bg-white rounded-lg p-4 shadow-lg">
+                    <h3 className="text-lg font-bold text-heading mb-1 line-clamp-1">
                       {product.name}
                     </h3>
                     {product.description && (
-                      <p className="text-sm text-[#D7BDCA] mb-3 line-clamp-2">
+                      <p className="text-sm text-body/70 mb-3 line-clamp-2">
                         {product.description}
                       </p>
                     )}
                     {product.pricePerGram ? (
                       <div className="flex items-center gap-2 text-xs font-medium">
-                        <span className="px-3 py-1.5 text-white bg-accent rounded-lg whitespace-nowrap font-semibold shadow-md">
+                        <span className="px-3 py-1.5 text-white bg-primary rounded-lg whitespace-nowrap font-semibold shadow-md">
                           ₹{Number(product.pricePerGram).toFixed(2)}/g
                         </span>
-                        <span className="px-3 py-1.5 text-white bg-accent rounded-lg whitespace-nowrap font-semibold shadow-md">
+                        <span className="px-3 py-1.5 text-white bg-primary rounded-lg whitespace-nowrap font-semibold shadow-md">
                           ₹{Number(product.price).toFixed(2)}
                         </span>
                       </div>
                     ) : (
                       <div className="text-sm font-medium">
-                        <span className="px-4 py-2 text-white bg-accent rounded-lg font-semibold shadow-md">
+                        <span className="px-4 py-2 text-white bg-primary rounded-lg font-semibold shadow-md">
                           ₹{Number(product.price).toFixed(2)}
                         </span>
                       </div>

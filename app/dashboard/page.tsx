@@ -37,7 +37,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-primary-50 flex">
+    <div className="min-h-screen bg-background flex">
       <DashboardSidebar
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
@@ -46,7 +46,7 @@ export default function DashboardPage() {
       />
       <div className="flex-1 flex flex-col lg:ml-64">
         <DashboardHeader setIsSidebarOpen={setIsSidebarOpen} currentSection={currentSection} />
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 overflow-y-auto bg-background">
           {currentSection === "overview" && (
             <DashboardOverview onNavigate={setCurrentSection} />
           )}

@@ -162,34 +162,29 @@ export default function AuthPage() {
     <div 
       className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
       style={{
-        background: "linear-gradient(to right, #1b6e49, #34C759)"
+        background: "#F9F7F2" // Warm Cream
       }}
     >
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-      </div>
 
       <div className="w-full max-w-md relative z-10">
         {/* Login Form */}
         {currentForm === "login" && (
           <form 
             onSubmit={handleLogin} 
-            className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-white/30"
+            className="bg-white rounded-3xl shadow-lg p-8 border-2 border-heading/10"
             style={{
               animation: "fadeInUp 0.6s ease-out both",
             }}
           >
-            <h3 className="text-3xl font-bold text-primary-800 mb-8 text-center">Login</h3>
+            <h3 className="text-3xl font-bold text-heading mb-8 text-center">Login</h3>
 
             <div className="mb-5">
-              <label htmlFor="username" className="block text-sm font-semibold text-primary-700 mb-2">
+              <label htmlFor="username" className="block text-sm font-semibold text-body mb-2">
                 Username
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <BiUser className="text-primary-400 text-xl" />
+                  <BiUser className="text-heading/60 text-xl" />
                 </div>
                 <input
                   type="text"
@@ -197,18 +192,18 @@ export default function AuthPage() {
                   name="username"
                   placeholder="Email or Phone"
                   required
-                  className="w-full pl-12 pr-4 py-3 border-2 border-primary-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 bg-white"
+                  className="w-full pl-12 pr-4 py-3 border-2 border-heading/20 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-white"
                 />
               </div>
             </div>
 
             <div className="mb-5">
-              <label htmlFor="password" className="block text-sm font-semibold text-primary-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-body mb-2">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <BiLock className="text-primary-400 text-xl" />
+                  <BiLock className="text-heading/60 text-xl" />
                 </div>
                 <input
                   type="password"
@@ -216,7 +211,7 @@ export default function AuthPage() {
                   name="password"
                   placeholder="Enter your password"
                   required
-                  className="w-full pl-12 pr-4 py-3 border-2 border-primary-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 bg-white"
+                  className="w-full pl-12 pr-4 py-3 border-2 border-heading/20 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-white"
                 />
               </div>
             </div>
@@ -231,7 +226,7 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={() => showForm("forgotPassword")}
-                className="text-accent hover:text-accent-dark font-semibold text-sm transition-colors"
+                className="text-primary hover:text-[#007f4d] font-semibold text-sm transition-colors"
               >
                 Forgot Password?
               </button>
@@ -240,7 +235,7 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-accent to-accent-dark text-white py-3 rounded-xl hover:from-accent-dark hover:to-accent transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              className="w-full bg-primary text-white py-3 rounded-xl hover:bg-[#007f4d] transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -261,7 +256,7 @@ export default function AuthPage() {
         {currentForm === "forgotPassword" && (
           <form 
             onSubmit={handleForgotPassword} 
-            className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-white/30"
+            className="bg-white rounded-3xl shadow-lg p-8 border-2 border-heading/10"
             style={{
               animation: "fadeInUp 0.6s ease-out both",
             }}
@@ -270,23 +265,23 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={() => showForm("login")}
-                className="p-2 hover:bg-primary-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-primary/10 rounded-lg transition-colors"
               >
-                <BiArrowBack className="text-primary-700 text-xl" />
+                <BiArrowBack className="text-heading text-xl" />
               </button>
-              <h3 className="text-3xl font-bold text-primary-800">Forgot Password</h3>
+              <h3 className="text-3xl font-bold text-heading">Forgot Password</h3>
             </div>
-            <p className="text-primary-600 text-sm mb-6">
+            <p className="text-body/80 text-sm mb-6">
               Enter your email address and we&apos;ll send you an OTP to reset your password.
             </p>
 
             <div className="mb-5">
-              <label htmlFor="email" className="block text-sm font-semibold text-primary-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-body mb-2">
                 Email Address
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <BiEnvelope className="text-primary-400 text-xl" />
+                  <BiEnvelope className="text-heading/60 text-xl" />
                 </div>
                 <input
                   type="email"
@@ -294,7 +289,7 @@ export default function AuthPage() {
                   name="email"
                   placeholder="Enter your email"
                   required
-                  className="w-full pl-12 pr-4 py-3 border-2 border-primary-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 bg-white"
+                  className="w-full pl-12 pr-4 py-3 border-2 border-heading/20 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-white"
                 />
               </div>
             </div>
@@ -308,7 +303,7 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-accent to-accent-dark text-white py-3 rounded-xl hover:from-accent-dark hover:to-accent transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] mb-4"
+              className="w-full bg-primary text-white py-3 rounded-xl hover:bg-[#007f4d] transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] mb-4"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -329,7 +324,7 @@ export default function AuthPage() {
         {currentForm === "otp" && (
           <form 
             onSubmit={handleVerifyOTP} 
-            className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-white/30"
+            className="bg-white rounded-3xl shadow-lg p-8 border-2 border-heading/10"
             style={{
               animation: "fadeInUp 0.6s ease-out both",
             }}
@@ -338,23 +333,23 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={() => showForm("login")}
-                className="p-2 hover:bg-primary-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-primary/10 rounded-lg transition-colors"
               >
-                <BiArrowBack className="text-primary-700 text-xl" />
+                <BiArrowBack className="text-heading text-xl" />
               </button>
-              <h3 className="text-3xl font-bold text-primary-800">Enter OTP</h3>
+              <h3 className="text-3xl font-bold text-heading">Enter OTP</h3>
             </div>
-            <p className="text-primary-600 text-sm mb-6">
+            <p className="text-body/80 text-sm mb-6">
               Please enter the 6-digit OTP sent to your email.
             </p>
 
             <div className="mb-5">
-              <label htmlFor="otp" className="block text-sm font-semibold text-primary-700 mb-2">
+              <label htmlFor="otp" className="block text-sm font-semibold text-body mb-2">
                 OTP Code
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <BiKey className="text-primary-400 text-xl" />
+                  <BiKey className="text-heading/60 text-xl" />
                 </div>
                 <input
                   type="text"
@@ -363,7 +358,7 @@ export default function AuthPage() {
                   placeholder="Enter 6-digit OTP"
                   maxLength={6}
                   required
-                  className="w-full pl-12 pr-4 py-3 border-2 border-primary-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 bg-white text-center text-2xl font-bold tracking-widest"
+                  className="w-full pl-12 pr-4 py-3 border-2 border-heading/20 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-white text-center text-2xl font-bold tracking-widest"
                 />
               </div>
             </div>
@@ -377,7 +372,7 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-accent to-accent-dark text-white py-3 rounded-xl hover:from-accent-dark hover:to-accent transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] mb-4"
+              className="w-full bg-primary text-white py-3 rounded-xl hover:bg-[#007f4d] transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] mb-4"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -398,7 +393,7 @@ export default function AuthPage() {
         {currentForm === "resetPassword" && (
           <form 
             onSubmit={handleResetPassword} 
-            className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-white/30"
+            className="bg-white rounded-3xl shadow-lg p-8 border-2 border-heading/10"
             style={{
               animation: "fadeInUp 0.6s ease-out both",
             }}
@@ -407,23 +402,23 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={() => showForm("login")}
-                className="p-2 hover:bg-primary-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-primary/10 rounded-lg transition-colors"
               >
-                <BiArrowBack className="text-primary-700 text-xl" />
+                <BiArrowBack className="text-heading text-xl" />
               </button>
-              <h3 className="text-3xl font-bold text-primary-800">Reset Password</h3>
+              <h3 className="text-3xl font-bold text-heading">Reset Password</h3>
             </div>
-            <p className="text-primary-600 text-sm mb-6">
+            <p className="text-body/80 text-sm mb-6">
               Please enter your new password below. Password must be at least 8 characters long.
             </p>
 
             <div className="mb-5">
-              <label htmlFor="new-password" className="block text-sm font-semibold text-primary-700 mb-2">
+              <label htmlFor="new-password" className="block text-sm font-semibold text-body mb-2">
                 New Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <BiLock className="text-primary-400 text-xl" />
+                  <BiLock className="text-heading/60 text-xl" />
                 </div>
                 <input
                   type="password"
@@ -431,18 +426,18 @@ export default function AuthPage() {
                   name="new-password"
                   placeholder="Enter new password"
                   required
-                  className="w-full pl-12 pr-4 py-3 border-2 border-primary-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 bg-white"
+                  className="w-full pl-12 pr-4 py-3 border-2 border-heading/20 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-white"
                 />
               </div>
             </div>
 
             <div className="mb-5">
-              <label htmlFor="confirm-password" className="block text-sm font-semibold text-primary-700 mb-2">
+              <label htmlFor="confirm-password" className="block text-sm font-semibold text-body mb-2">
                 Confirm Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <BiCheckCircle className="text-primary-400 text-xl" />
+                  <BiCheckCircle className="text-heading/60 text-xl" />
                 </div>
                 <input
                   type="password"
@@ -450,7 +445,7 @@ export default function AuthPage() {
                   name="confirm-password"
                   placeholder="Confirm new password"
                   required
-                  className="w-full pl-12 pr-4 py-3 border-2 border-primary-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 bg-white"
+                  className="w-full pl-12 pr-4 py-3 border-2 border-heading/20 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-white"
                 />
               </div>
             </div>
@@ -464,7 +459,7 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-accent to-accent-dark text-white py-3 rounded-xl hover:from-accent-dark hover:to-accent transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] mb-4"
+              className="w-full bg-primary text-white py-3 rounded-xl hover:bg-[#007f4d] transition-all duration-300 disabled:opacity-50 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] mb-4"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
