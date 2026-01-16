@@ -12,7 +12,8 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
-    "reset-password": "tsx scripts/reset-password.ts"
+    "reset-password": "tsx scripts/reset-password.ts",
+    "test-smtp": "tsx scripts/test-smtp.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -27,6 +28,7 @@
     "@types/formidable": "^3.4.6",
     "aos": "^2.3.4",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^17.2.3",
     "exceljs": "^4.4.0",
     "formidable": "^3.5.4",
     "framer-motion": "^11.3.6",
