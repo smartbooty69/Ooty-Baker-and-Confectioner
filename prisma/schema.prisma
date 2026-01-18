@@ -22,18 +22,6 @@ model User {
   @@map("users")
 }
 
-model Category {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  description String?
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  
-  products    Product[]
-
-  @@map("categories")
-}
-
 model Product {
   id            Int       @id @default(autoincrement())
   name          String
@@ -43,11 +31,9 @@ model Product {
   variety       String?
   pricePerGram  Decimal?  @map("price_per_gram")
   vegStatus     String    @map("veg_status") // "Veg" or "Non-Veg"
-  categoryId   Int?      @map("category_id")
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime? @default(now()) @updatedAt @map("updated_at")
   
-  category      Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   inquiryProducts BusinessInquiryProduct[]
 
   @@map("products")
