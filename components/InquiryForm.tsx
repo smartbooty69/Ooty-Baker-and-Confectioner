@@ -1,5 +1,7 @@
 "use client";
 
+import { logger } from "@/lib/logger";
+
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,7 +39,7 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
           setProducts(data);
         }
       } catch (error) {
-        console.error("Error fetching products:", error);
+        logger.error("Error fetching products", error);
       }
     }
     fetchProducts();
@@ -99,7 +101,7 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-heading mb-3">Inquiry Details</h2>
           <div className="w-32 h-1 bg-heading/60 mx-auto rounded-full"></div>
-          <p className="text-body/80 mt-4 text-lg">Fill out the form below and we'll get back to you soon!</p>
+          <p className="text-body/80 mt-4 text-lg">Fill out the form below and we&apos;ll get back to you soon!</p>
         </div>
 
         {submitStatus && (

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { logger } from "@/lib/logger";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import BusinessInquiries from "@/components/dashboard/BusinessInquiries";
@@ -31,7 +32,7 @@ export default function DashboardPage() {
         router.push("/auth");
       }
     } catch (error) {
-      console.error("Auth check error:", error);
+      logger.error("Auth check error", error);
       router.push("/auth");
     }
   };

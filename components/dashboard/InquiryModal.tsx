@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BiX } from "react-icons/bi";
+import { logger } from "@/lib/logger";
 
 interface Inquiry {
   id: number;
@@ -77,7 +78,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
         setMessage({ type: "error", text: "Inquiry not found" });
       }
     } catch (error) {
-      console.error("Error fetching inquiry:", error);
+      logger.error("Error fetching inquiry", error);
       setMessage({ type: "error", text: "Failed to load inquiry" });
     } finally {
       setLoading(false);
@@ -110,7 +111,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
         setMessage({ type: "error", text: data.error || "Failed to update status" });
       }
     } catch (error) {
-      console.error("Error updating inquiry:", error);
+      logger.error("Error updating inquiry", error);
       setMessage({ type: "error", text: "Failed to update inquiry" });
     } finally {
       setUpdating(false);

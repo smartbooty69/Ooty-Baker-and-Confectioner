@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { DashboardStats as DashboardStatsType } from "@/types";
 import { StatCardSkeleton } from "./SkeletonLoader";
+import { logger } from "@/lib/logger";
 
 export default function DashboardStats() {
   const [stats, setStats] = useState<DashboardStatsType | null>(null);
@@ -36,7 +37,7 @@ export default function DashboardStats() {
             });
           }
         } catch (error) {
-          console.error("Error parsing SSE data:", error);
+          logger.error("Error parsing SSE data", error);
         }
       };
 
@@ -52,7 +53,7 @@ export default function DashboardStats() {
         eventSourceRef.current = null;
       };
     } catch (error) {
-      console.error("SSE not available, using polling:", error);
+      logger.error("SSE not available, using polling", error);
       // Fallback to polling
       const interval = setInterval(fetchStats, 30000);
       return () => clearInterval(interval);
@@ -67,7 +68,7 @@ export default function DashboardStats() {
         setStats(data);
       }
     } catch (error) {
-      console.error("Error fetching stats:", error);
+      logger.error("Error fetching stats", error);
     } finally {
       setIsLoading(false);
     }

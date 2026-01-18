@@ -8,6 +8,7 @@ import { z } from "zod";
 import Image from "next/image";
 import { BiEdit, BiTrash, BiX, BiPlus, BiDownload, BiFilter, BiCheckSquare, BiSquare } from "react-icons/bi";
 import { CardSkeleton } from "./SkeletonLoader";
+import { logger } from "@/lib/logger";
 
 const productSchema = z.object({
   name: z.string().min(2).max(100).regex(/^[A-Za-z0-9\s\-]+$/),
@@ -302,7 +303,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
         showMessage("Failed to fetch products", "error");
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
+      logger.error("Error fetching products", error);
       showMessage("Failed to fetch products", "error");
     } finally {
       setIsLoading(false);
@@ -322,7 +323,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
         setCategories(data);
       }
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      logger.error("Error fetching categories", error);
     }
   }, []);
 
@@ -370,7 +371,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
           showMessage(errorData.error || "Failed to save product", "error");
         }
       } catch (error) {
-        console.error("Error saving product:", error);
+        logger.error("Error saving product", error);
         showMessage("An error occurred while saving", "error");
       } finally {
         setIsSubmitting(false);
@@ -427,7 +428,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
         setImagePreview(reader.result as string);
       };
       reader.onerror = () => {
-        console.error("Error reading file");
+        logger.error("Error reading file");
         showMessage("Error reading image file", "error");
       };
       reader.readAsDataURL(file);
@@ -456,7 +457,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
           showMessage("Failed to delete product", "error");
         }
       } catch (error) {
-        console.error("Error deleting product:", error);
+        logger.error("Error deleting product", error);
         // Revert on error
         setProducts(previousProducts);
         showMessage("An error occurred", "error");
@@ -492,7 +493,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
         showMessage("Failed to export products", "error");
       }
     } catch (error) {
-      console.error("Error exporting products:", error);
+      logger.error("Error exporting products", error);
       showMessage("An error occurred while exporting", "error");
     } finally {
       setIsExporting(false);
@@ -559,7 +560,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
         showMessage("Failed to delete products", "error");
       }
     } catch (error) {
-      console.error("Error bulk deleting products:", error);
+      logger.error("Error bulk deleting products", error);
       showMessage("An error occurred while deleting", "error");
     } finally {
       setIsBulkDeleting(false);

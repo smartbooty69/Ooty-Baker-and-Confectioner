@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { logger } from "@/lib/logger";
 import Header from "@/components/Header";
 import BannerSlider from "@/components/BannerSlider";
 import AboutSection from "@/components/AboutSection";
@@ -46,7 +47,7 @@ async function getProducts() {
 
     return productsByCategory;
   } catch (error) {
-    console.error("Error fetching products:", error);
+    logger.error("Error fetching products", error);
     return {};
   }
 }

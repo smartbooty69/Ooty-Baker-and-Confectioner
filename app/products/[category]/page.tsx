@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { logger } from "@/lib/logger";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -24,7 +25,7 @@ async function getProductsByCategory(category: string) {
       pricePerGram: product.pricePerGram ? Number(product.pricePerGram) : null,
     }));
   } catch (error) {
-    console.error("Error fetching products:", error);
+    logger.error("Error fetching products", error);
     return [];
   }
 }

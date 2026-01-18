@@ -1,5 +1,7 @@
 "use client";
 
+import { logger } from "@/lib/logger";
+
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
@@ -58,7 +60,7 @@ export default function ViewInquiryPage() {
 
       fetchInquiry();
     } catch (error) {
-      console.error("Auth check error:", error);
+      logger.error("Auth check error", error);
       router.push("/auth");
     }
   };
@@ -76,7 +78,7 @@ export default function ViewInquiryPage() {
         setMessage({ type: "error", text: "Inquiry not found" });
       }
     } catch (error) {
-      console.error("Error fetching inquiry:", error);
+      logger.error("Error fetching inquiry", error);
       setMessage({ type: "error", text: "Failed to load inquiry" });
     } finally {
       setLoading(false);
@@ -108,7 +110,7 @@ export default function ViewInquiryPage() {
         setMessage({ type: "error", text: data.error || "Failed to update status" });
       }
     } catch (error) {
-      console.error("Error updating inquiry:", error);
+      logger.error("Error updating inquiry", error);
       setMessage({ type: "error", text: "Failed to update inquiry" });
     } finally {
       setUpdating(false);

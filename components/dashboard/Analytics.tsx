@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { BiTrendingUp, BiTrendingDown, BiBarChart, BiPieChart } from "react-icons/bi";
 import { StatCardSkeleton } from "./SkeletonLoader";
+import { logger } from "@/lib/logger";
 
 interface AnalyticsData {
   period: number;
@@ -51,7 +52,7 @@ export default function Analytics() {
         setTimeout(() => setIsAnimating(true), 100);
       }
     } catch (error) {
-      console.error("Error fetching analytics:", error);
+      logger.error("Error fetching analytics", error);
     } finally {
       setIsLoading(false);
     }

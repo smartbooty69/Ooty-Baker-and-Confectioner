@@ -5,6 +5,7 @@ import { InquiryWithProducts } from "@/types";
 import { BiShow } from "react-icons/bi";
 import InquiryModal from "./InquiryModal";
 import { TableRowSkeleton } from "./SkeletonLoader";
+import { logger } from "@/lib/logger";
 
 export default function BusinessInquiries() {
   const [inquiries, setInquiries] = useState<InquiryWithProducts[]>([]);
@@ -36,7 +37,7 @@ export default function BusinessInquiries() {
         setInquiries(data);
       }
     } catch (error) {
-      console.error("Error fetching inquiries:", error);
+      logger.error("Error fetching inquiries", error);
     } finally {
       setIsLoading(false);
     }
@@ -99,7 +100,7 @@ export default function BusinessInquiries() {
         alert("Failed to update status");
       }
     } catch (error) {
-      console.error("Error updating status:", error);
+      logger.error("Error updating status", error);
       alert("An error occurred");
     } finally {
       setUpdatingStatus(null);
@@ -123,7 +124,7 @@ export default function BusinessInquiries() {
         showMessage("Inquiries exported successfully");
       }
     } catch (error) {
-      console.error("Error exporting inquiries:", error);
+      logger.error("Error exporting inquiries", error);
       showMessage("Error exporting inquiries", false);
     }
   };
@@ -146,7 +147,7 @@ export default function BusinessInquiries() {
         showMessage("Failed to delete all inquiries", false);
       }
     } catch (error) {
-      console.error("Error deleting all inquiries:", error);
+      logger.error("Error deleting all inquiries", error);
       showMessage("An error occurred while deleting inquiries", false);
     }
   };

@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, memo } from "react";
 import Image from "next/image";
 import { BiEdit, BiTrash, BiX, BiPlus, BiChevronUp, BiChevronDown } from "react-icons/bi";
+import { logger } from "@/lib/logger";
 
 interface Banner {
   id: number;
@@ -90,7 +91,7 @@ export default function BannerManagement() {
         showMessage("Failed to fetch banners", "error");
       }
     } catch (error) {
-      console.error("Error fetching banners:", error);
+      logger.error("Error fetching banners", error);
       showMessage("Failed to fetch banners", "error");
     } finally {
       setIsLoading(false);
@@ -176,7 +177,7 @@ export default function BannerManagement() {
         showMessage(errorData.error || "Failed to save banner", "error");
       }
     } catch (error) {
-      console.error("Error saving banner:", error);
+      logger.error("Error saving banner", error);
       showMessage("An error occurred while saving", "error");
     } finally {
       setIsSubmitting(false);
@@ -199,7 +200,7 @@ export default function BannerManagement() {
           showMessage("Failed to delete banner", "error");
         }
       } catch (error) {
-        console.error("Error deleting banner:", error);
+        logger.error("Error deleting banner", error);
         showMessage("An error occurred", "error");
       }
     },
@@ -236,7 +237,7 @@ export default function BannerManagement() {
         });
         fetchBanners();
       } catch (error) {
-        console.error("Error updating order:", error);
+        logger.error("Error updating order", error);
         fetchBanners(); // Revert on error
       }
     },

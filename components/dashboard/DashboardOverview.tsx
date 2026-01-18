@@ -19,7 +19,7 @@ export default function DashboardOverview({ onNavigate }: DashboardOverviewProps
           <div>
             <h1 className="text-3xl md:text-4xl font-bold mb-2 text-heading">Welcome Back!</h1>
             <p className="text-body/70 text-base md:text-lg">
-              Here's what's happening with your business today
+              Here&apos;s what&apos;s happening with your business today
             </p>
           </div>
           <div className="flex items-center space-x-3">

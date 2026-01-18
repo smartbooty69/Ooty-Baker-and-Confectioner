@@ -1,5 +1,7 @@
 "use client";
 
+import { logger } from "@/lib/logger";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -31,7 +33,7 @@ export default function BannerSlider() {
         }
       }
     } catch (error) {
-      console.error("Error fetching banners:", error);
+      logger.error("Error fetching banners", error);
       // Fallback to default banners if API fails
       setBanners([
         { id: 1, imagePath: "/images/Banne2.jpg", altText: "Banner Image 1", order: 0, isActive: true },

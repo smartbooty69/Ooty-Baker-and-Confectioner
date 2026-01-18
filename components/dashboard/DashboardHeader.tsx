@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { logger } from "@/lib/logger";
 
 interface DashboardHeaderProps {
   setIsSidebarOpen: (open: boolean) => void;
@@ -24,7 +25,7 @@ export default function DashboardHeader({ setIsSidebarOpen, currentSection }: Da
         setUser(data.user);
       }
     } catch (error) {
-      console.error("Error fetching user:", error);
+      logger.error("Error fetching user", error);
     }
   };
 

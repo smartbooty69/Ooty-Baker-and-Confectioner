@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { logger } from "@/lib/logger";
 
 type DashboardSection = "overview" | "business-inquiries" | "product" | "product-edit" | "banners" | "analytics";
 
@@ -26,7 +27,7 @@ export default function DashboardSidebar({
       await fetch("/api/auth/logout", { method: "POST" });
       router.push("/auth");
     } catch (error) {
-      console.error("Logout error:", error);
+      logger.error("Logout error", error);
       router.push("/auth");
     }
   };
