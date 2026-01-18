@@ -101,6 +101,11 @@ SMTP_USER=your-email@gmail.com
 SMTP_PASSWORD=your-gmail-app-password
 SMTP_FROM=your-email@gmail.com
 
+# Sentry Error Tracking (Optional)
+NEXT_PUBLIC_SENTRY_DSN=your-sentry-dsn-here
+SENTRY_ORG=your-sentry-org
+SENTRY_PROJECT=your-sentry-project
+
 # Node Environment
 NODE_ENV=development
 ```
@@ -110,6 +115,7 @@ NODE_ENV=development
 - Replace `xxxxx` with your Supabase project reference
 - Generate `NEXTAUTH_SECRET` with: `openssl rand -base64 32`
 - For Gmail, use [App Password](https://myaccount.google.com/apppasswords) (not your regular password)
+- Sentry variables are optional - only add if you want error tracking in production
 
 ### 4. Set Up Database
 
