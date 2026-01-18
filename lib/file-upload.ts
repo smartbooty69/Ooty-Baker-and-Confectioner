@@ -1,6 +1,8 @@
 import { writeFile, mkdir, unlink } from "fs/promises";
 import { join } from "path";
 import { existsSync } from "fs";
+import { logger } from "./logger";
+import { uploadToSupabase, deleteFromSupabase, isSupabaseConfigured } from "./supabase-storage";
 
 const UPLOAD_DIR = join(process.cwd(), "public", "uploads", "images");
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -32,9 +34,29 @@ export function validateFile(file: { size: number; mimetype: string }): { valid:
 }
 
 /**
- * Save uploaded file to disk
+ * Save uploaded file (uses Supabase if configured, otherwise local storage)
  */
-export async function saveFile(file: { buffer: Buffer; originalFilename: string }): Promise<UploadResult> {
+export async function saveFile(file: { buffer: Buffer; originalFilename: string; mimetype?: string }): Promise<UploadResult> {
+  // Validate first
+  const validation = validateFile({
+    size: file.buffer.length,
+    mimetype: file.mimetype || "image/jpeg",
+  });
+
+  if (!validation.valid) {
+    return { success: false, error: validation.error };
+  }
+
+  // Use Supabase if configured, otherwise fall back to local storage
+  if (isSupabaseConfigured() && file.mimetype) {
+    return await uploadToSupabase({
+      buffer: file.buffer,
+      originalFilename: file.originalFilename,
+      mimetype: file.mimetype,
+    });
+  }
+
+  // Fallback to local storage
   try {
     // Ensure upload directory exists
     if (!existsSync(UPLOAD_DIR)) {
@@ -55,15 +77,21 @@ export async function saveFile(file: { buffer: Buffer; originalFilename: string 
     const publicPath = `/uploads/images/${filename}`;
     return { success: true, filePath: publicPath };
   } catch (error) {
-    console.error("Error saving file:", error);
+    logger.error("Error saving file", error);
     return { success: false, error: "Failed to save file." };
   }
 }
 
 /**
- * Delete file from disk
+ * Delete file (uses Supabase if URL is from Supabase, otherwise local storage)
  */
 export async function deleteFile(filePath: string): Promise<boolean> {
+  // Check if it's a Supabase URL
+  if (filePath.includes('supabase.co/storage')) {
+    return await deleteFromSupabase(filePath);
+  }
+
+  // Fallback to local storage
   try {
     // Remove leading slash and convert to absolute path
     const relativePath = filePath.startsWith("/") ? filePath.slice(1) : filePath;
@@ -75,7 +103,7 @@ export async function deleteFile(filePath: string): Promise<boolean> {
     }
     return false;
   } catch (error) {
-    console.error("Error deleting file:", error);
+    logger.error("Error deleting file", error);
     return false;
   }
 }

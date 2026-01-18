@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
+import { logger } from "@/lib/logger";
 
 export async function GET(request: NextRequest) {
   const auth = await requireAuth();
@@ -143,7 +144,7 @@ export async function GET(request: NextRequest) {
       totalInquiries: inquiries.length,
     });
   } catch (error) {
-    console.error("Error fetching analytics:", error);
+    logger.error("Error fetching analytics", error);
     return NextResponse.json({ error: "Failed to fetch analytics" }, { status: 500 });
   }
 }

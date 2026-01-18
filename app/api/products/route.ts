@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
 import { validateFile, saveFile } from "@/lib/file-upload";
+import { logger } from "@/lib/logger";
 
 export async function GET() {
   // Public route - no auth required
@@ -19,7 +20,7 @@ export async function GET() {
 
     return NextResponse.json(serializedProducts);
   } catch (error) {
-    console.error("Error fetching products:", error);
+    logger.error("Error fetching products", error);
     return NextResponse.json(
       { error: "Failed to fetch products" },
       { status: 500 }
@@ -60,6 +61,7 @@ export async function POST(request: NextRequest) {
       const uploadResult = await saveFile({
         buffer,
         originalFilename: imageFile.name,
+        mimetype: imageFile.type,
       });
 
       if (!uploadResult.success) {
@@ -93,7 +95,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, product: serializedProduct }, { status: 201 });
   } catch (error) {
-    console.error("Error creating product:", error);
+    logger.error("Error creating product", error);
     return NextResponse.json(
       { error: "Failed to create product" },
       { status: 500 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUserByEmail, updateUserOTP, verifyOTP, updatePassword } from "@/lib/auth";
 import nodemailer from "nodemailer";
+import { logger } from "@/lib/logger";
 
 // Generate 6-digit OTP
 function generateOTP(): string {
@@ -64,11 +65,11 @@ export async function POST(request: NextRequest) {
       try {
         await sendOTPEmail(email, otpCode);
       } catch (emailError: any) {
-        console.error("Error sending email:", emailError);
+        logger.error("Error sending email", emailError);
         // In development, allow OTP to be generated even if email fails
-        // Log the OTP to console for testing
+        // Log the OTP for testing
         if (process.env.NODE_ENV === "development") {
-          console.log(`[DEV] OTP for ${email}: ${otpCode}`);
+          logger.info(`[DEV] OTP for ${email}: ${otpCode}`);
           return NextResponse.json({ 
             success: true, 
             message: "OTP generated (email not configured - check console for OTP)",
@@ -120,7 +121,7 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   } catch (error) {
-    console.error("OTP handler error:", error);
+    logger.error("OTP handler error", error);
     return NextResponse.json(
       { error: "An error occurred" },
       { status: 500 }

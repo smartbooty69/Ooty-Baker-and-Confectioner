@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
 import { sendInquiryStatusEmail } from "@/lib/email-notifications";
+import { logger } from "@/lib/logger";
 
 export async function GET(
   request: NextRequest,
@@ -47,7 +48,7 @@ export async function GET(
 
     return NextResponse.json({ success: true, inquiry: serializedInquiry });
   } catch (error) {
-    console.error("Error fetching inquiry:", error);
+    logger.error("Error fetching inquiry", error);
     return NextResponse.json(
       { error: "Failed to fetch inquiry" },
       { status: 500 }
@@ -103,7 +104,7 @@ export async function PUT(
         status: inquiry.status,
         staffNote: inquiry.staffNote,
       }).catch((error) => {
-        console.error("Failed to send status email notification:", error);
+        logger.error("Failed to send status email notification", error);
         // Don't fail the request if email fails
       });
     }
@@ -135,7 +136,7 @@ export async function PUT(
 
     return NextResponse.json({ success: true, inquiry: serializedInquiry });
   } catch (error) {
-    console.error("Error updating inquiry:", error);
+    logger.error("Error updating inquiry", error);
     return NextResponse.json(
       { error: "Failed to update inquiry" },
       { status: 500 }
@@ -157,7 +158,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error deleting inquiry:", error);
+    logger.error("Error deleting inquiry", error);
     return NextResponse.json(
       { error: "Failed to delete inquiry" },
       { status: 500 }

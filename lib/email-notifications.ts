@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { logger } from "./logger";
 
 interface InquiryEmailData {
   email: string;
@@ -14,7 +15,7 @@ interface InquiryEmailData {
 export async function sendInquiryStatusEmail(data: InquiryEmailData): Promise<boolean> {
   // Check if SMTP is configured
   if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-    console.log("[Email] SMTP not configured, skipping email notification");
+    logger.info("[Email] SMTP not configured, skipping email notification");
     return false;
   }
 
@@ -100,10 +101,10 @@ export async function sendInquiryStatusEmail(data: InquiryEmailData): Promise<bo
       html: emailHtml,
     });
 
-    console.log(`[Email] Status notification sent to ${data.email} for inquiry status: ${data.status}`);
+    logger.info(`[Email] Status notification sent to ${data.email} for inquiry status: ${data.status}`);
     return true;
   } catch (error: any) {
-    console.error("[Email] Error sending inquiry status notification:", error);
+    logger.error("[Email] Error sending inquiry status notification", error);
     // Don't throw error - email failure shouldn't break the status update
     return false;
   }

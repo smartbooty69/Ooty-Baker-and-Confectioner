@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import ExcelJS from "exceljs";
 import { requireAuth } from "@/lib/auth-helpers";
+import { logger } from "@/lib/logger";
 
 export async function GET() {
   const auth = await requireAuth();
@@ -82,7 +83,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Error exporting inquiries:", error);
+    logger.error("Error exporting inquiries", error);
     return NextResponse.json(
       { error: "Failed to export inquiries" },
       { status: 500 }

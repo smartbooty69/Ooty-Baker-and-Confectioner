@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
 import { saveFile, deleteFile, validateFile } from "@/lib/file-upload";
+import { logger } from "@/lib/logger";
 
 export async function GET(
   request: NextRequest,
@@ -18,7 +19,7 @@ export async function GET(
 
     return NextResponse.json(banner);
   } catch (error) {
-    console.error("Error fetching banner:", error);
+    logger.error("Error fetching banner", error);
     return NextResponse.json({ error: "Failed to fetch banner" }, { status: 500 });
   }
 }
@@ -85,6 +86,7 @@ export async function PUT(
       const uploadResult = await saveFile({
         buffer,
         originalFilename: image.name,
+        mimetype: image.type,
       });
 
       if (!uploadResult.success || !uploadResult.filePath) {
@@ -107,7 +109,7 @@ export async function PUT(
 
     return NextResponse.json(banner);
   } catch (error) {
-    console.error("Error updating banner:", error);
+    logger.error("Error updating banner", error);
     return NextResponse.json({ error: "Failed to update banner" }, { status: 500 });
   }
 }
@@ -142,7 +144,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error deleting banner:", error);
+    logger.error("Error deleting banner", error);
     return NextResponse.json({ error: "Failed to delete banner" }, { status: 500 });
   }
 }

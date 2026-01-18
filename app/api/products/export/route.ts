@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import ExcelJS from "exceljs";
 import { requireAuth } from "@/lib/auth-helpers";
+import { logger } from "@/lib/logger";
 
 export async function GET() {
   const auth = await requireAuth();
@@ -64,8 +65,7 @@ export async function GET() {
       },
     });
   } catch (error: any) {
-    console.error("Error exporting products:", error);
-    console.error("Error details:", {
+    logger.error("Error exporting products", error, {
       message: error?.message,
       stack: error?.stack,
       name: error?.name,

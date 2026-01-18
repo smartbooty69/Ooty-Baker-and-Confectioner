@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/session";
+import { logger } from "@/lib/logger";
 
 export async function GET(request: NextRequest) {
   try {
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest) {
       user: session,
     });
   } catch (error) {
-    console.error("Session check error:", error);
+    logger.error("Session check error", error);
     return NextResponse.json(
       { success: false, error: "An error occurred" },
       { status: 500 }

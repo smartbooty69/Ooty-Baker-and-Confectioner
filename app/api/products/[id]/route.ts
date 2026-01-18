@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
 import { validateFile, saveFile, deleteFile } from "@/lib/file-upload";
+import { logger } from "@/lib/logger";
 
 export async function GET(
   request: NextRequest,
@@ -29,7 +30,7 @@ export async function GET(
 
     return NextResponse.json({ success: true, product: serializedProduct });
   } catch (error) {
-    console.error("Error fetching product:", error);
+    logger.error("Error fetching product", error);
     return NextResponse.json(
       { error: "Failed to fetch product" },
       { status: 500 }
@@ -85,6 +86,7 @@ export async function PUT(
       const uploadResult = await saveFile({
         buffer,
         originalFilename: imageFile.name,
+        mimetype: imageFile.type,
       });
 
       if (!uploadResult.success) {
@@ -124,7 +126,7 @@ export async function PUT(
 
     return NextResponse.json({ success: true, product: serializedProduct });
   } catch (error) {
-    console.error("Error updating product:", error);
+    logger.error("Error updating product", error);
     return NextResponse.json(
       { error: "Failed to update product" },
       { status: 500 }
@@ -159,7 +161,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error deleting product:", error);
+    logger.error("Error deleting product", error);
     return NextResponse.json(
       { error: "Failed to delete product" },
       { status: 500 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUserByEmail, verifyPassword } from "@/lib/auth";
 import { createSession } from "@/lib/session";
+import { logger } from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
       user: { id: user.id, email: user.email },
     });
   } catch (error) {
-    console.error("Login error:", error);
+    logger.error("Login error", error);
     return NextResponse.json(
       { success: false, error: "An error occurred during login" },
       { status: 500 }

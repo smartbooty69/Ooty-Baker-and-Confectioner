@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
+import { logger } from "./logger";
 
 export interface SessionUser {
   id: number;
@@ -58,7 +59,7 @@ export async function getSession(): Promise<SessionUser | null> {
 
     return { id: user.id, email: user.email };
   } catch (error) {
-    console.error("Session error:", error);
+    logger.error("Session error", error);
     return null;
   }
 }

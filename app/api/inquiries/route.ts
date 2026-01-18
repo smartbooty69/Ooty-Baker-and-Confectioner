@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
+import { logger } from "@/lib/logger";
 
 export async function GET() {
   const auth = await requireAuth();
@@ -35,7 +36,7 @@ export async function GET() {
 
     return NextResponse.json(serializedInquiries);
   } catch (error) {
-    console.error("Error fetching inquiries:", error);
+    logger.error("Error fetching inquiries", error);
     return NextResponse.json(
       { error: "Failed to fetch inquiries" },
       { status: 500 }
@@ -104,7 +105,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error creating inquiry:", error);
+    logger.error("Error creating inquiry", error);
     return NextResponse.json(
       { error: "Failed to create inquiry" },
       { status: 500 }
@@ -128,7 +129,7 @@ export async function DELETE() {
 
     return NextResponse.json({ success: true, message: "All inquiries deleted successfully" });
   } catch (error) {
-    console.error("Error deleting all inquiries:", error);
+    logger.error("Error deleting all inquiries", error);
     return NextResponse.json(
       { error: "Failed to delete all inquiries" },
       { status: 500 }

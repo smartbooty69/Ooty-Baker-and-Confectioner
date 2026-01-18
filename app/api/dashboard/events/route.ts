@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
+import { logger } from "@/lib/logger";
 
 export async function GET(request: NextRequest) {
   const auth = await requireAuth();
@@ -45,7 +46,7 @@ export async function GET(request: NextRequest) {
           const productCount = await prisma.product.count();
           sendEvent({ type: "product_count", data: { count: productCount } });
         } catch (error) {
-          console.error("Error in SSE stream:", error);
+          logger.error("Error in SSE stream", error);
           sendEvent({ type: "error", message: "Failed to fetch updates" });
         }
       }, 5000); // Update every 5 seconds
