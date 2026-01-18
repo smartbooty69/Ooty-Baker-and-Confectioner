@@ -1,152 +1,327 @@
 # Ooty Baker & Confectioner - Next.js Application
 
-A modern web application for Ooty Baker & Confectioner built with Next.js, TypeScript, Tailwind CSS, and MySQL.
+A modern web application for Ooty Baker & Confectioner built with Next.js, TypeScript, Tailwind CSS, Prisma ORM, and Supabase.
 
-## Features
+## 🚀 Features
 
-- 🏠 **Home Page**: Product showcase with category-based organization
+- 🏠 **Home Page**: Product showcase with category-based organization and banner slider
 - 📝 **Business Inquiry Form**: Customer inquiry submission system
-- 🔐 **Authentication**: Login and password reset with OTP
+- 🔐 **Authentication**: Secure login with OTP-based password reset
 - 📊 **Admin Dashboard**: 
-  - Business inquiries management
-  - Product management (CRUD operations)
+  - Business inquiries management (view, update, delete, export)
+  - Product management (CRUD operations with image uploads)
+  - Banner management
   - Real-time statistics and analytics
-- 🎨 **Modern UI**: Built with Tailwind CSS for responsive design
+  - Server-Sent Events (SSE) for live updates
+- 🎨 **Modern UI**: Responsive design with Tailwind CSS
+- 📦 **Image Storage**: Supabase Storage integration (with local fallback)
 
-## Tech Stack
+## 🛠 Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Database**: MySQL with Prisma ORM
-- **Authentication**: Custom authentication system
+- **Database**: PostgreSQL (Supabase) with Prisma ORM
+- **Storage**: Supabase Storage (for images)
+- **Authentication**: Cookie-based HTTP-only sessions
 - **Form Handling**: React Hook Form with Zod validation
+- **Email**: SMTP (for OTP and notifications)
 
-## Getting Started
+## 📋 Prerequisites
 
-### Prerequisites
-
-- Node.js 18+ 
-- MySQL 8.0+
+- Node.js 18+
 - npm or yarn
+- Supabase account (free tier available)
+- SMTP credentials (Gmail App Password or Mailtrap for development)
 
-### Installation
+## 🏁 Getting Started
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd Ooty-Baker-and-Confectioner
-   ```
+### 1. Clone and Install
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+```bash
+git clone <repository-url>
+cd Ooty-Baker-and-Confectioner
+npm install
+```
 
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` and configure:
-   - `DATABASE_URL`: Your MySQL connection string
-   - `NEXTAUTH_SECRET`: A random secret for session management
-   - `SMTP_*`: Email configuration for OTP functionality
+### 2. Set Up Supabase
 
-4. **Set up the database**
-   ```bash
-   # Generate Prisma Client
-   npm run db:generate
-   
-   # Push schema to database
-   npm run db:push
-   ```
+#### Create Supabase Project
 
-5. **Copy images**
-   - Copy your existing images from the `images/` folder to `public/images/`
-   - Copy uploaded product images from `uploads/` to `public/uploads/`
+1. Go to [supabase.com](https://supabase.com) and sign up/login
+2. Click "New Project"
+3. Project name: `ooty-baker`
+4. Set a strong database password (save it!)
+5. Choose region closest to your users
+6. Wait 1-2 minutes for project setup
 
-6. **Run the development server**
-   ```bash
-   npm run dev
-   ```
+#### Get Database Connection String
 
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+1. Go to **Settings → Database**
+2. Find "Connection string" section
+3. Select **"Session pooler"** → **"URI"** tab (for IPv4 compatibility)
+4. Copy the connection string (looks like: `postgresql://postgres.asvdhrajxiroovtyzsxj:[PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres`)
 
-## Project Structure
+#### Set Up Storage Bucket
+
+1. Go to **Storage** in Supabase dashboard
+2. Click "Create a new bucket"
+3. **Bucket name:** `product-images` (lowercase, no spaces)
+4. **Public bucket:** ✅ Enable
+5. **File size limit:** 5 MB
+6. Click "Create bucket"
+
+#### Get Supabase Keys
+
+1. Go to **Settings → API**
+2. Copy:
+   - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
+   - **anon public** key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+### 3. Configure Environment Variables
+
+Create `.env.local` file in the root directory:
+
+```env
+# Database (Supabase PostgreSQL)
+DATABASE_URL="postgresql://postgres.asvdhrajxiroovtyzsxj:[YOUR-PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres"
+
+# Supabase Storage
+NEXT_PUBLIC_SUPABASE_URL="https://xxxxx.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key-here"
+
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-random-32-character-secret-key
+
+# Email/SMTP
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-gmail-app-password
+SMTP_FROM=your-email@gmail.com
+
+# Node Environment
+NODE_ENV=development
+```
+
+**Note:** 
+- Replace `[YOUR-PASSWORD]` with your actual Supabase database password
+- Replace `xxxxx` with your Supabase project reference
+- Generate `NEXTAUTH_SECRET` with: `openssl rand -base64 32`
+- For Gmail, use [App Password](https://myaccount.google.com/apppasswords) (not your regular password)
+
+### 4. Set Up Database
+
+```bash
+# Generate Prisma Client
+npm run db:generate
+
+# Push schema to Supabase database
+npm run db:push
+
+# (Optional) Seed database with sample data
+npm run db:seed
+```
+
+### 5. Copy Images (if any)
+
+If you have existing images:
+- Copy from `images/` to `public/images/`
+- Or upload directly via dashboard (they'll go to Supabase Storage)
+
+### 6. Run Development Server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📁 Project Structure
 
 ```
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
-│   ├── auth/             # Authentication pages
-│   ├── dashboard/        # Dashboard pages
+│   │   ├── auth/         # Authentication endpoints
+│   │   ├── products/     # Product CRUD
+│   │   ├── inquiries/    # Inquiry management
+│   │   ├── banners/      # Banner management
+│   │   └── dashboard/    # Dashboard stats & SSE
+│   ├── auth/             # Login page
+│   ├── dashboard/        # Admin dashboard pages
+│   ├── products/         # Public product pages
 │   ├── globals.css       # Global styles
 │   ├── layout.tsx        # Root layout
 │   └── page.tsx          # Home page
 ├── components/            # React components
-│   ├── dashboard/       # Dashboard-specific components
+│   ├── dashboard/       # Dashboard components
 │   └── ...              # Shared components
 ├── lib/                  # Utility libraries
 │   ├── auth.ts          # Authentication helpers
-│   └── prisma.ts        # Prisma client
+│   ├── prisma.ts        # Prisma client
+│   ├── session.ts       # Session management
+│   ├── file-upload.ts   # File upload (Supabase + local fallback)
+│   └── logger.ts        # Logging utility
 ├── prisma/               # Prisma schema
-│   └── schema.prisma    # Database schema
+│   ├── schema.prisma    # Database schema
+│   └── seed.ts          # Database seeding
 ├── public/               # Static files
 │   └── images/          # Image assets
 └── types/               # TypeScript type definitions
 ```
 
-## Database Schema
+## 🗄 Database Schema
 
-The application uses the following main tables:
-- `users`: User authentication
-- `products`: Product catalog
-- `business_inquiries`: Customer inquiries
-- `business_inquiry_products`: Junction table for inquiry products
-- `business_inquiry_history`: Inquiry status history
+Main tables:
+- `users` - User authentication
+- `products` - Product catalog
+- `banners` - Homepage banners
+- `business_inquiries` - Customer inquiries
+- `business_inquiry_products` - Junction table for inquiry products
+- `business_inquiry_history` - Inquiry status change history
 
-## API Routes
+## 🔌 API Routes
 
-- `GET /api/products` - List all products
-- `POST /api/products` - Create a product
-- `GET /api/products/[id]` - Get a product
-- `PUT /api/products/[id]` - Update a product
-- `DELETE /api/products/[id]` - Delete a product
-- `GET /api/inquiries` - List all inquiries
-- `POST /api/inquiries` - Create an inquiry
-- `GET /api/dashboard/stats` - Get dashboard statistics
+### Authentication
 - `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/session` - Check session
 - `POST /api/auth/otp` - OTP operations (send, verify, reset password)
 
-## Development
+### Products
+- `GET /api/products` - List all products
+- `POST /api/products` - Create product
+- `GET /api/products/[id]` - Get product
+- `PUT /api/products/[id]` - Update product
+- `DELETE /api/products/[id]` - Delete product
+- `GET /api/products/export` - Export products to Excel
 
-### Available Scripts
+### Inquiries
+- `GET /api/inquiries` - List all inquiries
+- `POST /api/inquiries` - Create inquiry
+- `GET /api/inquiries/[id]` - Get inquiry
+- `PUT /api/inquiries/[id]` - Update inquiry
+- `DELETE /api/inquiries/[id]` - Delete inquiry
+- `GET /api/inquiries/export` - Export inquiries to Excel
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run db:generate` - Generate Prisma Client
-- `npm run db:push` - Push schema changes to database
-- `npm run db:migrate` - Run database migrations
-- `npm run db:studio` - Open Prisma Studio
+### Banners
+- `GET /api/banners` - List all banners
+- `POST /api/banners` - Create banner
+- `PUT /api/banners/[id]` - Update banner
+- `DELETE /api/banners/[id]` - Delete banner
 
-## Migration from PHP
+### Dashboard
+- `GET /api/dashboard/stats` - Get dashboard statistics
+- `GET /api/dashboard/events` - Server-Sent Events stream
+- `GET /api/analytics` - Analytics data
 
-This project has been migrated from a PHP application. Key changes:
+## 🛠 Development Scripts
 
-1. **Backend**: PHP → Next.js API routes
-2. **Frontend**: Plain HTML/CSS/JS → React with TypeScript
-3. **Styling**: Custom CSS → Tailwind CSS
-4. **Database**: MySQLi → Prisma ORM
-5. **Authentication**: Session-based → Token-based (can be upgraded to NextAuth.js)
+```bash
+# Development
+npm run dev          # Start development server
 
-## Notes
+# Production
+npm run build        # Build for production
+npm run start        # Start production server
 
-- Image uploads are currently handled via file system. Consider migrating to cloud storage (AWS S3, Cloudinary) for production.
-- Session management is currently using localStorage. Consider implementing proper session management with cookies or NextAuth.js for production.
-- Email functionality requires SMTP configuration. For development, you can use services like Mailtrap.
+# Code Quality
+npm run lint         # Run ESLint
 
-## License
+# Database
+npm run db:generate  # Generate Prisma Client
+npm run db:push      # Push schema changes to database
+npm run db:migrate   # Run database migrations
+npm run db:studio    # Open Prisma Studio (database GUI)
+npm run db:seed      # Seed database with sample data
+
+# Utilities
+npm run reset-password  # Reset user password
+npm run test-smtp       # Test SMTP configuration
+```
+
+## 🚀 Deployment to Vercel
+
+### Prerequisites
+- Code pushed to GitHub/GitLab/Bitbucket
+- Vercel account ([vercel.com](https://vercel.com))
+- Supabase project configured
+- Production SMTP credentials
+
+### Steps
+
+1. **Connect Repository to Vercel**
+   - Go to [vercel.com/dashboard](https://vercel.com/dashboard)
+   - Click "Add New..." → "Project"
+   - Import your repository
+
+2. **Configure Environment Variables**
+   - Go to **Settings → Environment Variables**
+   - Add all variables from `.env.local` (see above)
+   - **Important:** 
+     - Use **Session pooler** connection string for `DATABASE_URL`
+     - Update `NEXTAUTH_URL` to your Vercel domain
+     - Generate a new `NEXTAUTH_SECRET` for production
+
+3. **Deploy**
+   - Vercel will automatically detect Next.js
+   - Click "Deploy"
+   - Wait for build to complete
+
+### Environment Variables for Vercel
+
+```env
+DATABASE_URL=postgresql://postgres.asvdhrajxiroovtyzsxj:[PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXTAUTH_URL=https://your-domain.vercel.app
+NEXTAUTH_SECRET=production-secret-here
+NODE_ENV=production
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+SMTP_FROM=your-email@gmail.com
+```
+
+### Why Supabase?
+
+✅ **Perfect for Vercel:**
+- No ephemeral file system issues (images stored in Supabase Storage)
+- PostgreSQL database works seamlessly
+- IPv4-compatible connection pooling
+- Built-in CDN for images
+- Free tier available
+
+## 📝 Important Notes
+
+- **Authentication**: Uses HTTP-only cookies for secure session management
+- **Image Storage**: Automatically uses Supabase Storage if configured, falls back to local file system in development
+- **Database**: Uses PostgreSQL via Supabase. Session pooler connection is required for IPv4 compatibility.
+- **Email**: SMTP required for OTP functionality. Use Mailtrap for testing.
+- **Real-time Updates**: Dashboard uses Server-Sent Events (SSE) for live updates
+
+## 🐛 Troubleshooting
+
+### Database Connection Issues
+- Ensure you're using **Session pooler** connection string (not Direct connection)
+- Verify password is correct in Supabase Settings → Database
+- Check Network Restrictions allow all IP addresses
+
+### Image Upload Issues
+- Verify Supabase Storage bucket `product-images` exists and is public
+- Check `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set correctly
+
+### Build Errors
+- Run `npm run db:generate` before building
+- Ensure all environment variables are set in Vercel
+- Check `NODE_ENV=production` is set
+
+## 📄 License
 
 All rights reserved - Ooty Baker & Confectioner
+
+---
+
+**Built with ❤️ using Next.js, TypeScript, and Supabase**
