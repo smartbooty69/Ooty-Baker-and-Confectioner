@@ -310,11 +310,6 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
     }
   }, [showMessage]);
 
-  useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-  }, [fetchProducts, fetchCategories]);
-
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch("/api/categories");
@@ -326,6 +321,11 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
       logger.error("Error fetching categories", error);
     }
   }, []);
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCategories();
+  }, [fetchProducts, fetchCategories]);
 
   const onSubmit = useCallback(
     async (data: ProductFormData) => {
