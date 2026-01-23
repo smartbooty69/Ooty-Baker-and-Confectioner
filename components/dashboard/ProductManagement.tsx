@@ -367,8 +367,20 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
           // Refresh products
           fetchProducts();
         } else {
-          const errorData = await response.json();
-          showMessage(errorData.error || "Failed to save product", "error");
+          let errorMessage = "Failed to save product";
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.error || errorData.message || errorMessage;
+            // Log full error for debugging
+            logger.error("Product save error", {
+              status: response.status,
+              error: errorData,
+            });
+          } catch (e) {
+            logger.error("Failed to parse error response", e);
+            errorMessage = `Server error (${response.status}). Please check the console for details.`;
+          }
+          showMessage(errorMessage, "error");
         }
       } catch (error) {
         logger.error("Error saving product", error);
