@@ -22,14 +22,19 @@ export async function GET() {
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
     // Fetch recent inquiries
-    const recentInquiries = await prisma.businessInquiry.findMany({
+    let recentInquiries = [];
+    try {
+      recentInquiries = await prisma.businessInquiry.findMany({
       where: {
         isDeleted: false,
         createdAt: { gte: sevenDaysAgo },
       },
       orderBy: { createdAt: "desc" },
       take: 10,
-    });
+      });
+    } catch (error) {
+      logger.error("Error fetching recent inquiries", error);
+    }
 
     recentInquiries.forEach((inquiry) => {
       activities.push({
@@ -43,7 +48,9 @@ export async function GET() {
     });
 
     // Fetch inquiries with status changes (from history)
-    const inquiriesWithHistory = await prisma.businessInquiry.findMany({
+    let inquiriesWithHistory = [];
+    try {
+      inquiriesWithHistory = await prisma.businessInquiry.findMany({
       where: {
         isDeleted: false,
         history: {
@@ -61,7 +68,10 @@ export async function GET() {
         },
       },
       take: 10,
-    });
+      });
+    } catch (error) {
+      logger.error("Error fetching inquiries with history", error);
+    }
 
     inquiriesWithHistory.forEach((inquiry) => {
       inquiry.history.forEach((historyItem) => {
@@ -85,24 +95,32 @@ export async function GET() {
     });
 
     // Fetch recent product updates
-    const recentProducts = await prisma.product.findMany({
+    let recentProducts = [];
+    try {
+      recentProducts = await prisma.product.findMany({
       where: {
         OR: [
           { createdAt: { gte: sevenDaysAgo } },
           { updatedAt: { gte: sevenDaysAgo } },
         ],
       },
-      orderBy: { updatedAt: "desc" },
+      orderBy: { createdAt: "desc" },
       take: 10,
-    });
+      });
+    } catch (error) {
+      logger.error("Error fetching recent products", error);
+    }
 
     recentProducts.forEach((product) => {
       const updatedAt = product.updatedAt || product.createdAt;
-      const isNew = !product.updatedAt || 
-        (product.createdAt.getTime() >= sevenDaysAgo.getTime() && 
-         product.createdAt.getTime() === updatedAt.getTime());
+      const createdAtTime = product.createdAt.getTime();
+      const updatedAtTime = updatedAt.getTime();
+      const sevenDaysAgoTime = sevenDaysAgo.getTime();
       
-      if (isNew && product.createdAt.getTime() >= sevenDaysAgo.getTime()) {
+      // Check if product was created in the last 7 days
+      const isNew = !product.updatedAt || createdAtTime === updatedAtTime;
+      
+      if (isNew && createdAtTime >= sevenDaysAgoTime) {
         activities.push({
           id: `product-${product.id}-created`,
           type: "product",
@@ -111,7 +129,7 @@ export async function GET() {
           timestamp: product.createdAt,
           entityId: product.id,
         });
-      } else if (product.updatedAt && product.updatedAt.getTime() >= sevenDaysAgo.getTime()) {
+      } else if (product.updatedAt && updatedAtTime >= sevenDaysAgoTime && updatedAtTime > createdAtTime) {
         activities.push({
           id: `product-${product.id}-updated`,
           type: "product",
@@ -124,16 +142,24 @@ export async function GET() {
     });
 
     // Fetch recent banner updates
-    const recentBanners = await prisma.banner.findMany({
+    let recentBanners = [];
+    try {
+      recentBanners = await prisma.banner.findMany({
       where: {
         OR: [
           { createdAt: { gte: sevenDaysAgo } },
           { updatedAt: { gte: sevenDaysAgo } },
         ],
       },
-      orderBy: { updatedAt: "desc" },
+      orderBy: [
+        { updatedAt: "desc" },
+        { createdAt: "desc" },
+      ],
       take: 10,
-    });
+      });
+    } catch (error) {
+      logger.error("Error fetching recent banners", error);
+    }
 
     recentBanners.forEach((banner) => {
       const isNew = banner.createdAt.getTime() === banner.updatedAt.getTime();

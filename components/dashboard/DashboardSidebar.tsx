@@ -53,15 +53,24 @@ export default function DashboardSidebar({
       >
         <div className="h-full flex flex-col overflow-y-auto">
           {/* Logo */}
-          <div className="p-6 border-b border-white/10">
+          <div className="p-6 border-b border-white/10 relative">
             <Link href="/" className="flex items-center space-x-3">
-              <Image
-                src="/images/gimmie-logo.jpg"
-                alt="Gimmie Logo"
-                width={40}
-                height={40}
-                className="rounded"
-              />
+              <div className="flex items-center space-x-2">
+                <Image
+                  src="/images/brand-logo.png"
+                  alt="Ooty Baker & Confectioner Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain bg-white rounded"
+                />
+                <Image
+                  src="/images/gimmie-logo.jpg"
+                  alt="Gimmie Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain rounded"
+                />
+              </div>
               <div>
                 <h1 className="text-xl font-bold text-white">Gimmie</h1>
                 <span className="text-sm text-white/80">Ooty Bakery & Confectionery</span>

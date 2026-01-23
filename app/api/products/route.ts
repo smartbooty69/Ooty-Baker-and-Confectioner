@@ -19,10 +19,11 @@ export async function GET() {
     }));
 
     return NextResponse.json(serializedProducts);
-  } catch (error) {
+  } catch (error: any) {
     logger.error("Error fetching products", error);
+    const errorMessage = error?.message || "Failed to fetch products";
     return NextResponse.json(
-      { error: "Failed to fetch products" },
+      { error: errorMessage },
       { status: 500 }
     );
   }
