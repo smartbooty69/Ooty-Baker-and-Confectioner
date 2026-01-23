@@ -65,7 +65,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Price per gram must be a positive number" }, { status: 400 });
     }
 
-    if (!vegStatus || (vegStatus !== "Veg" && vegStatus !== "Non-Veg")) {
+    // Normalize vegStatus - accept both "NonVeg" and "Non-Veg"
+    const normalizedVegStatus = vegStatus === "NonVeg" ? "Non-Veg" : vegStatus;
+    
+    if (!normalizedVegStatus || (normalizedVegStatus !== "Veg" && normalizedVegStatus !== "Non-Veg")) {
       return NextResponse.json({ error: "Veg status must be 'Veg' or 'Non-Veg'" }, { status: 400 });
     }
 
@@ -114,7 +117,7 @@ export async function POST(request: NextRequest) {
         variety: variety ? variety.trim() : null,
         price,
         pricePerGram,
-        vegStatus: vegStatus === "Veg" ? "Veg" : "Non-Veg",
+        vegStatus: normalizedVegStatus,
         imagePath,
       },
     });

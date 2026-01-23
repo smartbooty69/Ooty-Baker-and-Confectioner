@@ -69,6 +69,9 @@ export async function PUT(
     const vegStatus = formData.get("vegStatus") as string;
     const imageFile = formData.get("image") as File | null;
 
+    // Normalize vegStatus - accept both "NonVeg" and "Non-Veg"
+    const normalizedVegStatus = vegStatus === "NonVeg" ? "Non-Veg" : vegStatus;
+
     let imagePath: string | null = existingProduct.imagePath;
 
     // Handle image upload if new image is provided
@@ -112,7 +115,7 @@ export async function PUT(
         variety,
         price,
         pricePerGram,
-        vegStatus: vegStatus === "Veg" ? "Veg" : "Non-Veg",
+        vegStatus: normalizedVegStatus,
         imagePath,
       },
     });

@@ -16,7 +16,7 @@ const productSchema = z.object({
   variety: z.enum(["Candy", "Coated Candy", "Jelly"]),
   price: z.number().positive(),
   pricePerGram: z.number().positive(),
-  vegStatus: z.enum(["Veg", "NonVeg"]),
+  vegStatus: z.enum(["Veg", "Non-Veg"]),
 });
 
 interface ProductManagementProps {
@@ -389,7 +389,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
       setValue("variety", (product.variety || "Candy") as "Candy" | "Coated Candy" | "Jelly");
       setValue("price", Number(product.price));
       setValue("pricePerGram", Number(product.pricePerGram || 0));
-      setValue("vegStatus", (product.vegStatus === "Veg" ? "Veg" : "NonVeg") as VegStatus);
+      setValue("vegStatus", (product.vegStatus === "Veg" ? "Veg" : "Non-Veg") as VegStatus);
       setSelectedImage(null);
       setImagePreview(product.imagePath || null);
     },
@@ -851,7 +851,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
                         className="w-full px-4 py-2 border border-primary-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                       >
                         <option value="Veg">Veg</option>
-                        <option value="NonVeg">Non-Veg</option>
+                        <option value="Non-Veg">Non-Veg</option>
                       </select>
                     </div>
 
