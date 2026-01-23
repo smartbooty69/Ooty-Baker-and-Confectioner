@@ -50,16 +50,19 @@ export default function Header({ categories }: HeaderProps) {
     if (typeof window !== 'undefined') {
       const hashId = window.location.hash.replace('#', '');
       
+      // If we're on a non-home page with a hash, redirect immediately
+      if (hashId && pathname !== '/') {
+        window.location.replace(`https://ooty-baker-and-confectioner.vercel.app/#${hashId}`);
+        return;
+      }
+      
+      // On home page with hash, scroll to the element
       if (hashId && pathname === '/') {
-        // On home page with hash, scroll to the element
         const scrollTimeout = setTimeout(() => {
           scrollToHash(hashId);
         }, 100);
         
         return () => clearTimeout(scrollTimeout);
-      } else if (hashId && pathname !== '/') {
-        // On other pages with hash (like /about#inquiry), redirect to full URL with hash
-        window.location.href = `https://ooty-baker-and-confectioner.vercel.app/#${hashId}`;
       }
     }
   }, [pathname, scrollToHash]);
