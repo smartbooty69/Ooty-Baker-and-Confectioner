@@ -9,6 +9,7 @@ import {
   BiRightArrowAlt 
 } from "react-icons/bi";
 import { FaFacebookF, FaLinkedin, FaInstagram } from "react-icons/fa";
+import ScrollAnimation from "./ScrollAnimation";
 
 export default function AboutSection() {
   return (
@@ -21,12 +22,8 @@ export default function AboutSection() {
     >
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header Section */}
-        <div 
-          className="text-center mb-16"
-          style={{
-            animation: "fadeInUp 0.6s ease-out both",
-          }}
-        >
+        <ScrollAnimation direction="up" delay={0}>
+          <div className="text-center mb-16">
           <div className="inline-block mb-6">
             <div className="relative">
               <div className="absolute inset-0 bg-white/20 blur-2xl rounded-full"></div>
@@ -41,16 +38,13 @@ export default function AboutSection() {
           <p className="text-xl md:text-2xl text-body/80 max-w-2xl mx-auto">
             Where tradition meets taste and every bite tells a story
           </p>
-        </div>
+          </div>
+        </ScrollAnimation>
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
-          <div 
-            className="space-y-6"
-            style={{
-              animation: "fadeInUp 0.6s ease-out 0.2s both",
-            }}
-          >
+          <ScrollAnimation direction="up" delay={0.1}>
+            <div className="space-y-6">
             <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-heading/10 hover:border-heading/30 group">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1 h-12 bg-gradient-to-b from-primary to-heading rounded-full"></div>
@@ -68,82 +62,86 @@ export default function AboutSection() {
 
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-105 group">
-                <div className="bg-primary/10 rounded-full p-3 w-fit mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
-                  <BiPackage className="text-3xl text-primary" />
+              <ScrollAnimation direction="up" delay={0.1}>
+                <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-105 group">
+                  <div className="bg-primary/10 rounded-full p-3 w-fit mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                    <BiPackage className="text-3xl text-primary" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-heading mb-1">100+</div>
+                  <div className="text-sm font-semibold text-body/70 uppercase tracking-wider">Products</div>
                 </div>
-                <div className="text-3xl md:text-4xl font-bold text-heading mb-1">100+</div>
-                <div className="text-sm font-semibold text-body/70 uppercase tracking-wider">Products</div>
-              </div>
-              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-105 group">
-                <div className="bg-primary/10 rounded-full p-3 w-fit mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
-                  <BiCalendarCheck className="text-3xl text-primary" />
+              </ScrollAnimation>
+              <ScrollAnimation direction="up" delay={0.15}>
+                <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-105 group">
+                  <div className="bg-primary/10 rounded-full p-3 w-fit mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                    <BiCalendarCheck className="text-3xl text-primary" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-heading mb-1">15+</div>
+                  <div className="text-sm font-semibold text-body/70 uppercase tracking-wider">Years</div>
                 </div>
-                <div className="text-3xl md:text-4xl font-bold text-heading mb-1">15+</div>
-                <div className="text-sm font-semibold text-body/70 uppercase tracking-wider">Years</div>
-              </div>
-              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-105 group">
-                <div className="bg-primary/10 rounded-full p-3 w-fit mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
-                  <BiGroup className="text-3xl text-primary" />
+              </ScrollAnimation>
+              <ScrollAnimation direction="up" delay={0.2}>
+                <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-105 group">
+                  <div className="bg-primary/10 rounded-full p-3 w-fit mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                    <BiGroup className="text-3xl text-primary" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-heading mb-1">1000+</div>
+                  <div className="text-sm font-semibold text-body/70 uppercase tracking-wider">Customers</div>
                 </div>
-                <div className="text-3xl md:text-4xl font-bold text-heading mb-1">1000+</div>
-                <div className="text-sm font-semibold text-body/70 uppercase tracking-wider">Customers</div>
-              </div>
+              </ScrollAnimation>
             </div>
-          </div>
+            </div>
+          </ScrollAnimation>
 
           {/* Right Content - Features */}
-          <div 
-            className="space-y-4"
-            style={{
-              animation: "fadeInUp 0.6s ease-out 0.4s both",
-            }}
-          >
-            <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-[1.02] group">
-              <div className="flex items-start gap-5">
-                <div className="bg-primary/10 rounded-xl p-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
-                  <BiCheckCircle className="text-3xl text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-xl font-bold text-heading mb-2">Fresh & Quality</h4>
-                  <p className="text-body/80 leading-relaxed">Every product is prepared with utmost attention to detail, ensuring freshness and quality.</p>
+          <div className="space-y-4">
+            <ScrollAnimation direction="left" delay={0.2}>
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-[1.02] group">
+                <div className="flex items-start gap-5">
+                  <div className="bg-primary/10 rounded-xl p-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
+                    <BiCheckCircle className="text-3xl text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-heading mb-2">Fresh & Quality</h4>
+                    <p className="text-body/80 leading-relaxed">Every product is prepared with utmost attention to detail, ensuring freshness and quality.</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollAnimation>
 
-            <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-[1.02] group">
-              <div className="flex items-start gap-5">
-                <div className="bg-secondary/10 rounded-xl p-4 group-hover:bg-secondary/20 transition-all duration-300 shadow-md">
-                  <BiStore className="text-3xl text-secondary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-xl font-bold text-heading mb-2">Wide Variety</h4>
-                  <p className="text-body/80 leading-relaxed">From fresh breads to custom cakes, jellies, candies, and confections.</p>
+            <ScrollAnimation direction="left" delay={0.3}>
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-[1.02] group">
+                <div className="flex items-start gap-5">
+                  <div className="bg-secondary/10 rounded-xl p-4 group-hover:bg-secondary/20 transition-all duration-300 shadow-md">
+                    <BiStore className="text-3xl text-secondary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-heading mb-2">Wide Variety</h4>
+                    <p className="text-body/80 leading-relaxed">From fresh breads to custom cakes, jellies, candies, and confections.</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollAnimation>
 
-            <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-[1.02] group">
-              <div className="flex items-start gap-5">
-                <div className="bg-primary/10 rounded-xl p-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
-                  <BiHeart className="text-3xl text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-xl font-bold text-heading mb-2">Made with Love</h4>
-                  <p className="text-body/80 leading-relaxed">Every item reflects our promise to deliver freshness, flavor, and a little bit of magic.</p>
+            <ScrollAnimation direction="left" delay={0.4}>
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-heading/10 hover:border-primary/30 hover:scale-[1.02] group">
+                <div className="flex items-start gap-5">
+                  <div className="bg-primary/10 rounded-xl p-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
+                    <BiHeart className="text-3xl text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-heading mb-2">Made with Love</h4>
+                    <p className="text-body/80 leading-relaxed">Every item reflects our promise to deliver freshness, flavor, and a little bit of magic.</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
 
         {/* Social Media & CTA */}
-        <div 
-          className="mt-16 flex flex-col sm:flex-row items-center justify-between gap-6 bg-white rounded-3xl p-8 md:p-10 shadow-lg border-2 border-heading/10"
-          style={{
-            animation: "fadeInUp 0.6s ease-out 0.6s both",
-          }}
-        >
+        <ScrollAnimation direction="up" delay={0.3}>
+          <div className="mt-16 flex flex-col sm:flex-row items-center justify-between gap-6 bg-white rounded-3xl p-8 md:p-10 shadow-lg border-2 border-heading/10">
           <div className="flex flex-col sm:flex-row items-center gap-6">
             <span className="text-body font-bold text-lg">Follow Us:</span>
             <div className="flex items-center gap-4">
@@ -182,7 +180,8 @@ export default function AboutSection() {
             <span>Know More</span>
             <BiRightArrowAlt className="text-xl" />
           </Link>
-        </div>
+          </div>
+        </ScrollAnimation>
       </div>
     </section>
   );

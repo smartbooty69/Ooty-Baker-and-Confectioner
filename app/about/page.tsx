@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiCookie, BiCake, BiHeart, BiMapPin, BiRightArrowAlt } from "react-icons/bi";
 import { FaFacebookF, FaLinkedin, FaInstagram } from "react-icons/fa";
+import ScrollAnimation from "@/components/ScrollAnimation";
 
 export const revalidate = 60;
 
@@ -37,12 +38,8 @@ export default async function AboutPage() {
         }}
       >
         <div className="max-w-6xl mx-auto relative z-10">
-          <div 
-            className="text-center mb-12"
-            style={{
-              animation: "fadeInUp 0.6s ease-out both",
-            }}
-          >
+          <ScrollAnimation direction="up" delay={0}>
+            <div className="text-center mb-12">
             <div className="flex justify-center items-center gap-6 md:gap-8 mb-8">
               {/* Brand Logo with white background for green logo visibility */}
               <div className="relative group">
@@ -84,7 +81,8 @@ export default async function AboutPage() {
             <p className="text-xl md:text-2xl text-body/80 max-w-3xl mx-auto">
               Where tradition meets taste and every bite tells a story
             </p>
-          </div>
+            </div>
+          </ScrollAnimation>
         </div>
       </section>
 
@@ -97,12 +95,8 @@ export default async function AboutPage() {
       >
         <div className="max-w-6xl mx-auto">
           {/* Introduction Card */}
-          <div 
-            className="bg-white rounded-3xl p-8 md:p-12 shadow-lg mb-12 border-2 border-heading/10 hover:border-heading/30 transition-all duration-300 hover:shadow-xl"
-            style={{
-              animation: "fadeInUp 0.6s ease-out 0.2s both",
-            }}
-          >
+          <ScrollAnimation direction="up" delay={0.1}>
+            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg mb-12 border-2 border-heading/10 hover:border-heading/30 transition-all duration-300 hover:shadow-xl">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-1.5 h-16 bg-gradient-to-b from-primary to-heading rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-heading">
@@ -117,15 +111,12 @@ export default async function AboutPage() {
                 Our journey began with a simple idea — to bring joy to people&apos;s lives through delightful treats made with love and the finest ingredients. At Ooty Baker & Confectioner, we don&apos;t just bake; we craft experiences.
               </p>
             </div>
-          </div>
+            </div>
+          </ScrollAnimation>
 
           {/* What We Offer Section */}
-          <div 
-            className="mb-12"
-            style={{
-              animation: "fadeInUp 0.6s ease-out 0.4s both",
-            }}
-          >
+          <ScrollAnimation direction="up" delay={0.2}>
+            <div className="mb-12">
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-bold text-heading mb-3 inline-block">
                 What We Offer
@@ -141,44 +132,47 @@ export default async function AboutPage() {
               </p>
               
               <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-2xl p-6 border-2 border-heading/10 hover:border-primary/30 hover:shadow-lg transition-all duration-300 group hover:scale-105">
-                  <div className="bg-primary/10 rounded-xl p-4 w-fit mb-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
-                    <BiCookie className="text-4xl text-primary" />
+                <ScrollAnimation direction="up" delay={0.1}>
+                  <div className="bg-white rounded-2xl p-6 border-2 border-heading/10 hover:border-primary/30 hover:shadow-lg transition-all duration-300 group hover:scale-105">
+                    <div className="bg-primary/10 rounded-xl p-4 w-fit mb-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
+                      <BiCookie className="text-4xl text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-heading mb-2">Jellies</h3>
+                    <p className="text-body/80 leading-relaxed">Soft, chewy, and bursting with fruity flavors</p>
                   </div>
-                  <h3 className="text-xl font-bold text-heading mb-2">Jellies</h3>
-                  <p className="text-body/80 leading-relaxed">Soft, chewy, and bursting with fruity flavors</p>
-                </div>
+                </ScrollAnimation>
                 
-                <div className="bg-white rounded-2xl p-6 border-2 border-heading/10 hover:border-secondary/30 hover:shadow-lg transition-all duration-300 group hover:scale-105">
-                  <div className="bg-secondary/10 rounded-xl p-4 w-fit mb-4 group-hover:bg-secondary/20 transition-all duration-300 shadow-md">
-                    <BiCookie className="text-4xl text-secondary" />
+                <ScrollAnimation direction="up" delay={0.15}>
+                  <div className="bg-white rounded-2xl p-6 border-2 border-heading/10 hover:border-secondary/30 hover:shadow-lg transition-all duration-300 group hover:scale-105">
+                    <div className="bg-secondary/10 rounded-xl p-4 w-fit mb-4 group-hover:bg-secondary/20 transition-all duration-300 shadow-md">
+                      <BiCookie className="text-4xl text-secondary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-heading mb-2">Candies</h3>
+                    <p className="text-body/80 leading-relaxed">Vibrant, classic favorites that bring a touch of nostalgia</p>
                   </div>
-                  <h3 className="text-xl font-bold text-heading mb-2">Candies</h3>
-                  <p className="text-body/80 leading-relaxed">Vibrant, classic favorites that bring a touch of nostalgia</p>
-                </div>
+                </ScrollAnimation>
                 
-                <div className="bg-white rounded-2xl p-6 border-2 border-heading/10 hover:border-primary/30 hover:shadow-lg transition-all duration-300 group hover:scale-105">
-                  <div className="bg-primary/10 rounded-xl p-4 w-fit mb-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
-                    <BiCake className="text-4xl text-primary" />
+                <ScrollAnimation direction="up" delay={0.2}>
+                  <div className="bg-white rounded-2xl p-6 border-2 border-heading/10 hover:border-primary/30 hover:shadow-lg transition-all duration-300 group hover:scale-105">
+                    <div className="bg-primary/10 rounded-xl p-4 w-fit mb-4 group-hover:bg-primary/20 transition-all duration-300 shadow-md">
+                      <BiCake className="text-4xl text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-heading mb-2">Coated Candies</h3>
+                    <p className="text-body/80 leading-relaxed">Crunchy on the outside and rich inside, available in a range of tempting flavors</p>
                   </div>
-                  <h3 className="text-xl font-bold text-heading mb-2">Coated Candies</h3>
-                  <p className="text-body/80 leading-relaxed">Crunchy on the outside and rich inside, available in a range of tempting flavors</p>
-                </div>
+                </ScrollAnimation>
               </div>
               
               <p className="text-body text-lg leading-relaxed mt-8">
                 From tangy orange and zesty lemon to rich chocolate, caramel, and tropical fruit blends, our chocolate and candy collection is a treat for all ages. Whether you&apos;re shopping for a special gift, planning a party, or simply indulging your sweet tooth, Ooty Baker & Confectioner offers something for everyone.
               </p>
             </div>
-          </div>
+            </div>
+          </ScrollAnimation>
 
           {/* Our Promise Section */}
-          <div 
-            className="mb-12"
-            style={{
-              animation: "fadeInUp 0.6s ease-out 0.6s both",
-            }}
-          >
+          <ScrollAnimation direction="up" delay={0.3}>
+            <div className="mb-12">
             <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border-2 border-heading/10">
               <div className="flex items-start gap-6">
                 <div className="bg-primary/10 rounded-2xl p-5 shadow-md">
@@ -197,15 +191,12 @@ export default async function AboutPage() {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          </ScrollAnimation>
 
           {/* Location Card */}
-          <div 
-            className="mb-12"
-            style={{
-              animation: "fadeInUp 0.6s ease-out 0.8s both",
-            }}
-          >
+          <ScrollAnimation direction="up" delay={0.4}>
+            <div className="mb-12">
             <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border-2 border-heading/10">
               <div className="flex items-start gap-6 mb-6">
                 <div className="bg-secondary/10 rounded-2xl p-5 shadow-md">
@@ -233,15 +224,12 @@ export default async function AboutPage() {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          </ScrollAnimation>
 
           {/* Social Media & CTA */}
-          <div 
-            className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border-2 border-heading/10 text-center"
-            style={{
-              animation: "fadeInUp 0.6s ease-out 1s both",
-            }}
-          >
+          <ScrollAnimation direction="up" delay={0.5}>
+            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border-2 border-heading/10 text-center">
             <h3 className="text-2xl md:text-3xl font-bold text-heading mb-6">
               We&apos;re always delighted to welcome you!
             </h3>
@@ -275,7 +263,8 @@ export default async function AboutPage() {
                 <FaInstagram className="text-2xl" />
               </a>
             </div>
-          </div>
+            </div>
+          </ScrollAnimation>
         </div>
       </section>
 
