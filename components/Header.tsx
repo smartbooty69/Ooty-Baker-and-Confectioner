@@ -45,7 +45,7 @@ export default function Header({ categories }: HeaderProps) {
     }
   };
 
-  // Handle hash redirect immediately on mount (runs first)
+  // Handle hash redirect on mount and when pathname changes (for client-side navigation)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const hashId = window.location.hash.replace('#', '');
@@ -57,7 +57,7 @@ export default function Header({ categories }: HeaderProps) {
         return;
       }
     }
-  }, []); // Empty dependency - runs once on mount
+  }, [pathname]); // Run when pathname changes (handles client-side navigation)
   
   // Handle hash scrolling when on home page
   useEffect(() => {
