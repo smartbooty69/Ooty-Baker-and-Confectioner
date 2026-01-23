@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { BiUser, BiLock, BiEnvelope, BiKey, BiArrowBack, BiCheckCircle } from "react-icons/bi";
 
 type FormType = "login" | "forgotPassword" | "otp" | "resetPassword";
@@ -13,7 +13,6 @@ export default function AuthPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   // Remove username/password from URL if present (security issue)
   useEffect(() => {
