@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const formData = await request.formData();
+    logger.info("Received product creation request");
     const name = formData.get("name") as string;
     const description = (formData.get("description") as string) || null;
     const variety = formData.get("variety") as string;
@@ -110,38 +111,73 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const product = await prisma.product.create({
-      data: {
+    try {
+      // Normalize empty strings to null for optional fields
+      const normalizedDescription = description && description.trim() !== "" ? description.trim() : null;
+      const normalizedVariety = variety && variety.trim() !== "" ? variety.trim() : null;
+      
+      logger.info("Creating product", {
         name: name.trim(),
-        description: description ? description.trim() : null,
-        variety: variety ? variety.trim() : null,
+        variety: normalizedVariety,
         price,
         pricePerGram,
         vegStatus: normalizedVegStatus,
-        imagePath,
-      },
-    });
+        hasImage: !!imagePath,
+      });
+      
+      const product = await prisma.product.create({
+        data: {
+          name: name.trim(),
+          description: normalizedDescription,
+          variety: normalizedVariety,
+          price,
+          pricePerGram,
+          vegStatus: normalizedVegStatus,
+          imagePath,
+        },
+      });
+      
+      logger.info("Product created successfully", { productId: product.id });
 
-    // Convert Decimal to number for JSON serialization
-    const serializedProduct = {
-      ...product,
-      price: Number(product.price),
-      pricePerGram: product.pricePerGram ? Number(product.pricePerGram) : null,
-    };
+      // Convert Decimal to number for JSON serialization
+      const serializedProduct = {
+        ...product,
+        price: Number(product.price),
+        pricePerGram: product.pricePerGram ? Number(product.pricePerGram) : null,
+      };
 
-    return NextResponse.json({ success: true, product: serializedProduct }, { status: 201 });
-  } catch (error: any) {
-    logger.error("Error creating product", error);
-    const errorMessage = error?.message || "Failed to create product";
-    // Check for Prisma-specific errors
-    if (error?.code === "P2002") {
+      return NextResponse.json({ success: true, product: serializedProduct }, { status: 201 });
+    } catch (dbError: any) {
+      logger.error("Database error creating product", dbError);
+      // Check for Prisma-specific errors
+      if (dbError?.code === "P2002") {
+        return NextResponse.json(
+          { error: "A product with this name already exists" },
+          { status: 400 }
+        );
+      }
+      // Return more detailed error for debugging
       return NextResponse.json(
-        { error: "A product with this name already exists" },
-        { status: 400 }
+        { 
+          error: `Database error: ${dbError?.message || "Failed to create product"}`,
+          code: dbError?.code || "UNKNOWN",
+        },
+        { status: 500 }
       );
     }
+
+  } catch (error: any) {
+    logger.error("Error in POST /api/products", error);
+    // Return detailed error for debugging (in production, you might want to hide this)
+    const errorMessage = error?.message || "Failed to create product";
+    const errorStack = process.env.NODE_ENV === "development" ? error?.stack : undefined;
+    
     return NextResponse.json(
-      { error: errorMessage },
+      { 
+        error: errorMessage,
+        code: error?.code || "UNKNOWN",
+        ...(errorStack && { stack: errorStack }),
+      },
       { status: 500 }
     );
   }
