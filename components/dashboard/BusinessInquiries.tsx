@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { InquiryWithProducts } from "@/types";
 import { BiShow } from "react-icons/bi";
 import InquiryModal from "./InquiryModal";
@@ -18,18 +18,7 @@ export default function BusinessInquiries() {
   const [selectedInquiryId, setSelectedInquiryId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    fetchInquiries();
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(fetchInquiries, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    filterAndSortInquiries();
-  }, [inquiries, searchQuery, statusFilter, sortBy]);
-
-  const fetchInquiries = async () => {
+  const fetchInquiries = useCallback(async () => {
     try {
       const response = await fetch("/api/inquiries");
       if (response.ok) {
@@ -41,9 +30,9 @@ export default function BusinessInquiries() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const filterAndSortInquiries = () => {
+  const filterAndSortInquiries = useCallback(() => {
     let filtered = [...inquiries];
 
     // Apply search filter
@@ -78,7 +67,18 @@ export default function BusinessInquiries() {
     });
 
     setFilteredInquiries(filtered);
-  };
+  }, [inquiries, searchQuery, statusFilter, sortBy]);
+
+  useEffect(() => {
+    fetchInquiries();
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(fetchInquiries, 30000);
+    return () => clearInterval(interval);
+  }, [fetchInquiries]);
+
+  useEffect(() => {
+    filterAndSortInquiries();
+  }, [filterAndSortInquiries]);
 
   const handleQuickStatusUpdate = async (id: number, newStatus: string) => {
     if (!confirm(`Change status to ${newStatus}?`)) return;

@@ -63,7 +63,7 @@ export default function BannerManagement() {
 
   useEffect(() => {
     fetchBanners();
-  }, []);
+  }, [fetchBanners]);
 
   useEffect(() => {
     if (message) {
@@ -182,7 +182,7 @@ export default function BannerManagement() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [editingBanner, selectedImage, altText, order, imagePreview, showMessage, fetchBanners]);
+  }, [editingBanner, selectedImage, altText, order, imagePreview, showMessage, fetchBanners, handleCloseModal]);
 
   const handleDelete = useCallback(
     async (id: number) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { BiTrendingUp, BiTrendingDown, BiBarChart, BiPieChart } from "react-icons/bi";
 import { StatCardSkeleton } from "./SkeletonLoader";
 import { logger } from "@/lib/logger";
@@ -36,11 +36,7 @@ export default function Analytics() {
   const [period, setPeriod] = useState("30");
   const [isAnimating, setIsAnimating] = useState(false);
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, [period]);
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       setIsLoading(true);
       setIsAnimating(false);
@@ -56,7 +52,11 @@ export default function Analytics() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [period]);
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [fetchAnalytics]);
 
   // Prepare chart data
   const chartData = useMemo(() => {

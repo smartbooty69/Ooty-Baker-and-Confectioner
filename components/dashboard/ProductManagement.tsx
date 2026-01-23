@@ -313,7 +313,7 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
   useEffect(() => {
     fetchProducts();
     fetchCategories();
-  }, [fetchProducts]);
+  }, [fetchProducts, fetchCategories]);
 
   const fetchCategories = useCallback(async () => {
     try {

@@ -2,7 +2,7 @@
 
 import { logger } from "@/lib/logger";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 
@@ -43,29 +43,7 @@ export default function ViewInquiryPage() {
   const [staffNote, setStaffNote] = useState("");
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  useEffect(() => {
-    // Check authentication
-    checkAuth();
-  }, [params.id, router]);
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch("/api/auth/session");
-      const data = await response.json();
-      
-      if (!data.success || !data.user) {
-        router.push("/auth");
-        return;
-      }
-
-      fetchInquiry();
-    } catch (error) {
-      logger.error("Auth check error", error);
-      router.push("/auth");
-    }
-  };
-
-  const fetchInquiry = async () => {
+  const fetchInquiry = useCallback(async () => {
     try {
       const response = await fetch(`/api/inquiries/${params.id}`);
       const data = await response.json();
@@ -83,7 +61,29 @@ export default function ViewInquiryPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id]);
+
+  const checkAuth = useCallback(async () => {
+    try {
+      const response = await fetch("/api/auth/session");
+      const data = await response.json();
+      
+      if (!data.success || !data.user) {
+        router.push("/auth");
+        return;
+      }
+
+      fetchInquiry();
+    } catch (error) {
+      logger.error("Auth check error", error);
+      router.push("/auth");
+    }
+  }, [router, fetchInquiry]);
+
+  useEffect(() => {
+    // Check authentication
+    checkAuth();
+  }, [params.id, checkAuth]);
 
   const handleStatusUpdate = async (e: React.FormEvent) => {
     e.preventDefault();

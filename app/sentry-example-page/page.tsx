@@ -80,7 +80,7 @@ export default function SentryExamplePage() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Throws an unhandled error that will be automatically caught by
-                Sentry's error boundary.
+                Sentry&apos;s error boundary.
               </p>
               <button
                 onClick={handleThrowError}
@@ -104,7 +104,7 @@ export default function SentryExamplePage() {
                 messages
               </li>
               <li>
-                The "Unhandled Error" button will trigger an error boundary
+                The &quot;Unhandled Error&quot; button will trigger an error boundary
                 (you may see an error page)
               </li>
             </ul>

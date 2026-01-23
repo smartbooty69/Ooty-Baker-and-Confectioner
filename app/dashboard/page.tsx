@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { logger } from "@/lib/logger";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
@@ -18,12 +18,7 @@ export default function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    // Check authentication
-    checkAuth();
-  }, [router]);
-
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     try {
       const response = await fetch("/api/auth/session");
       const data = await response.json();
@@ -35,7 +30,12 @@ export default function DashboardPage() {
       logger.error("Auth check error", error);
       router.push("/auth");
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    // Check authentication
+    checkAuth();
+  }, [checkAuth]);
 
   return (
     <div className="min-h-screen bg-background flex">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { BiX } from "react-icons/bi";
 import { logger } from "@/lib/logger";
 
@@ -46,23 +46,7 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
   const [staffNote, setStaffNote] = useState("");
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  useEffect(() => {
-    if (isOpen && inquiryId) {
-      fetchInquiry();
-    }
-  }, [isOpen, inquiryId]);
-
-  // Auto-dismiss notification after 3 seconds
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage(null);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
-  const fetchInquiry = async () => {
+  const fetchInquiry = useCallback(async () => {
     if (!inquiryId) return;
     
     setLoading(true);
@@ -83,7 +67,23 @@ export default function InquiryModal({ inquiryId, isOpen, onClose, onUpdate }: I
     } finally {
       setLoading(false);
     }
-  };
+  }, [inquiryId]);
+
+  useEffect(() => {
+    if (isOpen && inquiryId) {
+      fetchInquiry();
+    }
+  }, [isOpen, inquiryId, fetchInquiry]);
+
+  // Auto-dismiss notification after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleStatusUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
