@@ -40,8 +40,8 @@ export default function Header({ categories }: HeaderProps) {
       // Update URL hash
       window.history.pushState(null, '', hash);
     } else {
-      // If not on home page, redirect to full URL with hash
-      window.location.href = `https://ooty-baker-and-confectioner.vercel.app/${hash}`;
+      // If not on home page, redirect to home with hash
+      window.location.href = `/${hash}`;
     }
   };
 
@@ -53,7 +53,7 @@ export default function Header({ categories }: HeaderProps) {
       
       // If we're on a non-home page with a hash, redirect immediately
       if (hashId && currentPath !== '/') {
-        window.location.replace(`https://ooty-baker-and-confectioner.vercel.app/#${hashId}`);
+        window.location.replace(`/#${hashId}`);
         return;
       }
     }
