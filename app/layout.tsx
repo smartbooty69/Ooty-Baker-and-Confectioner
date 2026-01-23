@@ -78,29 +78,32 @@ export default function RootLayout({
         <Script 
           src="https://unpkg.com/aos@next/dist/aos.js" 
           strategy="afterInteractive"
-          onLoad={() => {
-            if (typeof window !== 'undefined' && (window as any).AOS) {
-              (window as any).AOS.init({ offset: 1 });
-            }
-          }}
         />
-        <Script id="aos-fallback" strategy="afterInteractive">
+        <Script id="aos-init" strategy="afterInteractive">
           {`
             (function() {
               function initAOS() {
-                if (typeof window !== 'undefined' && window.AOS && !window.AOS.initialized) {
+                if (typeof window !== 'undefined' && window.AOS) {
                   try {
-                    window.AOS.init({ offset: 1 });
+                    if (!window.AOS.initialized) {
+                      window.AOS.init({ offset: 1 });
+                    }
                   } catch (e) {
                     console.error('AOS initialization error:', e);
                   }
-                } else if (typeof window !== 'undefined' && !window.AOS) {
+                } else {
                   // Retry after a short delay if AOS is not yet available
-                  setTimeout(initAOS, 50);
+                  setTimeout(initAOS, 100);
                 }
               }
-              // Start checking after a short delay to ensure AOS script has loaded
-              setTimeout(initAOS, 200);
+              // Wait for DOM to be ready and AOS script to load
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                  setTimeout(initAOS, 300);
+                });
+              } else {
+                setTimeout(initAOS, 300);
+              }
             })();
           `}
         </Script>
