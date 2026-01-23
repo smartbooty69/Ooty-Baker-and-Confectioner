@@ -52,9 +52,23 @@ export async function POST(request: NextRequest) {
       try {
         user = await getUserByEmail(email);
       } catch (dbError: any) {
-        logger.error("Database error fetching user", dbError);
-        // Check if it's a connection error
-        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+        logger.error("Database error fetching user", { 
+          error: dbError, 
+          code: dbError?.code, 
+          message: dbError?.message,
+          name: dbError?.name 
+        });
+        // Check if it's a connection error (various Prisma error codes)
+        const isConnectionError = 
+          dbError?.code === 'P1001' || 
+          dbError?.code === 'P1000' ||
+          dbError?.code === 'P1017' ||
+          dbError?.name === 'PrismaClientInitializationError' ||
+          dbError?.message?.includes("Can't reach database") ||
+          dbError?.message?.includes("connection") ||
+          dbError?.message?.includes("timeout");
+        
+        if (isConnectionError) {
           return NextResponse.json(
             { error: "Database connection error. Please try again later." },
             { status: 503 }
@@ -80,9 +94,23 @@ export async function POST(request: NextRequest) {
       try {
         await updateUserOTP(email, otpCode, expiry);
       } catch (dbError: any) {
-        logger.error("Database error saving OTP", dbError);
-        // Check if it's a connection error
-        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+        logger.error("Database error saving OTP", { 
+          error: dbError, 
+          code: dbError?.code, 
+          message: dbError?.message,
+          name: dbError?.name 
+        });
+        // Check if it's a connection error (various Prisma error codes)
+        const isConnectionError = 
+          dbError?.code === 'P1001' || 
+          dbError?.code === 'P1000' ||
+          dbError?.code === 'P1017' ||
+          dbError?.name === 'PrismaClientInitializationError' ||
+          dbError?.message?.includes("Can't reach database") ||
+          dbError?.message?.includes("connection") ||
+          dbError?.message?.includes("timeout");
+        
+        if (isConnectionError) {
           return NextResponse.json(
             { error: "Database connection error. Please try again later." },
             { status: 503 }
@@ -132,9 +160,23 @@ export async function POST(request: NextRequest) {
       try {
         isValid = await verifyOTP(email, otp);
       } catch (dbError: any) {
-        logger.error("Database error verifying OTP", dbError);
-        // Check if it's a connection error
-        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+        logger.error("Database error verifying OTP", { 
+          error: dbError, 
+          code: dbError?.code, 
+          message: dbError?.message,
+          name: dbError?.name 
+        });
+        // Check if it's a connection error (various Prisma error codes)
+        const isConnectionError = 
+          dbError?.code === 'P1001' || 
+          dbError?.code === 'P1000' ||
+          dbError?.code === 'P1017' ||
+          dbError?.name === 'PrismaClientInitializationError' ||
+          dbError?.message?.includes("Can't reach database") ||
+          dbError?.message?.includes("connection") ||
+          dbError?.message?.includes("timeout");
+        
+        if (isConnectionError) {
           return NextResponse.json(
             { error: "Database connection error. Please try again later." },
             { status: 503 }
@@ -175,9 +217,23 @@ export async function POST(request: NextRequest) {
         await updatePassword(email, password);
         return NextResponse.json({ success: true, message: "Password reset successful" });
       } catch (dbError: any) {
-        logger.error("Database error updating password", dbError);
-        // Check if it's a connection error
-        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+        logger.error("Database error updating password", { 
+          error: dbError, 
+          code: dbError?.code, 
+          message: dbError?.message,
+          name: dbError?.name 
+        });
+        // Check if it's a connection error (various Prisma error codes)
+        const isConnectionError = 
+          dbError?.code === 'P1001' || 
+          dbError?.code === 'P1000' ||
+          dbError?.code === 'P1017' ||
+          dbError?.name === 'PrismaClientInitializationError' ||
+          dbError?.message?.includes("Can't reach database") ||
+          dbError?.message?.includes("connection") ||
+          dbError?.message?.includes("timeout");
+        
+        if (isConnectionError) {
           return NextResponse.json(
             { error: "Database connection error. Please try again later." },
             { status: 503 }
@@ -195,13 +251,36 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   } catch (error: any) {
-    logger.error("OTP handler error", error);
+    logger.error("OTP handler error", { 
+      error, 
+      code: error?.code, 
+      message: error?.message,
+      name: error?.name,
+      stack: error?.stack 
+    });
     
     // Provide more specific error messages when possible
     if (error instanceof SyntaxError) {
       return NextResponse.json(
         { error: "Invalid request format" },
         { status: 400 }
+      );
+    }
+    
+    // Check if it's a database connection error in the outer catch
+    const isConnectionError = 
+      error?.code === 'P1001' || 
+      error?.code === 'P1000' ||
+      error?.code === 'P1017' ||
+      error?.name === 'PrismaClientInitializationError' ||
+      error?.message?.includes("Can't reach database") ||
+      error?.message?.includes("connection") ||
+      error?.message?.includes("timeout");
+    
+    if (isConnectionError) {
+      return NextResponse.json(
+        { error: "Database connection error. Please try again later." },
+        { status: 503 }
       );
     }
     
