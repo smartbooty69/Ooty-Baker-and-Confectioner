@@ -53,6 +53,13 @@ export async function POST(request: NextRequest) {
         user = await getUserByEmail(email);
       } catch (dbError: any) {
         logger.error("Database error fetching user", dbError);
+        // Check if it's a connection error
+        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+          return NextResponse.json(
+            { error: "Database connection error. Please try again later." },
+            { status: 503 }
+          );
+        }
         return NextResponse.json(
           { error: "Database error. Please try again later." },
           { status: 500 }
@@ -74,6 +81,13 @@ export async function POST(request: NextRequest) {
         await updateUserOTP(email, otpCode, expiry);
       } catch (dbError: any) {
         logger.error("Database error saving OTP", dbError);
+        // Check if it's a connection error
+        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+          return NextResponse.json(
+            { error: "Database connection error. Please try again later." },
+            { status: 503 }
+          );
+        }
         return NextResponse.json(
           { error: "Failed to generate OTP. Please try again later." },
           { status: 500 }
@@ -119,6 +133,13 @@ export async function POST(request: NextRequest) {
         isValid = await verifyOTP(email, otp);
       } catch (dbError: any) {
         logger.error("Database error verifying OTP", dbError);
+        // Check if it's a connection error
+        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+          return NextResponse.json(
+            { error: "Database connection error. Please try again later." },
+            { status: 503 }
+          );
+        }
         return NextResponse.json(
           { error: "Database error. Please try again later." },
           { status: 500 }
@@ -155,6 +176,13 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: true, message: "Password reset successful" });
       } catch (dbError: any) {
         logger.error("Database error updating password", dbError);
+        // Check if it's a connection error
+        if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+          return NextResponse.json(
+            { error: "Database connection error. Please try again later." },
+            { status: 503 }
+          );
+        }
         return NextResponse.json(
           { error: "Failed to reset password. Please try again later." },
           { status: 500 }

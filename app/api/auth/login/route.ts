@@ -15,7 +15,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if username is email or phone (for now, we'll assume email)
-    const user = await getUserByEmail(username);
+    let user;
+    try {
+      user = await getUserByEmail(username);
+    } catch (dbError: any) {
+      logger.error("Database error fetching user", dbError);
+      // Check if it's a connection error
+      if (dbError.code === 'P1001' || dbError.message?.includes('Can\'t reach database')) {
+        return NextResponse.json(
+          { success: false, error: "Database connection error. Please try again later." },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json(
+        { success: false, error: "Database error. Please try again later." },
+        { status: 500 }
+      );
+    }
 
     if (!user) {
       return NextResponse.json(
@@ -24,7 +40,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isValid = await verifyPassword(password, user.password);
+    let isValid;
+    try {
+      isValid = await verifyPassword(password, user.password);
+    } catch (verifyError: any) {
+      logger.error("Password verification error", verifyError);
+      return NextResponse.json(
+        { success: false, error: "Error verifying password. Please try again." },
+        { status: 500 }
+      );
+    }
 
     if (!isValid) {
       return NextResponse.json(
@@ -34,16 +59,33 @@ export async function POST(request: NextRequest) {
     }
 
     // Create session
-    await createSession(user.id, user.email);
+    try {
+      await createSession(user.id, user.email);
+    } catch (sessionError: any) {
+      logger.error("Session creation error", sessionError);
+      return NextResponse.json(
+        { success: false, error: "Failed to create session. Please try again." },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
       user: { id: user.id, email: user.email },
     });
-  } catch (error) {
+  } catch (error: any) {
     logger.error("Login error", error);
+    
+    // Handle JSON parsing errors
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { success: false, error: "Invalid request format" },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
-      { success: false, error: "An error occurred during login" },
+      { success: false, error: "An error occurred during login. Please try again later." },
       { status: 500 }
     );
   }
