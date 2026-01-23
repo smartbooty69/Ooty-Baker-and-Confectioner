@@ -46,8 +46,9 @@ export default function Header({ categories }: HeaderProps) {
         window.history.pushState(null, '', hash);
       }
     } else {
-      // If element doesn't exist on current page, navigate to home and store hash to scroll after navigation
+      // If element doesn't exist on current page (like on /about), navigate to home and store hash to scroll after navigation
       pendingHashRef.current = hashId;
+      // Navigate to home first
       router.push('/');
     }
   };
@@ -58,17 +59,31 @@ export default function Header({ categories }: HeaderProps) {
       const hashId = pendingHashRef.current || window.location.hash.replace('#', '');
       
       if (hashId) {
-        // Small delay to ensure page is rendered
-        setTimeout(() => {
-          scrollToHash(hashId);
-          if (pendingHashRef.current) {
-            // Update URL with hash
-            if (window.history.pushState) {
-              window.history.pushState(null, '', `#${hashId}`);
+        // Longer delay to ensure page is fully rendered and elements are available
+        const scrollTimeout = setTimeout(() => {
+          const element = document.getElementById(hashId);
+          if (element) {
+            scrollToHash(hashId);
+            if (pendingHashRef.current) {
+              // Update URL with hash
+              if (window.history.pushState) {
+                window.history.pushState(null, '', `#${hashId}`);
+              }
+              pendingHashRef.current = null;
             }
-            pendingHashRef.current = null;
+          } else if (pendingHashRef.current) {
+            // If element still not found, try again after a bit more time
+            setTimeout(() => {
+              scrollToHash(hashId);
+              if (window.history.pushState) {
+                window.history.pushState(null, '', `#${hashId}`);
+              }
+              pendingHashRef.current = null;
+            }, 200);
           }
-        }, 150);
+        }, 300);
+        
+        return () => clearTimeout(scrollTimeout);
       }
     } else if (pathname !== '/' && typeof window !== 'undefined') {
       // If we're on a different page and there's a hash in the URL, navigate to home
