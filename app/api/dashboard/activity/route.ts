@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helpers";
 import { logger } from "@/lib/logger";
+import { Prisma } from "@prisma/client";
 
 interface Activity {
   id: string;
@@ -11,6 +12,12 @@ interface Activity {
   timestamp: Date;
   entityId?: number;
 }
+
+type BusinessInquiryWithHistory = Prisma.BusinessInquiryGetPayload<{
+  include: {
+    history: true;
+  };
+}>;
 
 export async function GET() {
   const auth = await requireAuth();
@@ -22,7 +29,7 @@ export async function GET() {
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
     // Fetch recent inquiries
-    let recentInquiries = [];
+    let recentInquiries: Prisma.BusinessInquiryGetPayload<{}>[] = [];
     try {
       recentInquiries = await prisma.businessInquiry.findMany({
       where: {
@@ -48,7 +55,7 @@ export async function GET() {
     });
 
     // Fetch inquiries with status changes (from history)
-    let inquiriesWithHistory = [];
+    let inquiriesWithHistory: BusinessInquiryWithHistory[] = [];
     try {
       inquiriesWithHistory = await prisma.businessInquiry.findMany({
       where: {
@@ -95,7 +102,7 @@ export async function GET() {
     });
 
     // Fetch recent product updates
-    let recentProducts = [];
+    let recentProducts: Prisma.ProductGetPayload<{}>[] = [];
     try {
       recentProducts = await prisma.product.findMany({
       where: {
@@ -142,7 +149,7 @@ export async function GET() {
     });
 
     // Fetch recent banner updates
-    let recentBanners = [];
+    let recentBanners: Prisma.BannerGetPayload<{}>[] = [];
     try {
       recentBanners = await prisma.banner.findMany({
       where: {
