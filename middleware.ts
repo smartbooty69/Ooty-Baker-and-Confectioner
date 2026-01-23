@@ -24,13 +24,17 @@ export function middleware(request: NextRequest) {
 
   // For /api/products, only protect POST/PUT/DELETE (GET is public)
   if (pathname.startsWith("/api/products") && request.method !== "GET") {
+    console.log("[MIDDLEWARE] Checking auth for /api/products", request.method);
     const sessionCookie = request.cookies.get("auth_session");
+    console.log("[MIDDLEWARE] Session cookie exists:", !!sessionCookie);
     if (!sessionCookie) {
+      console.log("[MIDDLEWARE] No session cookie, returning 401");
       return NextResponse.json(
         { success: false, error: "Unauthorized" },
         { status: 401 }
       );
     }
+    console.log("[MIDDLEWARE] Session cookie found, allowing request");
     return NextResponse.next();
   }
 

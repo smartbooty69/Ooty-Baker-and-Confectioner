@@ -50,34 +50,60 @@ export async function createSession(userId: number, email: string) {
 
 export async function getSession(): Promise<SessionUser | null> {
   try {
+    console.log("[GET_SESSION] Getting session cookie...");
     const cookieStore = cookies();
     const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME);
 
     if (!sessionCookie?.value) {
+      console.log("[GET_SESSION] No session cookie found");
       return null;
     }
 
+    console.log("[GET_SESSION] Session cookie found, parsing...");
     const sessionData = JSON.parse(sessionCookie.value);
+    console.log("[GET_SESSION] Session data parsed:", {
+      userId: sessionData.userId,
+      email: sessionData.email,
+      expiresAt: sessionData.expiresAt
+    });
 
     // Check if session is expired
-    if (new Date(sessionData.expiresAt) < new Date()) {
+    const expiresAt = new Date(sessionData.expiresAt);
+    const now = new Date();
+    console.log("[GET_SESSION] Checking expiration:", {
+      expiresAt: expiresAt.toISOString(),
+      now: now.toISOString(),
+      isExpired: expiresAt < now
+    });
+    
+    if (expiresAt < now) {
+      console.log("[GET_SESSION] Session expired, destroying...");
       await destroySession();
       return null;
     }
 
     // Verify user still exists
+    console.log("[GET_SESSION] Verifying user exists in database...");
     const user = await prisma.user.findUnique({
       where: { id: sessionData.userId },
       select: { id: true, email: true },
     });
 
     if (!user) {
+      console.log("[GET_SESSION] User not found in database, destroying session...");
       await destroySession();
       return null;
     }
 
+    console.log("[GET_SESSION] Session valid, returning user:", { id: user.id, email: user.email });
     return { id: user.id, email: user.email };
-  } catch (error) {
+  } catch (error: any) {
+    console.error("[GET_SESSION] Error getting session:", {
+      message: error?.message,
+      code: error?.code,
+      name: error?.name,
+      stack: error?.stack
+    });
     logger.error("Session error", error);
     return null;
   }

@@ -10,10 +10,17 @@ export const runtime = 'nodejs';
 
 export async function GET() {
   // Public route - no auth required
+  console.log("[PRODUCTS GET] Starting products fetch");
   try {
+    console.log("[PRODUCTS GET] Attempting to connect to database...");
+    console.log("[PRODUCTS GET] DATABASE_URL exists:", !!process.env.DATABASE_URL);
+    console.log("[PRODUCTS GET] DATABASE_URL port:", process.env.DATABASE_URL?.match(/:\d+\//)?.[0]);
+    
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
     });
+
+    console.log("[PRODUCTS GET] Products fetched successfully, count:", products.length);
 
     // Convert Decimal to number for JSON serialization
     const serializedProducts = products.map((product) => ({
@@ -22,12 +29,20 @@ export async function GET() {
       pricePerGram: product.pricePerGram ? Number(product.pricePerGram) : null,
     }));
 
+    console.log("[PRODUCTS GET] Returning serialized products");
     return NextResponse.json(serializedProducts);
   } catch (error: any) {
+    console.error("[PRODUCTS GET] Error fetching products:", {
+      message: error?.message,
+      code: error?.code,
+      name: error?.name,
+      stack: error?.stack,
+      error: error
+    });
     logger.error("Error fetching products", error);
     const errorMessage = error?.message || "Failed to fetch products";
     return NextResponse.json(
-      { error: errorMessage },
+      { error: errorMessage, code: error?.code, details: process.env.NODE_ENV === "development" ? error?.stack : undefined },
       { status: 500 }
     );
   }
@@ -35,12 +50,23 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   console.log("[PRODUCTS POST] Starting product creation");
+  console.log("[PRODUCTS POST] Checking authentication...");
+  
+  // Check for session cookie first
+  const cookies = request.cookies;
+  const sessionCookie = cookies.get("auth_session");
+  console.log("[PRODUCTS POST] Session cookie exists:", !!sessionCookie);
+  console.log("[PRODUCTS POST] Session cookie value length:", sessionCookie?.value?.length || 0);
+  
   const auth = await requireAuth();
   if (auth.error) {
-    console.error("[PRODUCTS POST] Auth error:", auth.error);
+    console.error("[PRODUCTS POST] Auth error:", {
+      status: auth.error.status,
+      error: await auth.error.json().catch(() => "Could not parse error"),
+    });
     return auth.error;
   }
-  console.log("[PRODUCTS POST] Auth successful");
+  console.log("[PRODUCTS POST] Auth successful, user:", auth.session?.email);
 
   try {
     const formData = await request.formData();

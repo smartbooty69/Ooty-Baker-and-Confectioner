@@ -59,8 +59,12 @@ npm install
 
 1. Go to **Settings → Database**
 2. Find "Connection string" section
-3. Select **"Session pooler"** → **"URI"** tab (for IPv4 compatibility)
-4. Copy the connection string (looks like: `postgresql://postgres.asvdhrajxiroovtyzsxj:[PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres`)
+3. **IMPORTANT**: Select **"Transaction pooler"** → **"URI"** tab (NOT Session pooler)
+   - Transaction mode (port 6543) allows more concurrent connections and is better for serverless
+   - Session mode (port 5432) has limited connections and will cause "max clients reached" errors
+4. Copy the connection string and add `?pgbouncer=true` at the end
+   - Should look like: `postgresql://postgres.asvdhrajxiroovtyzsxj:[PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true`
+   - Note the port is **6543** (Transaction mode), not 5432 (Session mode)
 
 #### Set Up Storage Bucket
 
