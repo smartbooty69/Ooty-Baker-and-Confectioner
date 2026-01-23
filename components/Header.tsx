@@ -40,23 +40,26 @@ export default function Header({ categories }: HeaderProps) {
       // Update URL hash
       window.history.pushState(null, '', hash);
     } else {
-      // If not on home page, navigate to home with hash using standard URL format
-      window.location.href = `/${hash}`;
+      // If not on home page, redirect to full URL with hash
+      window.location.href = `https://ooty-baker-and-confectioner.vercel.app/${hash}`;
     }
   };
 
   // Handle hash scrolling when page loads with hash in URL
   useEffect(() => {
-    if (pathname === '/' && typeof window !== 'undefined') {
+    if (typeof window !== 'undefined') {
       const hashId = window.location.hash.replace('#', '');
       
-      if (hashId) {
-        // Delay to ensure page is rendered
+      if (hashId && pathname === '/') {
+        // On home page with hash, scroll to the element
         const scrollTimeout = setTimeout(() => {
           scrollToHash(hashId);
         }, 100);
         
         return () => clearTimeout(scrollTimeout);
+      } else if (hashId && pathname !== '/') {
+        // On other pages with hash (like /about#inquiry), redirect to full URL with hash
+        window.location.href = `https://ooty-baker-and-confectioner.vercel.app/#${hashId}`;
       }
     }
   }, [pathname, scrollToHash]);
