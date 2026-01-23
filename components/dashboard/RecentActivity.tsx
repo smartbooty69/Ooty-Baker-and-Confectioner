@@ -12,8 +12,17 @@ interface Activity {
   entityId?: number;
 }
 
+interface ProcessedActivity {
+  id: string;
+  type: "inquiry" | "product" | "banner";
+  action: "created" | "updated" | "deleted" | "status_changed";
+  description: string;
+  timestamp: Date;
+  entityId?: number;
+}
+
 export default function RecentActivity() {
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activities, setActivities] = useState<ProcessedActivity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +34,7 @@ export default function RecentActivity() {
         }
         const data = await response.json();
         // Convert timestamp strings to Date objects
-        const activitiesWithDates = data.map((activity: Activity) => ({
+        const activitiesWithDates: ProcessedActivity[] = data.map((activity: Activity) => ({
           ...activity,
           timestamp: new Date(activity.timestamp),
         }));
