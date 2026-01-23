@@ -55,7 +55,7 @@ export default function RootLayout({
                 var hash = window.location.hash;
                 var pathname = window.location.pathname;
                 if (hash && hash.length > 0 && pathname && pathname !== '/') {
-                  window.location.replace('https://ooty-baker-and-confectioner.vercel.app' + hash);
+                  window.location.replace('/' + hash);
                 }
               })();
             `,
