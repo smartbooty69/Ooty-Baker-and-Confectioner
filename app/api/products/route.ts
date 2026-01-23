@@ -14,7 +14,8 @@ export async function GET() {
   try {
     console.log("[PRODUCTS GET] Attempting to connect to database...");
     console.log("[PRODUCTS GET] DATABASE_URL exists:", !!process.env.DATABASE_URL);
-    console.log("[PRODUCTS GET] DATABASE_URL port:", process.env.DATABASE_URL?.match(/:\d+\//)?.[0]);
+    const portMatch = process.env.DATABASE_URL?.match(/:\d+\//);
+    console.log("[PRODUCTS GET] DATABASE_URL port:", portMatch ? portMatch[0] : "unknown");
     
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
@@ -30,7 +31,7 @@ export async function GET() {
     }));
 
     console.log("[PRODUCTS GET] Returning serialized products");
-    return NextResponse.json(serializedProducts);
+    return NextResponse.json(serializedProducts, { status: 200 });
   } catch (error: any) {
     console.error("[PRODUCTS GET] Error fetching products:", {
       message: error?.message,
@@ -39,10 +40,30 @@ export async function GET() {
       stack: error?.stack,
       error: error
     });
-    logger.error("Error fetching products", error);
+    
+    // Ensure we always return valid JSON
+    try {
+      logger.error("Error fetching products", error);
+    } catch (logError) {
+      console.error("[PRODUCTS GET] Failed to log error:", logError);
+    }
+    
     const errorMessage = error?.message || "Failed to fetch products";
+    const errorCode = error?.code || "UNKNOWN";
+    
+    // Check for specific database connection errors
+    let userFriendlyMessage = errorMessage;
+    if (errorMessage?.includes("MaxClientsInSessionMode") || errorMessage?.includes("max clients")) {
+      userFriendlyMessage = "Database connection limit reached. Please use Transaction mode (port 6543) instead of Session mode (port 5432).";
+    }
+    
     return NextResponse.json(
-      { error: errorMessage, code: error?.code, details: process.env.NODE_ENV === "development" ? error?.stack : undefined },
+      { 
+        success: false,
+        error: userFriendlyMessage, 
+        code: errorCode,
+        ...(process.env.NODE_ENV === "development" && { details: error?.stack })
+      },
       { status: 500 }
     );
   }
@@ -244,18 +265,31 @@ export async function POST(request: NextRequest) {
         meta: dbError?.meta,
         error: dbError
       });
-      logger.error("Database error creating product", dbError);
+      try {
+        logger.error("Database error creating product", dbError);
+      } catch (logError) {
+        console.error("[PRODUCTS POST] Failed to log error:", logError);
+      }
+      
       // Check for Prisma-specific errors
       if (dbError?.code === "P2002") {
         return NextResponse.json(
-          { error: "A product with this name already exists" },
+          { success: false, error: "A product with this name already exists" },
           { status: 400 }
         );
       }
+      
+      // Check for database connection errors
+      let userFriendlyMessage = dbError?.message || "Failed to create product";
+      if (userFriendlyMessage?.includes("MaxClientsInSessionMode") || userFriendlyMessage?.includes("max clients")) {
+        userFriendlyMessage = "Database connection limit reached. Please use Transaction mode (port 6543) instead of Session mode (port 5432).";
+      }
+      
       // Return more detailed error for debugging
       return NextResponse.json(
         { 
-          error: `Database error: ${dbError?.message || "Failed to create product"}`,
+          success: false,
+          error: `Database error: ${userFriendlyMessage}`,
           code: dbError?.code || "UNKNOWN",
         },
         { status: 500 }
@@ -270,16 +304,29 @@ export async function POST(request: NextRequest) {
       name: error?.name,
       error: error
     });
-    logger.error("Error in POST /api/products", error);
-    // Return detailed error for debugging (in production, you might want to hide this)
+    
+    // Ensure we always return valid JSON
+    try {
+      logger.error("Error in POST /api/products", error);
+    } catch (logError) {
+      console.error("[PRODUCTS POST] Failed to log error:", logError);
+    }
+    
     const errorMessage = error?.message || "Failed to create product";
-    const errorStack = process.env.NODE_ENV === "development" ? error?.stack : undefined;
+    const errorCode = error?.code || "UNKNOWN";
+    
+    // Check for specific database connection errors
+    let userFriendlyMessage = errorMessage;
+    if (errorMessage?.includes("MaxClientsInSessionMode") || errorMessage?.includes("max clients")) {
+      userFriendlyMessage = "Database connection limit reached. Please use Transaction mode (port 6543) instead of Session mode (port 5432).";
+    }
     
     return NextResponse.json(
       { 
-        error: errorMessage,
-        code: error?.code || "UNKNOWN",
-        ...(errorStack && { stack: errorStack }),
+        success: false,
+        error: userFriendlyMessage,
+        code: errorCode,
+        ...(process.env.NODE_ENV === "development" && { details: error?.stack }),
       },
       { status: 500 }
     );
