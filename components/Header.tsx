@@ -40,8 +40,8 @@ export default function Header({ categories }: HeaderProps) {
       // Update URL hash
       window.history.pushState(null, '', hash);
     } else {
-      // If not on home page, redirect to home with hash
-      window.location.href = `/${hash}`;
+      // If not on home page, just redirect to homepage
+      router.push('/');
     }
   };
 
@@ -51,13 +51,13 @@ export default function Header({ categories }: HeaderProps) {
       const hashId = window.location.hash.replace('#', '');
       const currentPath = window.location.pathname;
       
-      // If we're on a non-home page with a hash, redirect immediately
+      // If we're on a non-home page with a hash, just redirect to homepage
       if (hashId && currentPath !== '/') {
-        window.location.replace(`/#${hashId}`);
+        router.push('/');
         return;
       }
     }
-  }, [pathname]); // Run when pathname changes (handles client-side navigation)
+  }, [pathname, router]); // Run when pathname changes (handles client-side navigation)
   
   // Handle hash scrolling when on home page
   useEffect(() => {
