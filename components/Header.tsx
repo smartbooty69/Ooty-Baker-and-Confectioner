@@ -35,15 +35,18 @@ export default function Header({ categories }: HeaderProps) {
     e.preventDefault();
     const hashId = hash.replace('#', '');
     
-    // If we're on the home page, scroll to the element
-    if (pathname === '/') {
+    // Check if the element exists on the current page
+    const element = document.getElementById(hashId);
+    
+    // If we're on the home page and element exists, scroll to it
+    if (pathname === '/' && element) {
       scrollToHash(hashId);
       // Update URL hash without triggering scroll
       if (window.history.pushState) {
         window.history.pushState(null, '', hash);
       }
     } else {
-      // If not on home page, navigate to home and store hash to scroll after navigation
+      // If element doesn't exist on current page, navigate to home and store hash to scroll after navigation
       pendingHashRef.current = hashId;
       router.push('/');
     }
@@ -67,8 +70,15 @@ export default function Header({ categories }: HeaderProps) {
           }
         }, 150);
       }
+    } else if (pathname !== '/' && typeof window !== 'undefined') {
+      // If we're on a different page and there's a hash in the URL, navigate to home
+      const hashId = window.location.hash.replace('#', '');
+      if (hashId && (hashId === 'inquiry' || hashId === 'products')) {
+        pendingHashRef.current = hashId;
+        router.push('/');
+      }
     }
-  }, [pathname, scrollToHash]);
+  }, [pathname, scrollToHash, router]);
 
   return (
     <>
