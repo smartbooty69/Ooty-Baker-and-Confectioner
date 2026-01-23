@@ -75,9 +75,34 @@ export default function RootLayout({
           }}
         />
         {children}
-        <Script src="https://unpkg.com/aos@next/dist/aos.js" strategy="afterInteractive" />
-        <Script id="aos-init" strategy="afterInteractive">
-          {`AOS.init({ offset: 1 });`}
+        <Script 
+          src="https://unpkg.com/aos@next/dist/aos.js" 
+          strategy="afterInteractive"
+          onLoad={() => {
+            if (typeof window !== 'undefined' && (window as any).AOS) {
+              (window as any).AOS.init({ offset: 1 });
+            }
+          }}
+        />
+        <Script id="aos-fallback" strategy="afterInteractive">
+          {`
+            (function() {
+              function initAOS() {
+                if (typeof window !== 'undefined' && window.AOS && !window.AOS.initialized) {
+                  try {
+                    window.AOS.init({ offset: 1 });
+                  } catch (e) {
+                    console.error('AOS initialization error:', e);
+                  }
+                } else if (typeof window !== 'undefined' && !window.AOS) {
+                  // Retry after a short delay if AOS is not yet available
+                  setTimeout(initAOS, 50);
+                }
+              }
+              // Start checking after a short delay to ensure AOS script has loaded
+              setTimeout(initAOS, 200);
+            })();
+          `}
         </Script>
       </body>
     </html>
