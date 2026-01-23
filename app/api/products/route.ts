@@ -126,6 +126,7 @@ export async function POST(request: NextRequest) {
         if (!uploadResult.success) {
           console.error("[PRODUCTS POST] File upload failed:", {
             error: uploadResult.error,
+            hint: uploadResult.hint,
             filename: imageFile.name,
             size: imageFile.size,
             isVercel: !!process.env.VERCEL,
@@ -133,15 +134,16 @@ export async function POST(request: NextRequest) {
           });
           logger.error("File upload failed", { 
             error: uploadResult.error,
+            hint: uploadResult.hint,
             filename: imageFile.name,
             size: imageFile.size
           });
           return NextResponse.json(
             { 
               error: uploadResult.error || "Failed to upload image",
-              hint: process.env.VERCEL && !isSupabaseConfigured()
+              hint: uploadResult.hint || (process.env.VERCEL && !isSupabaseConfigured()
                 ? "On Vercel, file uploads require Supabase Storage. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your Vercel environment variables."
-                : undefined
+                : undefined)
             },
             { status: 500 }
           );

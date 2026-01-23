@@ -12,6 +12,7 @@ export interface UploadResult {
   success: boolean;
   filePath?: string;
   error?: string;
+  hint?: string;
 }
 
 /**

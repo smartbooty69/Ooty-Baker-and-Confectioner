@@ -4,8 +4,35 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Exclude auth API routes - they handle their own authentication
+  if (pathname.startsWith("/api/auth")) {
+    return NextResponse.next();
+  }
+
+  // Exclude public API routes
+  const publicApiRoutes = [
+    "/api/products", // GET is public, POST requires auth (handled in route)
+  ];
+  
+  // For GET requests to public routes, allow through
+  if (request.method === "GET" && publicApiRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.next();
+  }
+
   // Protected routes that require authentication
-  const protectedRoutes = ["/dashboard", "/api/dashboard", "/api/inquiries", "/api/products"];
+  const protectedRoutes = ["/dashboard", "/api/dashboard", "/api/inquiries"];
+
+  // For /api/products, only protect POST/PUT/DELETE (GET is public)
+  if (pathname.startsWith("/api/products") && request.method !== "GET") {
+    const sessionCookie = request.cookies.get("auth_session");
+    if (!sessionCookie) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+    return NextResponse.next();
+  }
 
   // Check if the route is protected
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));

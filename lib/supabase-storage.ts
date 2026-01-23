@@ -17,6 +17,7 @@ export interface UploadResult {
   success: boolean;
   filePath?: string;
   error?: string;
+  hint?: string;
 }
 
 /**
@@ -34,6 +35,29 @@ export async function uploadToSupabase(
   }
 
   try {
+    // Check if bucket exists first
+    const bucketName = 'product-images';
+    const { data: buckets, error: listError } = await supabase.storage.listBuckets();
+    
+    if (listError) {
+      logger.error('Error listing Supabase buckets', listError);
+      return { 
+        success: false, 
+        error: `Failed to access storage: ${listError.message}` 
+      };
+    }
+
+    const bucketExists = buckets?.some(bucket => bucket.name === bucketName);
+    
+    if (!bucketExists) {
+      logger.error(`Supabase bucket '${bucketName}' not found`);
+      return { 
+        success: false, 
+        error: `Storage bucket '${bucketName}' not found. Please create the bucket in your Supabase dashboard.`,
+        hint: `Go to Supabase Dashboard → Storage → Create bucket → Name: "${bucketName}" → Make it public`
+      };
+    }
+
     // Generate unique filename
     const timestamp = Date.now();
     const randomStr = Math.random().toString(36).substring(2, 15);
@@ -42,7 +66,7 @@ export async function uploadToSupabase(
 
     // Upload to Supabase Storage
     const { data, error } = await supabase.storage
-      .from('product-images')
+      .from(bucketName)
       .upload(filename, file.buffer, {
         contentType: file.mimetype,
         upsert: false
@@ -50,12 +74,22 @@ export async function uploadToSupabase(
 
     if (error) {
       logger.error('Supabase upload error', error);
+      
+      // Provide more helpful error messages
+      if (error.message?.includes('Bucket not found') || error.message?.includes('not found')) {
+        return { 
+          success: false, 
+          error: `Storage bucket '${bucketName}' not found. Please create the bucket in your Supabase dashboard.`,
+          hint: `Go to Supabase Dashboard → Storage → Create bucket → Name: "${bucketName}" → Make it public`
+        };
+      }
+      
       return { success: false, error: error.message };
     }
 
     // Get public URL
     const { data: { publicUrl } } = supabase.storage
-      .from('product-images')
+      .from(bucketName)
       .getPublicUrl(filename);
 
     logger.info(`File uploaded to Supabase: ${filename}`);
@@ -65,6 +99,16 @@ export async function uploadToSupabase(
     };
   } catch (error: any) {
     logger.error('Error uploading to Supabase', error);
+    
+    // Check for bucket-related errors
+    if (error?.message?.includes('Bucket not found') || error?.message?.includes('not found')) {
+      return { 
+        success: false, 
+        error: `Storage bucket 'product-images' not found. Please create the bucket in your Supabase dashboard.`,
+        hint: `Go to Supabase Dashboard → Storage → Create bucket → Name: "product-images" → Make it public`
+      };
+    }
+    
     return {
       success: false,
       error: error?.message || "Failed to upload file to Supabase"
