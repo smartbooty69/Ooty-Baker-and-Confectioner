@@ -45,19 +45,27 @@ export default function Header({ categories }: HeaderProps) {
     }
   };
 
-  // Handle hash scrolling when page loads with hash in URL
+  // Handle hash redirect immediately on mount (runs first)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const hashId = window.location.hash.replace('#', '');
+      const currentPath = window.location.pathname;
       
       // If we're on a non-home page with a hash, redirect immediately
-      if (hashId && pathname !== '/') {
+      if (hashId && currentPath !== '/') {
         window.location.replace(`https://ooty-baker-and-confectioner.vercel.app/#${hashId}`);
         return;
       }
+    }
+  }, []); // Empty dependency - runs once on mount
+  
+  // Handle hash scrolling when on home page
+  useEffect(() => {
+    if (typeof window !== 'undefined' && pathname === '/') {
+      const hashId = window.location.hash.replace('#', '');
       
       // On home page with hash, scroll to the element
-      if (hashId && pathname === '/') {
+      if (hashId) {
         const scrollTimeout = setTimeout(() => {
           scrollToHash(hashId);
         }, 100);
