@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { BiCheckCircle, BiXCircle, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
 
 interface Activity {
-  id: number;
+  id: string;
   type: "inquiry" | "product" | "banner";
   action: "created" | "updated" | "deleted" | "status_changed";
   description: string;
-  timestamp: Date;
+  timestamp: string | Date;
+  entityId?: number;
 }
 
 export default function RecentActivity() {
@@ -16,36 +17,33 @@ export default function RecentActivity() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching recent activities
-    // In a real app, this would come from an API
-    const mockActivities: Activity[] = [
-      {
-        id: 1,
-        type: "inquiry",
-        action: "created",
-        description: "New inquiry from ABC Company",
-        timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
-      },
-      {
-        id: 2,
-        type: "product",
-        action: "updated",
-        description: "Product 'Chocolate Candy' was updated",
-        timestamp: new Date(Date.now() - 1000 * 60 * 15), // 15 minutes ago
-      },
-      {
-        id: 3,
-        type: "inquiry",
-        action: "status_changed",
-        description: "Inquiry #123 status changed to 'In Progress'",
-        timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
-      },
-    ];
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch("/api/dashboard/activity");
+        if (!response.ok) {
+          throw new Error("Failed to fetch activities");
+        }
+        const data = await response.json();
+        // Convert timestamp strings to Date objects
+        const activitiesWithDates = data.map((activity: Activity) => ({
+          ...activity,
+          timestamp: new Date(activity.timestamp),
+        }));
+        setActivities(activitiesWithDates);
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+        setActivities([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    setTimeout(() => {
-      setActivities(mockActivities);
-      setIsLoading(false);
-    }, 500);
+    fetchActivities();
+    
+    // Refresh activities every 30 seconds
+    const interval = setInterval(fetchActivities, 30000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   const getActivityIcon = (action: string) => {
