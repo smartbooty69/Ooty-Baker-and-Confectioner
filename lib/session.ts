@@ -11,22 +11,27 @@ const SESSION_COOKIE_NAME = "auth_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 export async function createSession(userId: number, email: string) {
-  const cookieStore = cookies();
-  const sessionData = {
-    userId,
-    email,
-    expiresAt: new Date(Date.now() + SESSION_MAX_AGE * 1000).toISOString(),
-  };
+  try {
+    const cookieStore = cookies();
+    const sessionData = {
+      userId,
+      email,
+      expiresAt: new Date(Date.now() + SESSION_MAX_AGE * 1000).toISOString(),
+    };
 
-  cookieStore.set(SESSION_COOKIE_NAME, JSON.stringify(sessionData), {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: SESSION_MAX_AGE,
-    path: "/",
-  });
+    cookieStore.set(SESSION_COOKIE_NAME, JSON.stringify(sessionData), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: SESSION_MAX_AGE,
+      path: "/",
+    });
 
-  return sessionData;
+    return sessionData;
+  } catch (error: any) {
+    logger.error("Error creating session cookie", error);
+    throw new Error(`Failed to set session cookie: ${error?.message || "Unknown error"}`);
+  }
 }
 
 export async function getSession(): Promise<SessionUser | null> {
