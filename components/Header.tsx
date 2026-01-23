@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 interface HeaderProps {
@@ -11,6 +12,49 @@ interface HeaderProps {
 export default function Header({ categories }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const scrollToHash = useCallback((hashId: string) => {
+    const element = document.getElementById(hashId);
+    if (element) {
+      // Add offset for fixed header
+      const headerHeight = 100;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
+
+  const handleHashLink = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+    e.preventDefault();
+    const hashId = hash.replace('#', '');
+    
+    // If we're on the home page, scroll to the element
+    if (pathname === '/') {
+      scrollToHash(hashId);
+    } else {
+      // If not on home page, navigate to home with hash
+      router.push(`/${hash}`);
+    }
+  };
+
+  // Handle hash scrolling when page loads or pathname changes
+  useEffect(() => {
+    if (pathname === '/' && typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash) {
+        // Small delay to ensure page is rendered
+        setTimeout(() => {
+          scrollToHash(hash.replace('#', ''));
+        }, 100);
+      }
+    }
+  }, [pathname, scrollToHash]);
 
   return (
     <>
@@ -41,7 +85,8 @@ export default function Header({ categories }: HeaderProps) {
             <div className="relative group">
               <a 
                 href="#products" 
-                className="text-[1.2em] font-semibold text-text-medium uppercase transition-colors relative pb-[5px] whitespace-nowrap hover:text-text-dark after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-text-medium after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
+                onClick={(e) => handleHashLink(e, '#products')}
+                className="text-[1.2em] font-semibold text-text-medium uppercase transition-colors relative pb-[5px] whitespace-nowrap hover:text-text-dark after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-text-medium after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left cursor-pointer"
               >
                 Products +
               </a>
@@ -63,21 +108,22 @@ export default function Header({ categories }: HeaderProps) {
             >
               About Us
             </Link>
-            <Link 
+            <a 
               href="#contact" 
-              className="text-[1.2em] font-semibold text-gimme-light uppercase transition-colors relative pb-[5px] whitespace-nowrap hover:text-gimme-dark after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-gimme-light after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
+              onClick={(e) => handleHashLink(e, '#contact')}
+              className="text-[1.2em] font-semibold text-gimme-light uppercase transition-colors relative pb-[5px] whitespace-nowrap hover:text-gimme-dark after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-gimme-light after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left cursor-pointer"
             >
               Inquiry
-            </Link>
-            <button
-              onClick={() => (window.location.href = "/auth")}
+            </a>
+            <Link
+              href="/auth"
               className="bg-transparent border-2 border-text-medium px-[22px] py-[10px] rounded-[25px] text-[1.05em] text-text-medium transition-all flex items-center gap-2 font-medium whitespace-nowrap hover:bg-text-medium hover:text-surface hover:border-text-medium"
             >
               <span>Login</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
                 <path d="M9 5L16 12L9 19" />
               </svg>
-            </button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -156,13 +202,16 @@ export default function Header({ categories }: HeaderProps) {
 
           {/* Inquiry */}
           <div className="flex justify-between items-center py-5 border-b border-gray-300">
-            <Link
+            <a
               href="#contact"
-              className="text-xl text-body font-medium uppercase w-full"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => {
+                handleHashLink(e, '#contact');
+                setIsMobileMenuOpen(false);
+              }}
+              className="text-xl text-body font-medium uppercase w-full cursor-pointer"
             >
               INQUIRY
-            </Link>
+            </a>
             <span className="text-xl text-body/70 ml-4">↗</span>
           </div>
         </nav>
