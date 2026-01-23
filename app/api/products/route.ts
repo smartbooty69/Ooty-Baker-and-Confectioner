@@ -4,6 +4,10 @@ import { requireAuth } from "@/lib/auth-helpers";
 import { validateFile, saveFile } from "@/lib/file-upload";
 import { logger } from "@/lib/logger";
 
+// Increase body size limit for file uploads (10MB)
+export const maxDuration = 30;
+export const runtime = 'nodejs';
+
 export async function GET() {
   // Public route - no auth required
   try {
@@ -95,8 +99,14 @@ export async function POST(request: NextRequest) {
         });
 
         if (!uploadResult.success) {
+          logger.error("File upload failed", { error: uploadResult.error });
           return NextResponse.json(
-            { error: uploadResult.error || "Failed to upload image" },
+            { 
+              error: uploadResult.error || "Failed to upload image",
+              hint: process.env.VERCEL 
+                ? "On Vercel, file uploads require Supabase Storage. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your Vercel environment variables."
+                : undefined
+            },
             { status: 500 }
           );
         }

@@ -56,7 +56,15 @@ export async function saveFile(file: { buffer: Buffer; originalFilename: string;
     });
   }
 
-  // Fallback to local storage
+  // Fallback to local storage (only works in development, not on Vercel)
+  // On Vercel, filesystem is read-only except /tmp, so Supabase must be configured
+  if (process.env.VERCEL) {
+    return {
+      success: false,
+      error: "File uploads require Supabase Storage to be configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables."
+    };
+  }
+
   try {
     // Ensure upload directory exists
     if (!existsSync(UPLOAD_DIR)) {
