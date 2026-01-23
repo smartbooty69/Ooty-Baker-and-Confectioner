@@ -1,11 +1,45 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import { useCallback } from "react";
 import { BiMapPin, BiEnvelope, BiPhone, BiRightArrowAlt } from "react-icons/bi";
 import { FaFacebookF, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const scrollToHash = useCallback((hashId: string) => {
+    const element = document.getElementById(hashId);
+    if (element) {
+      // Add offset for fixed header
+      const headerHeight = 100;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
+
+  const handleHashLink = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+    e.preventDefault();
+    const hashId = hash.replace('#', '');
+    
+    // If we're on the home page, scroll to the element
+    if (pathname === '/') {
+      scrollToHash(hashId);
+      // Update URL hash
+      window.history.pushState(null, '', hash);
+    } else {
+      // If not on home page, just redirect to homepage
+      router.push('/');
+    }
+  };
 
   return (
     <footer 
@@ -78,22 +112,24 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link 
+                  <a 
                     href="#products" 
-                    className="flex items-center text-white/90 hover:text-white transition-colors duration-300 group"
+                    onClick={(e) => handleHashLink(e, '#products')}
+                    className="flex items-center text-white/90 hover:text-white transition-colors duration-300 group cursor-pointer"
                   >
                     <BiRightArrowAlt className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <span className="group-hover:translate-x-2 transition-transform">Products</span>
-                  </Link>
+                  </a>
                 </li>
                 <li>
-                  <Link 
+                  <a 
                     href="#inquiry" 
-                    className="flex items-center text-white/90 hover:text-white transition-colors duration-300 group"
+                    onClick={(e) => handleHashLink(e, '#inquiry')}
+                    className="flex items-center text-white/90 hover:text-white transition-colors duration-300 group cursor-pointer"
                   >
                     <BiRightArrowAlt className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <span className="group-hover:translate-x-2 transition-transform">Inquiry</span>
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </nav>
