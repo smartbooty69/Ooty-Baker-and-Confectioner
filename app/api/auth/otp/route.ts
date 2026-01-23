@@ -48,7 +48,17 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const user = await getUserByEmail(email);
+      let user;
+      try {
+        user = await getUserByEmail(email);
+      } catch (dbError: any) {
+        logger.error("Database error fetching user", dbError);
+        return NextResponse.json(
+          { error: "Database error. Please try again later." },
+          { status: 500 }
+        );
+      }
+
       if (!user) {
         return NextResponse.json(
           { error: "User not found" },
@@ -59,30 +69,41 @@ export async function POST(request: NextRequest) {
       const otpCode = generateOTP();
       const expiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-      await updateUserOTP(email, otpCode, expiry);
-
-      // Try to send email, but don't fail if email is not configured
+      // Always save OTP to database first
       try {
-        await sendOTPEmail(email, otpCode);
-      } catch (emailError: any) {
-        logger.error("Error sending email", emailError);
-        // In development, allow OTP to be generated even if email fails
-        // Log the OTP for testing
-        if (process.env.NODE_ENV === "development") {
-          logger.info(`[DEV] OTP for ${email}: ${otpCode}`);
-          return NextResponse.json({ 
-            success: true, 
-            message: "OTP generated (email not configured - check console for OTP)",
-            devOtp: process.env.NODE_ENV === "development" ? otpCode : undefined
-          });
-        }
+        await updateUserOTP(email, otpCode, expiry);
+      } catch (dbError: any) {
+        logger.error("Database error saving OTP", dbError);
         return NextResponse.json(
-          { error: "Failed to send OTP email. Please check your SMTP configuration." },
+          { error: "Failed to generate OTP. Please try again later." },
           { status: 500 }
         );
       }
 
-      return NextResponse.json({ success: true, message: "OTP sent to your email" });
+      // Try to send email, but don't fail the request if email fails
+      // The OTP is already saved, so the user can still use it if they have access to it
+      try {
+        await sendOTPEmail(email, otpCode);
+        return NextResponse.json({ success: true, message: "OTP sent to your email" });
+      } catch (emailError: any) {
+        logger.error("Error sending email", emailError);
+        
+        // Log the OTP for debugging (only in development or if explicitly enabled)
+        if (process.env.NODE_ENV === "development" || process.env.LOG_OTP_IN_PRODUCTION === "true") {
+          logger.info(`[OTP] Generated OTP for ${email}: ${otpCode}`);
+        }
+        
+        // Return success even if email fails - OTP is saved and can be retrieved
+        // In production, you might want to return a generic message for security
+        return NextResponse.json({ 
+          success: true, 
+          message: process.env.NODE_ENV === "development" 
+            ? "OTP generated (email not configured - check logs for OTP)"
+            : "OTP generated. Please check your email or contact support if you don't receive it.",
+          // Only include devOtp in development
+          ...(process.env.NODE_ENV === "development" && { devOtp: otpCode })
+        });
+      }
     }
 
     if (action === "verify-otp") {
@@ -93,7 +114,17 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const isValid = await verifyOTP(email, otp);
+      let isValid;
+      try {
+        isValid = await verifyOTP(email, otp);
+      } catch (dbError: any) {
+        logger.error("Database error verifying OTP", dbError);
+        return NextResponse.json(
+          { error: "Database error. Please try again later." },
+          { status: 500 }
+        );
+      }
+
       if (!isValid) {
         return NextResponse.json(
           { error: "Invalid or expired OTP" },
@@ -112,18 +143,43 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      await updatePassword(email, password);
-      return NextResponse.json({ success: true, message: "Password reset successful" });
+      if (password.length < 8) {
+        return NextResponse.json(
+          { error: "Password must be at least 8 characters long" },
+          { status: 400 }
+        );
+      }
+
+      try {
+        await updatePassword(email, password);
+        return NextResponse.json({ success: true, message: "Password reset successful" });
+      } catch (dbError: any) {
+        logger.error("Database error updating password", dbError);
+        return NextResponse.json(
+          { error: "Failed to reset password. Please try again later." },
+          { status: 500 }
+        );
+      }
     }
 
     return NextResponse.json(
       { error: "Invalid action" },
       { status: 400 }
     );
-  } catch (error) {
+  } catch (error: any) {
     logger.error("OTP handler error", error);
+    
+    // Provide more specific error messages when possible
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: "Invalid request format" },
+        { status: 400 }
+      );
+    }
+    
+    // Generic error response
     return NextResponse.json(
-      { error: "An error occurred" },
+      { error: "An error occurred. Please try again later." },
       { status: 500 }
     );
   }
