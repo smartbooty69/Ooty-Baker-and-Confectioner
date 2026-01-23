@@ -82,6 +82,18 @@ export async function POST(request: NextRequest) {
     // Handle image upload if provided
     if (imageFile && imageFile.size > 0) {
       try {
+        // Check if Supabase is configured (required on Vercel)
+        const { isSupabaseConfigured } = await import("@/lib/supabase-storage");
+        if (process.env.VERCEL && !isSupabaseConfigured()) {
+          return NextResponse.json(
+            { 
+              error: "File uploads require Supabase Storage to be configured",
+              hint: "Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your Vercel environment variables. Go to your Vercel project → Settings → Environment Variables."
+            },
+            { status: 500 }
+          );
+        }
+
         const validation = validateFile({
           size: imageFile.size,
           mimetype: imageFile.type,
@@ -91,6 +103,13 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ error: validation.error }, { status: 400 });
         }
 
+        logger.info("Uploading image", { 
+          filename: imageFile.name, 
+          size: imageFile.size,
+          type: imageFile.type,
+          supabaseConfigured: isSupabaseConfigured()
+        });
+
         const buffer = Buffer.from(await imageFile.arrayBuffer());
         const uploadResult = await saveFile({
           buffer,
@@ -99,11 +118,15 @@ export async function POST(request: NextRequest) {
         });
 
         if (!uploadResult.success) {
-          logger.error("File upload failed", { error: uploadResult.error });
+          logger.error("File upload failed", { 
+            error: uploadResult.error,
+            filename: imageFile.name,
+            size: imageFile.size
+          });
           return NextResponse.json(
             { 
               error: uploadResult.error || "Failed to upload image",
-              hint: process.env.VERCEL 
+              hint: process.env.VERCEL && !isSupabaseConfigured()
                 ? "On Vercel, file uploads require Supabase Storage. Please configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your Vercel environment variables."
                 : undefined
             },
@@ -112,10 +135,16 @@ export async function POST(request: NextRequest) {
         }
 
         imagePath = uploadResult.filePath || null;
+        logger.info("Image uploaded successfully", { imagePath });
       } catch (error: any) {
         logger.error("Error uploading image", error);
         return NextResponse.json(
-          { error: `Image upload failed: ${error?.message || "Unknown error"}` },
+          { 
+            error: `Image upload failed: ${error?.message || "Unknown error"}`,
+            hint: process.env.VERCEL 
+              ? "Make sure Supabase Storage is configured in Vercel environment variables."
+              : undefined
+          },
           { status: 500 }
         );
       }

@@ -371,11 +371,19 @@ export default function ProductManagement({ mode }: ProductManagementProps) {
           try {
             const errorData = await response.json();
             errorMessage = errorData.error || errorData.message || errorMessage;
+            
+            // Include hint if available
+            if (errorData.hint) {
+              errorMessage += ` ${errorData.hint}`;
+            }
+            
             // Log full error for debugging
             logger.error("Product save error", {
               status: response.status,
               error: errorData,
+              fullError: JSON.stringify(errorData, null, 2),
             });
+            console.error("Full error details:", errorData);
           } catch (e) {
             logger.error("Failed to parse error response", e);
             errorMessage = `Server error (${response.status}). Please check the console for details.`;
