@@ -48,33 +48,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${roboto.variable} ${poppins.variable}`}>
       <body className={inter.className}>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                function redirectHash() {
-                  var hash = window.location.hash;
-                  var pathname = window.location.pathname;
-                  if (hash && hash.length > 0 && pathname && pathname !== '/') {
-                    window.location.replace('/' + hash);
-                    return true;
-                  }
-                  return false;
+        <Script id="hash-redirect" strategy="beforeInteractive">
+          {`
+            (function() {
+              if (typeof window !== 'undefined') {
+                var hash = window.location.hash;
+                var pathname = window.location.pathname;
+                if (hash && pathname !== '/') {
+                  window.location.replace('https://ooty-baker-and-confectioner.vercel.app' + hash);
                 }
-                // Try immediately
-                if (!redirectHash()) {
-                  // If redirect didn't happen, try again on DOMContentLoaded
-                  if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', redirectHash);
-                  } else {
-                    // DOM already loaded, try once more
-                    setTimeout(redirectHash, 0);
-                  }
-                }
-              })();
-            `,
-          }}
-        />
+              }
+            })();
+          `}
+        </Script>
         {children}
         <Script src="https://unpkg.com/aos@next/dist/aos.js" strategy="afterInteractive" />
         <Script id="aos-init" strategy="afterInteractive">
