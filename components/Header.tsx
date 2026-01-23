@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
@@ -14,6 +14,7 @@ export default function Header({ categories }: HeaderProps) {
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const pendingHashRef = useRef<string | null>(null);
 
   const scrollToHash = useCallback((hashId: string) => {
     const element = document.getElementById(hashId);
@@ -37,21 +38,34 @@ export default function Header({ categories }: HeaderProps) {
     // If we're on the home page, scroll to the element
     if (pathname === '/') {
       scrollToHash(hashId);
+      // Update URL hash without triggering scroll
+      if (window.history.pushState) {
+        window.history.pushState(null, '', hash);
+      }
     } else {
-      // If not on home page, navigate to home with hash
-      router.push(`/${hash}`);
+      // If not on home page, navigate to home and store hash to scroll after navigation
+      pendingHashRef.current = hashId;
+      router.push('/');
     }
   };
 
   // Handle hash scrolling when page loads or pathname changes
   useEffect(() => {
     if (pathname === '/' && typeof window !== 'undefined') {
-      const hash = window.location.hash;
-      if (hash) {
+      const hashId = pendingHashRef.current || window.location.hash.replace('#', '');
+      
+      if (hashId) {
         // Small delay to ensure page is rendered
         setTimeout(() => {
-          scrollToHash(hash.replace('#', ''));
-        }, 100);
+          scrollToHash(hashId);
+          if (pendingHashRef.current) {
+            // Update URL with hash
+            if (window.history.pushState) {
+              window.history.pushState(null, '', `#${hashId}`);
+            }
+            pendingHashRef.current = null;
+          }
+        }, 150);
       }
     }
   }, [pathname, scrollToHash]);
