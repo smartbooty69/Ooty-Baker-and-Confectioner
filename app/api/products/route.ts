@@ -34,11 +34,17 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  console.log("[PRODUCTS POST] Starting product creation");
   const auth = await requireAuth();
-  if (auth.error) return auth.error;
+  if (auth.error) {
+    console.error("[PRODUCTS POST] Auth error:", auth.error);
+    return auth.error;
+  }
+  console.log("[PRODUCTS POST] Auth successful");
 
   try {
     const formData = await request.formData();
+    console.log("[PRODUCTS POST] FormData received");
     logger.info("Received product creation request");
     const name = formData.get("name") as string;
     const description = (formData.get("description") as string) || null;
@@ -118,6 +124,13 @@ export async function POST(request: NextRequest) {
         });
 
         if (!uploadResult.success) {
+          console.error("[PRODUCTS POST] File upload failed:", {
+            error: uploadResult.error,
+            filename: imageFile.name,
+            size: imageFile.size,
+            isVercel: !!process.env.VERCEL,
+            supabaseConfigured: isSupabaseConfigured()
+          });
           logger.error("File upload failed", { 
             error: uploadResult.error,
             filename: imageFile.name,
@@ -164,6 +177,15 @@ export async function POST(request: NextRequest) {
         hasImage: !!imagePath,
       });
       
+      console.log("[PRODUCTS POST] Creating product in database:", {
+        name: name.trim(),
+        variety: normalizedVariety,
+        price,
+        pricePerGram,
+        vegStatus: normalizedVegStatus,
+        hasImage: !!imagePath
+      });
+      
       const product = await prisma.product.create({
         data: {
           name: name.trim(),
@@ -176,6 +198,7 @@ export async function POST(request: NextRequest) {
         },
       });
       
+      console.log("[PRODUCTS POST] Product created successfully:", { productId: product.id });
       logger.info("Product created successfully", { productId: product.id });
 
       // Convert Decimal to number for JSON serialization
@@ -187,6 +210,12 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({ success: true, product: serializedProduct }, { status: 201 });
     } catch (dbError: any) {
+      console.error("[PRODUCTS POST] Database error creating product:", {
+        code: dbError?.code,
+        message: dbError?.message,
+        meta: dbError?.meta,
+        error: dbError
+      });
       logger.error("Database error creating product", dbError);
       // Check for Prisma-specific errors
       if (dbError?.code === "P2002") {
@@ -206,6 +235,13 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error: any) {
+    console.error("[PRODUCTS POST] Unexpected error:", {
+      message: error?.message,
+      stack: error?.stack,
+      code: error?.code,
+      name: error?.name,
+      error: error
+    });
     logger.error("Error in POST /api/products", error);
     // Return detailed error for debugging (in production, you might want to hide this)
     const errorMessage = error?.message || "Failed to create product";

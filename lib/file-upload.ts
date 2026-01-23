@@ -37,6 +37,13 @@ export function validateFile(file: { size: number; mimetype: string }): { valid:
  * Save uploaded file (uses Supabase if configured, otherwise local storage)
  */
 export async function saveFile(file: { buffer: Buffer; originalFilename: string; mimetype?: string }): Promise<UploadResult> {
+  console.log("[FILE UPLOAD] Starting file upload:", {
+    filename: file.originalFilename,
+    size: file.buffer.length,
+    mimetype: file.mimetype,
+    isVercel: !!process.env.VERCEL
+  });
+
   // Validate first
   const validation = validateFile({
     size: file.buffer.length,
@@ -44,26 +51,43 @@ export async function saveFile(file: { buffer: Buffer; originalFilename: string;
   });
 
   if (!validation.valid) {
+    console.error("[FILE UPLOAD] Validation failed:", validation.error);
     return { success: false, error: validation.error };
   }
 
+  console.log("[FILE UPLOAD] Validation passed");
+
   // Use Supabase if configured, otherwise fall back to local storage
-  if (isSupabaseConfigured() && file.mimetype) {
-    return await uploadToSupabase({
-      buffer: file.buffer,
-      originalFilename: file.originalFilename,
-      mimetype: file.mimetype,
-    });
+  const supabaseConfigured = isSupabaseConfigured();
+  console.log("[FILE UPLOAD] Supabase configured:", supabaseConfigured);
+
+  if (supabaseConfigured && file.mimetype) {
+    console.log("[FILE UPLOAD] Using Supabase Storage");
+    try {
+      const result = await uploadToSupabase({
+        buffer: file.buffer,
+        originalFilename: file.originalFilename,
+        mimetype: file.mimetype,
+      });
+      console.log("[FILE UPLOAD] Supabase upload result:", result);
+      return result;
+    } catch (error: any) {
+      console.error("[FILE UPLOAD] Supabase upload error:", error);
+      return { success: false, error: error?.message || "Failed to upload to Supabase" };
+    }
   }
 
   // Fallback to local storage (only works in development, not on Vercel)
   // On Vercel, filesystem is read-only except /tmp, so Supabase must be configured
   if (process.env.VERCEL) {
+    console.error("[FILE UPLOAD] Vercel detected but Supabase not configured");
     return {
       success: false,
       error: "File uploads require Supabase Storage to be configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables."
     };
   }
+
+  console.log("[FILE UPLOAD] Using local storage fallback");
 
   try {
     // Ensure upload directory exists
