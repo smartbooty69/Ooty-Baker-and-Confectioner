@@ -123,8 +123,8 @@ export default function Header({ categories }: HeaderProps) {
               About Us
             </Link>
             <a 
-              href="#contact" 
-              onClick={(e) => handleHashLink(e, '#contact')}
+              href="#inquiry" 
+              onClick={(e) => handleHashLink(e, '#inquiry')}
               className="text-[1.2em] font-semibold text-gimme-light uppercase transition-colors relative pb-[5px] whitespace-nowrap hover:text-gimme-dark after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-gimme-light after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left cursor-pointer"
             >
               Inquiry
@@ -217,9 +217,9 @@ export default function Header({ categories }: HeaderProps) {
           {/* Inquiry */}
           <div className="flex justify-between items-center py-5 border-b border-gray-300">
             <a
-              href="#contact"
+              href="#inquiry"
               onClick={(e) => {
-                handleHashLink(e, '#contact');
+                handleHashLink(e, '#inquiry');
                 setIsMobileMenuOpen(false);
               }}
               className="text-xl text-body font-medium uppercase w-full cursor-pointer"

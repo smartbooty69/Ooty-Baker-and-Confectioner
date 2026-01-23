@@ -88,7 +88,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link 
-                    href="#contact" 
+                    href="#inquiry" 
                     className="flex items-center text-white/90 hover:text-white transition-colors duration-300 group"
                   >
                     <BiRightArrowAlt className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />

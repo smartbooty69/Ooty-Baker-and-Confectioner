@@ -91,7 +91,7 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
 
   return (
     <section 
-      id="contact" 
+      id="inquiry" 
       className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       style={{
         background: "#F9F7F2" // Warm Cream
