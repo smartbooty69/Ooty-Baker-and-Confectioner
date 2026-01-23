@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
@@ -14,7 +14,6 @@ export default function Header({ categories }: HeaderProps) {
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const pendingHashRef = useRef<string | null>(null);
 
   const scrollToHash = useCallback((hashId: string) => {
     const element = document.getElementById(hashId);
@@ -35,65 +34,32 @@ export default function Header({ categories }: HeaderProps) {
     e.preventDefault();
     const hashId = hash.replace('#', '');
     
-    // Check if the element exists on the current page
-    const element = document.getElementById(hashId);
-    
-    // If we're on the home page and element exists, scroll to it
-    if (pathname === '/' && element) {
+    // If we're on the home page, scroll to the element
+    if (pathname === '/') {
       scrollToHash(hashId);
-      // Update URL hash without triggering scroll
-      if (window.history.pushState) {
-        window.history.pushState(null, '', hash);
-      }
+      // Update URL hash
+      window.history.pushState(null, '', hash);
     } else {
-      // If element doesn't exist on current page (like on /about), navigate to home and store hash to scroll after navigation
-      pendingHashRef.current = hashId;
-      // Navigate to home first
-      router.push('/');
+      // If not on home page, navigate to home with hash using standard URL format
+      window.location.href = `/${hash}`;
     }
   };
 
-  // Handle hash scrolling when page loads or pathname changes
+  // Handle hash scrolling when page loads with hash in URL
   useEffect(() => {
     if (pathname === '/' && typeof window !== 'undefined') {
-      const hashId = pendingHashRef.current || window.location.hash.replace('#', '');
+      const hashId = window.location.hash.replace('#', '');
       
       if (hashId) {
-        // Longer delay to ensure page is fully rendered and elements are available
+        // Delay to ensure page is rendered
         const scrollTimeout = setTimeout(() => {
-          const element = document.getElementById(hashId);
-          if (element) {
-            scrollToHash(hashId);
-            if (pendingHashRef.current) {
-              // Update URL with hash
-              if (window.history.pushState) {
-                window.history.pushState(null, '', `#${hashId}`);
-              }
-              pendingHashRef.current = null;
-            }
-          } else if (pendingHashRef.current) {
-            // If element still not found, try again after a bit more time
-            setTimeout(() => {
-              scrollToHash(hashId);
-              if (window.history.pushState) {
-                window.history.pushState(null, '', `#${hashId}`);
-              }
-              pendingHashRef.current = null;
-            }, 200);
-          }
-        }, 300);
+          scrollToHash(hashId);
+        }, 100);
         
         return () => clearTimeout(scrollTimeout);
       }
-    } else if (pathname !== '/' && typeof window !== 'undefined') {
-      // If we're on a different page and there's a hash in the URL, navigate to home
-      const hashId = window.location.hash.replace('#', '');
-      if (hashId && (hashId === 'inquiry' || hashId === 'products')) {
-        pendingHashRef.current = hashId;
-        router.push('/');
-      }
     }
-  }, [pathname, scrollToHash, router]);
+  }, [pathname, scrollToHash]);
 
   return (
     <>
