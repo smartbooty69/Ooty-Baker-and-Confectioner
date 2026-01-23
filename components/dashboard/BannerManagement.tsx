@@ -61,19 +61,6 @@ export default function BannerManagement() {
     null
   );
 
-  useEffect(() => {
-    fetchBanners();
-  }, [fetchBanners]);
-
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage(null);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
   const showMessage = useCallback((text: string, type: "success" | "error" = "success") => {
     setMessage({ type, text });
   }, []);
@@ -97,6 +84,19 @@ export default function BannerManagement() {
       setIsLoading(false);
     }
   }, [showMessage]);
+
+  useEffect(() => {
+    fetchBanners();
+  }, [fetchBanners]);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleAddBanner = useCallback(() => {
     setIsAddingBanner(true);
