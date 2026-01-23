@@ -52,6 +52,19 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
+                // Remove credentials from URL (security)
+                var urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('username') || urlParams.has('password')) {
+                  urlParams.delete('username');
+                  urlParams.delete('password');
+                  var redirect = urlParams.get('redirect');
+                  var newUrl = redirect 
+                    ? window.location.pathname + '?redirect=' + encodeURIComponent(redirect)
+                    : window.location.pathname;
+                  window.history.replaceState({}, '', newUrl);
+                }
+                
+                // Handle hash redirects
                 var hash = window.location.hash;
                 var pathname = window.location.pathname;
                 if (hash && hash.length > 0 && pathname && pathname !== '/') {

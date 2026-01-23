@@ -17,11 +17,12 @@ export default function AuthPage() {
   // Remove username/password from URL if present (security issue)
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // Use a synchronous check to remove credentials immediately
       const urlParams = new URLSearchParams(window.location.search);
       const hasCredentials = urlParams.has('username') || urlParams.has('password');
       
       if (hasCredentials) {
-        // Remove credentials from URL
+        // Remove credentials from URL immediately
         urlParams.delete('username');
         urlParams.delete('password');
         
@@ -31,10 +32,38 @@ export default function AuthPage() {
           ? `/auth?redirect=${encodeURIComponent(redirect)}`
           : '/auth';
         
-        // Replace URL without credentials
+        // Replace URL without credentials (use replace to avoid adding to history)
         window.history.replaceState({}, '', newUrl);
       }
     }
+  }, []);
+
+  // Also check on mount and after navigation
+  useEffect(() => {
+    const checkAndCleanUrl = () => {
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('username') || urlParams.has('password')) {
+          urlParams.delete('username');
+          urlParams.delete('password');
+          const redirect = urlParams.get('redirect');
+          const newUrl = redirect 
+            ? `/auth?redirect=${encodeURIComponent(redirect)}`
+            : '/auth';
+          window.history.replaceState({}, '', newUrl);
+        }
+      }
+    };
+    
+    // Check immediately
+    checkAndCleanUrl();
+    
+    // Also listen for popstate events (back/forward navigation)
+    window.addEventListener('popstate', checkAndCleanUrl);
+    
+    return () => {
+      window.removeEventListener('popstate', checkAndCleanUrl);
+    };
   }, []);
 
   const showForm = (formId: FormType) => {
@@ -193,6 +222,7 @@ export default function AuthPage() {
         {/* Login Form */}
         {currentForm === "login" && (
           <form 
+            method="post"
             onSubmit={handleLogin} 
             className="bg-white rounded-3xl shadow-lg p-8 border-2 border-heading/10"
             style={{
