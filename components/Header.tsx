@@ -77,7 +77,12 @@ export default function Header({ categories }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-surface rounded-surface mx-auto my-5 max-w-[1200px] px-[30px] py-[10px] shadow-surface">
+      <header 
+        className="fixed top-0 left-0 right-0 z-50 bg-surface rounded-surface mx-auto my-5 max-w-[1200px] px-[30px] py-[10px] shadow-surface"
+        style={{
+          backgroundColor: 'rgba(230, 247, 240, 0.8)', // Slight green tint with transparency
+        }}
+      >
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
