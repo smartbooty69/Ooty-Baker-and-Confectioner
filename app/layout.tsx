@@ -48,6 +48,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${roboto.variable} ${poppins.variable}`}>
       <body className={inter.className}>
+        <Script id="hash-redirect" strategy="beforeInteractive">
+          {`
+            (function() {
+              if (typeof window !== 'undefined') {
+                var hash = window.location.hash;
+                var pathname = window.location.pathname;
+                if (hash && pathname !== '/') {
+                  window.location.replace('https://ooty-baker-and-confectioner.vercel.app/' + hash);
+                }
+              }
+            })();
+          `}
+        </Script>
         {children}
         <Script src="https://unpkg.com/aos@next/dist/aos.js" strategy="afterInteractive" />
         <Script id="aos-init" strategy="afterInteractive">
