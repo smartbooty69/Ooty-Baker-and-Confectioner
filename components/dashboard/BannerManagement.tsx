@@ -142,6 +142,15 @@ export default function BannerManagement() {
     reader.readAsDataURL(file);
   }, [showMessage]);
 
+  const handleCloseModal = useCallback(() => {
+    setEditingBanner(null);
+    setIsAddingBanner(false);
+    setSelectedImage(null);
+    setImagePreview(null);
+    setAltText("");
+    setOrder(0);
+  }, []);
+
   const handleSubmit = useCallback(async () => {
     if (!imagePreview && !selectedImage) {
       showMessage("Please select an image", "error");
@@ -243,15 +252,6 @@ export default function BannerManagement() {
     },
     [banners, fetchBanners]
   );
-
-  const handleCloseModal = useCallback(() => {
-    setEditingBanner(null);
-    setIsAddingBanner(false);
-    setSelectedImage(null);
-    setImagePreview(null);
-    setAltText("");
-    setOrder(0);
-  }, []);
 
   const isModalOpen = editingBanner !== null || isAddingBanner;
 
