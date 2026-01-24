@@ -55,20 +55,20 @@ export default function DashboardSidebar({
           {/* Logo */}
           <div className="p-6 border-b border-white/10 relative">
             <Link href="/" className="flex items-center justify-center">
-              <div className="flex items-center space-x-2">
+              <div className="bg-white/95 rounded-2xl px-4 py-3 shadow-md flex items-center space-x-3">
                 <Image
                   src="/images/brand-logo.png"
                   alt="Ooty Baker & Confectioner Logo"
-                  width={40}
-                  height={40}
-                  className="object-contain bg-white rounded"
+                  width={52}
+                  height={52}
+                  className="object-contain rounded-xl"
                 />
                 <Image
                   src="/images/gimmie-logo.jpg"
                   alt="Gimmie Logo"
-                  width={40}
-                  height={40}
-                  className="object-contain bg-white rounded"
+                  width={72}
+                  height={72}
+                  className="object-contain rounded-xl"
                 />
               </div>
             </Link>
