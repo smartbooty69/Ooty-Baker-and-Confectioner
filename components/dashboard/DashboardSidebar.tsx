@@ -54,7 +54,7 @@ export default function DashboardSidebar({
         <div className="h-full flex flex-col overflow-y-auto">
           {/* Logo */}
           <div className="p-6 border-b border-white/10 relative">
-            <Link href="/" className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center justify-center">
               <div className="flex items-center space-x-2">
                 <Image
                   src="/images/brand-logo.png"
@@ -70,10 +70,6 @@ export default function DashboardSidebar({
                   height={40}
                   className="object-contain rounded"
                 />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-white">Gimmie</h1>
-                <span className="text-sm text-white/80">Ooty Bakery & Confectionery</span>
               </div>
             </Link>
             <button
