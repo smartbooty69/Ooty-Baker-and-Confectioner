@@ -61,7 +61,7 @@ export default function DashboardSidebar({
                   alt="Ooty Baker & Confectioner Logo"
                   width={40}
                   height={40}
-                  className="object-contain bg-white rounded"
+                  className="object-contain rounded"
                 />
                 <Image
                   src="/images/gimmie-logo.jpg"
