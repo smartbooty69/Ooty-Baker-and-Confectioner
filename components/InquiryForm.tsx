@@ -50,9 +50,16 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
+    setValue,
   } = useForm<InquiryFormData>({
     resolver: zodResolver(inquirySchema),
+    defaultValues: {
+      productInterest: [],
+    },
   });
+
+  const selectedProducts = watch("productInterest") || [];
 
   const onSubmit = async (data: InquiryFormData) => {
     setIsSubmitting(true);
@@ -225,8 +232,21 @@ export default function InquiryForm({ categories }: InquiryFormProps) {
                     >
                       <input
                         type="checkbox"
-                        value={product.id}
-                        {...register("productInterest")}
+                        checked={selectedProducts.includes(product.id)}
+                        onChange={(e) => {
+                          const currentValues = selectedProducts;
+                          if (e.target.checked) {
+                            setValue("productInterest", [...currentValues, product.id], {
+                              shouldValidate: true,
+                            });
+                          } else {
+                            setValue(
+                              "productInterest",
+                              currentValues.filter((id) => id !== product.id),
+                              { shouldValidate: true }
+                            );
+                          }
+                        }}
                         className="w-4 h-4 text-primary focus:ring-primary border-heading/30 rounded"
                       />
                       <span className="text-body">{product.name}</span>
