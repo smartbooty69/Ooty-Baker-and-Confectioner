@@ -14,7 +14,7 @@ A modern web application for Ooty Baker & Confectioner built with Next.js, TypeS
   - Real-time statistics and analytics
   - Server-Sent Events (SSE) for live updates
 - 🎨 **Modern UI**: Responsive design with Tailwind CSS
-- 📦 **Image Storage**: Supabase Storage integration (with local fallback)
+- 📦 **Image Storage**: Vercel Blob (recommended), Supabase Storage, or local storage fallback
 
 ## 🛠 Tech Stack
 
@@ -66,7 +66,19 @@ npm install
    - Should look like: `postgresql://postgres.asvdhrajxiroovtyzsxj:[PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true`
    - Note the port is **6543** (Transaction mode), not 5432 (Session mode)
 
-#### Set Up Storage Bucket
+#### Set Up Image Storage (Choose One)
+
+**Option 1: Vercel Blob (Recommended for Vercel deployments)**
+
+1. Go to your **Vercel Dashboard** → Your Project → **Storage** → **Blob**
+2. Click **"Create Database"** (if not already created)
+3. Go to **Settings** → Copy your **BLOB_READ_WRITE_TOKEN**
+4. Add it to your Vercel environment variables:
+   - Variable name: `BLOB_READ_WRITE_TOKEN`
+   - Value: Your token from Vercel
+5. That's it! No bucket setup needed. ✅
+
+**Option 2: Supabase Storage (Alternative)**
 
 1. Go to **Storage** in Supabase dashboard
 2. Click "Create a new bucket"
@@ -74,13 +86,31 @@ npm install
 4. **Public bucket:** ✅ Enable
 5. **File size limit:** 5 MB
 6. Click "Create bucket"
+7. Create storage policies (see Storage Policies section below)
 
-#### Get Supabase Keys
+**Note:** The system will automatically use Vercel Blob if available, otherwise fall back to Supabase Storage, then local storage (development only).
+
+#### Get Supabase Keys (Only if using Supabase Storage)
 
 1. Go to **Settings → API**
 2. Copy:
    - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
    - **anon public** key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+#### Set Up Supabase Storage Policies (Only if using Supabase Storage)
+
+1. Go to **Storage** → **Policies** in Supabase dashboard
+2. Under `product-images` bucket, click **"New policy"**
+3. Create **Public read access** policy:
+   - Policy name: `Public read access`
+   - Allowed operation: `SELECT`
+   - Target roles: Leave empty (defaults to public) or select `anon`, `authenticated`
+   - Policy definition: `true`
+4. Create **Authenticated upload access** policy:
+   - Policy name: `Authenticated upload access`
+   - Allowed operation: `INSERT`
+   - Target roles: `authenticated`
+   - Policy definition: `true`
 
 ### 3. Configure Environment Variables
 
@@ -88,9 +118,16 @@ Create `.env.local` file in the root directory:
 
 ```env
 # Database (Supabase PostgreSQL)
-DATABASE_URL="postgresql://postgres.asvdhrajxiroovtyzsxj:[YOUR-PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL="postgresql://postgres.asvdhrajxiroovtyzsxj:[YOUR-PASSWORD]@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
 
-# Supabase Storage
+# Image Storage - Choose ONE option:
+
+# Option 1: Vercel Blob (Recommended - automatically available on Vercel)
+# BLOB_READ_WRITE_TOKEN is automatically set on Vercel, or get it from:
+# Vercel Dashboard → Your Project → Storage → Blob → Settings
+BLOB_READ_WRITE_TOKEN="vercel_blob_xxxxx"
+
+# Option 2: Supabase Storage (Alternative)
 NEXT_PUBLIC_SUPABASE_URL="https://xxxxx.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key-here"
 

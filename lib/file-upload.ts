@@ -2,6 +2,7 @@ import { writeFile, mkdir, unlink } from "fs/promises";
 import { join } from "path";
 import { existsSync } from "fs";
 import { logger } from "./logger";
+import { uploadToVercelBlob, deleteFromVercelBlob, isVercelBlobConfigured } from "./vercel-blob-storage";
 import { uploadToSupabase, deleteFromSupabase, isSupabaseConfigured } from "./supabase-storage";
 
 const UPLOAD_DIR = join(process.cwd(), "public", "uploads", "images");
@@ -58,7 +59,32 @@ export async function saveFile(file: { buffer: Buffer; originalFilename: string;
 
   console.log("[FILE UPLOAD] Validation passed");
 
-  // Use Supabase if configured, otherwise fall back to local storage
+  // Priority: Vercel Blob > Supabase > Local Storage
+  // 1. Try Vercel Blob first (best for Vercel deployments)
+  const vercelBlobConfigured = isVercelBlobConfigured();
+  console.log("[FILE UPLOAD] Vercel Blob configured:", vercelBlobConfigured);
+
+  if (vercelBlobConfigured && file.mimetype) {
+    console.log("[FILE UPLOAD] Using Vercel Blob Storage");
+    try {
+      const result = await uploadToVercelBlob({
+        buffer: file.buffer,
+        originalFilename: file.originalFilename,
+        mimetype: file.mimetype,
+      });
+      console.log("[FILE UPLOAD] Vercel Blob upload result:", result);
+      if (result.success) {
+        return result;
+      }
+      // If Vercel Blob fails, fall through to next option
+      console.warn("[FILE UPLOAD] Vercel Blob upload failed, trying fallback:", result.error);
+    } catch (error: any) {
+      console.error("[FILE UPLOAD] Vercel Blob upload error:", error);
+      // Fall through to next option
+    }
+  }
+
+  // 2. Try Supabase Storage as fallback
   const supabaseConfigured = isSupabaseConfigured();
   console.log("[FILE UPLOAD] Supabase configured:", supabaseConfigured);
 
@@ -71,20 +97,25 @@ export async function saveFile(file: { buffer: Buffer; originalFilename: string;
         mimetype: file.mimetype,
       });
       console.log("[FILE UPLOAD] Supabase upload result:", result);
-      return result;
+      if (result.success) {
+        return result;
+      }
+      // If Supabase fails, fall through to local storage
+      console.warn("[FILE UPLOAD] Supabase upload failed, trying local storage:", result.error);
     } catch (error: any) {
       console.error("[FILE UPLOAD] Supabase upload error:", error);
-      return { success: false, error: error?.message || "Failed to upload to Supabase" };
+      // Fall through to local storage
     }
   }
 
-  // Fallback to local storage (only works in development, not on Vercel)
-  // On Vercel, filesystem is read-only except /tmp, so Supabase must be configured
+  // 3. Fallback to local storage (only works in development, not on Vercel)
+  // On Vercel, filesystem is read-only except /tmp, so cloud storage must be configured
   if (process.env.VERCEL) {
-    console.error("[FILE UPLOAD] Vercel detected but Supabase not configured");
+    console.error("[FILE UPLOAD] Vercel detected but no cloud storage configured");
     return {
       success: false,
-      error: "File uploads require Supabase Storage to be configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables."
+      error: "File uploads require cloud storage. Please configure either Vercel Blob (BLOB_READ_WRITE_TOKEN) or Supabase Storage (NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY).",
+      hint: "Vercel Blob: Get token from Vercel Dashboard → Storage → Blob → Settings. Supabase: Create storage bucket in Supabase dashboard."
     };
   }
 
@@ -116,9 +147,14 @@ export async function saveFile(file: { buffer: Buffer; originalFilename: string;
 }
 
 /**
- * Delete file (uses Supabase if URL is from Supabase, otherwise local storage)
+ * Delete file (uses Vercel Blob, Supabase, or local storage based on URL)
  */
 export async function deleteFile(filePath: string): Promise<boolean> {
+  // Check if it's a Vercel Blob URL
+  if (filePath.includes('blob.vercel-storage.com') || filePath.includes('public.blob.vercel-storage.com')) {
+    return await deleteFromVercelBlob(filePath);
+  }
+
   // Check if it's a Supabase URL
   if (filePath.includes('supabase.co/storage')) {
     return await deleteFromSupabase(filePath);
